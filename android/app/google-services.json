@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "588228047702",
+    "project_id": "dengele-ov4aur",
+    "storage_bucket": "dengele-ov4aur.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588228047702:android:751959d86af303eae05cf7",
+        "android_client_info": {
+          "package_name": "com.dengele.dengele"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq_9O600DTPuOJVqpIySaePRoT8Wa5pgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -56,6 +56,21 @@ abstract class FlutterFlowTheme {
   late Color error;
   late Color info;
 
+  late Color backButtonColor;
+  late Color textFieldColor;
+  late Color lightTextAndIconColor;
+  late Color addNewGoalPageSelectedFillColor;
+  late Color addNewGoalPageSelectedBorderColor;
+  late Color customGrey;
+  late Color customlightblue;
+  late Color trackColor;
+  late Color iconColor;
+  late Color trashcanbackground;
+  late Color dustbin;
+  late Color customColor1;
+  late Color customColor2;
+  late Color customColor3;
+
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
   @Deprecated('Use displaySmall instead')
@@ -142,13 +157,13 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF4B39EF);
-  late Color secondary = const Color(0xFF39D2C0);
+  late Color primary = const Color(0xFF1854D3);
+  late Color secondary = const Color(0xFF009470);
   late Color tertiary = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFFE0E3E7);
   late Color primaryText = const Color(0xFF14181B);
   late Color secondaryText = const Color(0xFF57636C);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color primaryBackground = const Color(0xFFFAFBFC);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color accent1 = const Color(0x4C4B39EF);
   late Color accent2 = const Color(0x4D39D2C0);
@@ -158,6 +173,21 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color backButtonColor = const Color(0xFFDBDBDB);
+  late Color textFieldColor = const Color(0xFFF3F3F5);
+  late Color lightTextAndIconColor = const Color(0xFFFFFFFF);
+  late Color addNewGoalPageSelectedFillColor = const Color(0xFFF0F6FF);
+  late Color addNewGoalPageSelectedBorderColor = const Color(0xFF1854D3);
+  late Color customGrey = const Color(0xFFF1F5F9);
+  late Color customlightblue = const Color(0xFFCCE1F1);
+  late Color trackColor = const Color(0xFFCBCED4);
+  late Color iconColor = const Color(0xFFD5D9DB);
+  late Color trashcanbackground = const Color(0xFFFAE7EB);
+  late Color dustbin = const Color(0xFFE05570);
+  late Color customColor1 = const Color(0xFFFF0000);
+  late Color customColor2 = const Color(0xFFEFF5FF);
+  late Color customColor3 = const Color(0xFFECFDF5);
 }
 
 abstract class Typography {
@@ -328,14 +358,14 @@ class DarkModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF4B39EF);
-  late Color secondary = const Color(0xFF39D2C0);
+  late Color primary = const Color(0xA91E0CC2);
+  late Color secondary = const Color(0xFF008B45);
   late Color tertiary = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFF262D34);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
   late Color primaryBackground = const Color(0xFF1D2428);
-  late Color secondaryBackground = const Color(0xFF14181B);
+  late Color secondaryBackground = const Color(0xFF1D2428);
   late Color accent1 = const Color(0x4C4B39EF);
   late Color accent2 = const Color(0x4D39D2C0);
   late Color accent3 = const Color(0x4DEE8B60);
@@ -344,6 +374,21 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color backButtonColor = const Color(0xFF542333);
+  late Color textFieldColor = const Color(0x4EACCAC3);
+  late Color lightTextAndIconColor = const Color(0xFF834BFD);
+  late Color addNewGoalPageSelectedFillColor = const Color(0x7C114166);
+  late Color addNewGoalPageSelectedBorderColor = const Color(0xFF254D68);
+  late Color customGrey = const Color(0xFF232B30);
+  late Color customlightblue = const Color(0xFF1D2428);
+  late Color trackColor = const Color(0xFFD5D9DB);
+  late Color iconColor = const Color(0xFFD5D9DB);
+  late Color trashcanbackground = const Color(0xFF232B30);
+  late Color dustbin = const Color(0xACE05570);
+  late Color customColor1 = const Color(0xADFF0000);
+  late Color customColor2 = const Color(0xFF232B30);
+  late Color customColor3 = const Color(0xFF1D2428);
 }
 
 extension TextStyleHelper on TextStyle {

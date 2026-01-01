@@ -54,7 +54,8 @@
 	<true/>
 
 
-
+	<key>PermissionGroupNotification</key>
+    <string>Hedeflerinizi tamamladığınızdan emin olmak, serilerinizi korumak ve önemli hatırlatıcıları almak için bildirimlere izin verin.</string>
 
 
 

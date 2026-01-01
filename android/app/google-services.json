@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:588228047702:android:751959d86af303eae05cf7",
+        "mobilesdk_app_id": "1:588228047702:android:7c6fcc5f0499a080e05cf7",
         "android_client_info": {
-          "package_name": "com.dengele.dengele"
+          "package_name": "com.dengele.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "588228047702-497uqojt7qvd35ub76b941jnqetsfm1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAq_9O600DTPuOJVqpIySaePRoT8Wa5pgw"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588228047702-497uqojt7qvd35ub76b941jnqetsfm1q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "588228047702-d5ofo8qt0cqdg06hb2aj25bprtav8m5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dengele.dengele"
+              }
+            }
+          ]
         }
       }
     }

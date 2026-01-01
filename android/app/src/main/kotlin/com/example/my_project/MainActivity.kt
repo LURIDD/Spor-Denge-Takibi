@@ -1,4 +1,4 @@
-package com.dengele.dengele
+package com.dengele.app
 
 import io.flutter.embedding.android.FlutterActivity
 

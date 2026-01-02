@@ -7,8 +7,10 @@ import '/components/dashboard_u_i/home_page_today_goals/home_page_today_goals_wi
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -26,6 +28,9 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
+  // Konfeti efektini kontrol etmek için kullanılan controller.
+  final ConfettiController _confettiController =
+      ConfettiController(duration: const Duration(seconds: 3));
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -36,22 +41,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if ((currentUserDocument?.lastResetDate != null) &&
-          (currentUserDocument?.lastResetDate == getCurrentTimestamp)) {
-        await actions.checkDailyStreak();
-      }
+      await actions.checkDailyStreak();
+      await actions.resetDailyGoals();
     });
   }
 
   @override
   void dispose() {
     _model.dispose();
+    _confettiController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Kullanıcının hedeflerini (UserGoals) veritabanından stream olarak dinliyoruz.
     return StreamBuilder<List<UserGoalsRecord>>(
       stream: queryUserGoalsRecord(
         parent: currentUserReference,
@@ -76,6 +81,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         }
         List<UserGoalsRecord> homePageUserGoalsRecordList = snapshot.data!;
 
+        // Klavyeyi kapatmak için ekranın boş bir yerine tıklanmasını sağlayan yapı.
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -86,121 +92,315 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             child: Scaffold(
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-              body: SafeArea(
-                top: true,
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 100.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Kullaniciyi karsilayan ana baslik metni
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  'Hazır mısın, ${currentUserDisplayName} ?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .override(
-                                        font: GoogleFonts.interTight(
+              body: Stack(
+                children: [
+                  SafeArea(
+                    top: true,
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Kullaniciyi karsilayan ana baslik metni
+                                  // Kullaniciyi karsilayan ana baslik metni
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          'Hazır mısın, ${currentUserDisplayName} ?',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            context: context,
+                                            builder: (context) {
+                                              return Container(
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.all(20),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.6,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Bildirimler',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineSmall,
+                                                    ),
+                                                    Divider(),
+                                                    Expanded(
+                                                      child: StreamBuilder<
+                                                          List<
+                                                              NotificationsRecord>>(
+                                                        stream:
+                                                            queryNotificationsRecord(
+                                                          queryBuilder: (notificationsRecord) =>
+                                                              notificationsRecord
+                                                                  .where(
+                                                                      'user_ref',
+                                                                      isEqualTo:
+                                                                          currentUserReference),
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                              .hasError) {
+                                                            return Center(
+                                                                child: Text(
+                                                                    'Hata oluştu.'));
+                                                          }
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                                child:
+                                                                    CircularProgressIndicator());
+                                                          }
+                                                          final notifications =
+                                                              snapshot.data!;
+                                                          notifications.sort((a,
+                                                                  b) =>
+                                                              (b.createdTime ??
+                                                                      DateTime(
+                                                                          0))
+                                                                  .compareTo(a
+                                                                          .createdTime ??
+                                                                      DateTime(
+                                                                          0)));
+
+                                                          if (notifications
+                                                              .isEmpty) {
+                                                            return Center(
+                                                                child: Text(
+                                                                    'Bildiriminiz yok.'));
+                                                          }
+                                                          return ListView
+                                                              .separated(
+                                                            itemCount:
+                                                                notifications
+                                                                    .length,
+                                                            separatorBuilder:
+                                                                (_, __) =>
+                                                                    Divider(),
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              final notification =
+                                                                  notifications[
+                                                                      index];
+                                                              return ListTile(
+                                                                title: Text(
+                                                                    notification
+                                                                        .title,
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                subtitle: Text(
+                                                                    notification
+                                                                        .message),
+                                                                trailing: Text(
+                                                                  DateFormat(
+                                                                          'dd/MM HH:mm')
+                                                                      .format(notification
+                                                                              .createdTime ??
+                                                                          DateTime
+                                                                              .now()),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                                leading: Icon(
+                                                                    Icons
+                                                                        .notifications,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.notifications_none,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // Kullaniciyi motive eden alt bilgi veya aciklama metni
+                                  Text(
+                                    'Bugün de hedeflerine odaklan 🎯',
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
-                                                  .headlineMedium
+                                                  .labelMedium
                                                   .fontWeight,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .headlineMedium
+                                                  .labelMedium
                                                   .fontStyle,
                                         ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontStyle,
-                                      ),
-                                ),
+                                  ).animate().fade(delay: 200.ms),
+                                ].divide(SizedBox(height: 8.0)),
                               ),
+                            ),
+                            wrapWithModel(
+                              model: _model.homePageGreeterModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: HomePageGreeterWidget(),
+                            ),
 
-                              // Kullaniciyi motive eden alt bilgi veya aciklama metni
-                              Text(
-                                'Bugün de hedeflerine odaklan 🎯',
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                      fontSize: 15.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
+                            // Gunluk ilerleme durumunu gosteren progress bar bilesenini modele baglayarak cagiriyoruz
+                            wrapWithModel(
+                              model: _model.homePageDailyProgressBarModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: HomePageDailyProgressBarWidget(),
+                            ),
+
+                            // Kullanicinin gunluk hedeflerini listeleyen bileseni (Widget) sayfaya dahil ediyoruz
+                            wrapWithModel(
+                              model: _model.homePageTodayGoalsModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: HomePageTodayGoalsWidget(
+                                goalsList: homePageUserGoalsRecordList,
+                                onGoalCompleted: () {
+                                  final uncompletedCount =
+                                      homePageUserGoalsRecordList
+                                          .where((e) => !e.isCompleted)
+                                          .length;
+                                  if (uncompletedCount <= 1) {
+                                    _confettiController.play();
+                                  }
+                                },
                               ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                        ),
-                        wrapWithModel(
-                          model: _model.homePageGreeterModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: HomePageGreeterWidget(),
-                        ),
+                            )
+                                .animate()
+                                .fade(duration: 600.ms)
+                                .slideY(begin: 0.2, end: 0),
 
-                        // Gunluk ilerleme durumunu gosteren progress bar bilesenini modele baglayarak cagiriyoruz
-                        wrapWithModel(
-                          model: _model.homePageDailyProgressBarModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: HomePageDailyProgressBarWidget(),
+                            // Kullanicinin gun icindeki aktivitelerinin ozetini gösteren bileseni (Widget) yukluyoruz
+                            wrapWithModel(
+                              model: _model.homePageDailySummaryModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: HomePageDailySummaryWidget(
+                                tamamlananAdet: homePageUserGoalsRecordList
+                                    .where((e) => e.isCompleted == true)
+                                    .toList()
+                                    .length,
+                                kalanAdet: homePageUserGoalsRecordList
+                                    .where((e) => !e.isCompleted)
+                                    .toList()
+                                    .length,
+                              ),
+                            )
+                                .animate()
+                                .fade(duration: 800.ms)
+                                .slideY(begin: 0.1, end: 0),
+                          ]
+                              .divide(SizedBox(height: 16.0))
+                              .addToEnd(SizedBox(height: 16.0)),
                         ),
-
-                        // Kullanicinin gunluk hedeflerini listeleyen bileseni (Widget) sayfaya dahil ediyoruz
-                        wrapWithModel(
-                          model: _model.homePageTodayGoalsModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: HomePageTodayGoalsWidget(
-                            goalsList: homePageUserGoalsRecordList,
-                          ),
-                        ),
-
-                        // Kullanicinin gun icindeki aktivitelerinin ozetini gösteren bileseni (Widget) yukluyoruz
-                        wrapWithModel(
-                          model: _model.homePageDailySummaryModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: HomePageDailySummaryWidget(
-                            tamamlananAdet: homePageUserGoalsRecordList
-                                .where((e) => e.isCompleted == true)
-                                .toList()
-                                .length,
-                            kalanAdet: homePageUserGoalsRecordList
-                                .where((e) => !e.isCompleted)
-                                .toList()
-                                .length,
-                          ),
-                        ),
-                      ]
-                          .divide(SizedBox(height: 16.0))
-                          .addToEnd(SizedBox(height: 16.0)),
+                      ),
                     ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: ConfettiWidget(
+                      confettiController: _confettiController,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      shouldLoop: false,
+                      colors: const [
+                        Colors.green,
+                        Colors.blue,
+                        Colors.pink,
+                        Colors.orange,
+                        Colors.purple
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -86,6 +86,7 @@ class UsersRecord extends FirestoreRecord {
   bool hasGender() => _gender != null;
 
   // "currentStreak" field.
+  // Kullanıcının mevcut devam eden seri günü sayısı.
   int? _currentStreak;
   int get currentStreak => _currentStreak ?? 0;
   bool hasCurrentStreak() => _currentStreak != null;
@@ -101,6 +102,7 @@ class UsersRecord extends FirestoreRecord {
   bool hasHighestStreak() => _highestStreak != null;
 
   // "streakCount" field.
+  // Tamamlanan toplam seri sayısı.
   int? _streakCount;
   int get streakCount => _streakCount ?? 0;
   bool hasStreakCount() => _streakCount != null;
@@ -111,6 +113,7 @@ class UsersRecord extends FirestoreRecord {
   bool hasLastStreakUpdate() => _lastStreakUpdate != null;
 
   // "dailyStepGoal" field.
+  // Kullanıcının günlük hedeflediği adım sayısı.
   int? _dailyStepGoal;
   int get dailyStepGoal => _dailyStepGoal ?? 0;
   bool hasDailyStepGoal() => _dailyStepGoal != null;
@@ -140,6 +143,12 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get lastActiveTime => _lastActiveTime;
   bool hasLastActiveTime() => _lastActiveTime != null;
 
+  // "is_notifications_enabled" field.
+  // Kullanıcının bildirim izin durumu.
+  bool? _isNotificationsEnabled;
+  bool get isNotificationsEnabled => _isNotificationsEnabled ?? true;
+  bool hasIsNotificationsEnabled() => _isNotificationsEnabled != null;
+
   void _initializeFields() {
     _uid = snapshotData['uid'] as String?;
     _userName = snapshotData['user_name'] as String?;
@@ -166,6 +175,7 @@ class UsersRecord extends FirestoreRecord {
     _streak = castToType<int>(snapshotData['streak']);
     _lastLoginDate = snapshotData['last_login_date'] as DateTime?;
     _lastActiveTime = snapshotData['last_active_time'] as DateTime?;
+    _isNotificationsEnabled = snapshotData['is_notifications_enabled'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -227,6 +237,7 @@ Map<String, dynamic> createUsersRecordData({
   int? streak,
   DateTime? lastLoginDate,
   DateTime? lastActiveTime,
+  bool? isNotificationsEnabled,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -255,6 +266,7 @@ Map<String, dynamic> createUsersRecordData({
       'streak': streak,
       'last_login_date': lastLoginDate,
       'last_active_time': lastActiveTime,
+      'is_notifications_enabled': isNotificationsEnabled,
     }.withoutNulls,
   );
 
@@ -290,7 +302,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.lastResetDate == e2?.lastResetDate &&
         e1?.streak == e2?.streak &&
         e1?.lastLoginDate == e2?.lastLoginDate &&
-        e1?.lastActiveTime == e2?.lastActiveTime;
+        e1?.lastActiveTime == e2?.lastActiveTime &&
+        e1?.isNotificationsEnabled == e2?.isNotificationsEnabled;
   }
 
   @override
@@ -319,7 +332,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.lastResetDate,
         e?.streak,
         e?.lastLoginDate,
-        e?.lastActiveTime
+        e?.lastActiveTime,
+        e?.isNotificationsEnabled
       ]);
 
   @override

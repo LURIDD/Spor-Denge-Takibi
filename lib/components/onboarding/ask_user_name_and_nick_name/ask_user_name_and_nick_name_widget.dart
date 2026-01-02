@@ -231,15 +231,8 @@ class _AskUserNameAndNickNameWidgetState
                         validator: _model.adTxtTextControllerValidator
                             .asValidator(context),
                         inputFormatters: [
-                          if (!isAndroid && !isiOS)
-                            TextInputFormatter.withFunction(
-                                (oldValue, newValue) {
-                              return TextEditingValue(
-                                selection: newValue.selection,
-                                text: newValue.text
-                                    .toCapitalization(TextCapitalization.none),
-                              );
-                            }),
+                          FilteringTextInputFormatter.allow(
+                              RegExp('[a-zA-Z\\s]')),
                         ],
                       ),
                     ),

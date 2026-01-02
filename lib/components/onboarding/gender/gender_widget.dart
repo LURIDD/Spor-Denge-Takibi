@@ -2,7 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
+import '/pages/onboarding/step_goal_page/step_goal_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -256,9 +256,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                 ),
               ),
               Opacity(
-                opacity: FFAppState().TempGender != ''
-                    ? 1.0
-                    : 0.5,
+                opacity: FFAppState().TempGender != '' ? 1.0 : 0.5,
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
@@ -330,8 +328,8 @@ class _GenderWidgetState extends State<GenderWidget> {
                           ),
                         });
 
-                        _navigate = () => context.goNamedAuth(
-                            HomePageWidget.routeName, context.mounted);
+                        _navigate = () =>
+                            context.pushNamed(StepGoalPageWidget.routeName);
                       } else {
                         _model.showErrors = true;
                         safeSetState(() {});
@@ -359,7 +357,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Artık Hazırsın',
+                            'Devam Et',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

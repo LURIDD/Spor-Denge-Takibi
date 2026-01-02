@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '/auth/base_auth_user_provider.dart';
 
 import '/main.dart';
@@ -11,6 +10,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
+import '/pages/onboarding/step_goal_page/step_goal_page_widget.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -174,6 +174,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: GenderPageWidget.routeName,
           path: GenderPageWidget.routePath,
           builder: (context, params) => GenderPageWidget(),
+        ),
+        FFRoute(
+          name: StepGoalPageWidget.routeName,
+          path: StepGoalPageWidget.routePath,
+          builder: (context, params) => StepGoalPageWidget(),
         ),
         FFRoute(
           name: PPAndTOSWidget.routeName,

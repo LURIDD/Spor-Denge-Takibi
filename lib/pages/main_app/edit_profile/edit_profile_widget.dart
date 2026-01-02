@@ -150,31 +150,31 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 FFAppState().secilenAvatar = currentUserPhoto;
                                 safeSetState(() {});
                               },
-                                child: Container(
-                                  width: 110.0,
-                                  height: 110.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Builder(
-                                    builder: (context) {
-                                      if (FFAppState()
-                                          .secilenAvatar
-                                          .startsWith('http')) {
-                                        return Image.network(
-                                          FFAppState().secilenAvatar,
-                                          fit: BoxFit.cover,
-                                        );
-                                      } else {
-                                        return Image.asset(
-                                          FFAppState().secilenAvatar,
-                                          fit: BoxFit.cover,
-                                        );
-                                      }
-                                    },
-                                  ),
+                              child: Container(
+                                width: 110.0,
+                                height: 110.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
+                                child: Builder(
+                                  builder: (context) {
+                                    if (FFAppState()
+                                        .secilenAvatar
+                                        .startsWith('http')) {
+                                      return Image.network(
+                                        FFAppState().secilenAvatar,
+                                        fit: BoxFit.cover,
+                                      );
+                                    } else {
+                                      return Image.asset(
+                                        FFAppState().secilenAvatar,
+                                        fit: BoxFit.cover,
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                           InkWell(
@@ -637,7 +637,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                         .displayNameTxtTextControllerValidator
                                         .asValidator(context),
                                     inputFormatters: [
-                                      _model.displayNameTxtMask
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[a-zA-Z\\s]')),
                                     ],
                                   ),
                                 ),
@@ -1460,11 +1461,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             content: Text(
                               'Lütfen geçerli bir boy giriniz (50-300 cm)',
                               style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryText),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText),
                             ),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).secondaryBackground,
+                            backgroundColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                           ),
                         );
                         return;
@@ -1476,11 +1477,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             content: Text(
                               'Lütfen geçerli bir kilo giriniz (20-300 kg)',
                               style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryText),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText),
                             ),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).secondaryBackground,
+                            backgroundColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                           ),
                         );
                         return;

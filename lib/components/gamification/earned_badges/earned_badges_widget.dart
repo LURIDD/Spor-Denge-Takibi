@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/backend/backend.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'earned_badges_model.dart';
@@ -37,9 +38,7 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // Kullanicinin toplam kazandigi rozetlerin gosterildigi alan
-        Container(
+    return Container(
       width: double.infinity,
       height: 100.0,
       decoration: BoxDecoration(
@@ -48,10 +47,7 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
-            offset: Offset(
-              0.0,
-              2.0,
-            ),
+            offset: Offset(0.0, 2.0),
           )
         ],
         borderRadius: BorderRadius.circular(18.0),
@@ -104,10 +100,35 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
                                 .fontStyle,
                           ),
                     ),
-                    Text(
-                      '1,234',
-                      style:
-                          FlutterFlowTheme.of(context).headlineMedium.override(
+                    FutureBuilder<AggregateQuerySnapshot>(
+                      future: FirebaseFirestore.instance
+                          .collectionGroup('user_badges')
+                          .where('status', isEqualTo: 'unlocked')
+                          .count()
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Text(
+                            '-',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  font: GoogleFonts.interTight(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                          );
+                        }
+                        final count = snapshot.data!.count;
+                        return Text(
+                          formatNumber(
+                            count,
+                            formatType: FormatType.decimal,
+                            decimalType: DecimalType.automatic,
+                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
                                 font: GoogleFonts.interTight(
                                   fontWeight: FontWeight.w800,
                                   fontStyle: FlutterFlowTheme.of(context)
@@ -120,6 +141,8 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
                                     .headlineMedium
                                     .fontStyle,
                               ),
+                        );
+                      },
                     ),
                   ].divide(SizedBox(height: 5.0)),
                 ),

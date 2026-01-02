@@ -132,7 +132,7 @@ class _TotalStreakWidgetState extends State<TotalStreakWidget> {
                                   ),
                         ),
                         Text(
-                          containerUsersRecordList.length.toString(),
+                          containerUsersRecordList.fold<int>(0, (previousValue, element) => previousValue + (element.currentStreak)).toString(),
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium
                               .override(

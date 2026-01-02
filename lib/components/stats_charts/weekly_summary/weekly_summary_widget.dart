@@ -10,7 +10,14 @@ export 'weekly_summary_model.dart';
 
 /// Haftalik Genel Ozet
 class WeeklySummaryWidget extends StatefulWidget {
-  const WeeklySummaryWidget({super.key});
+  final List<double> weeklyValues; // Add parameter
+  final int consistency;
+
+  const WeeklySummaryWidget({
+    super.key,
+    required this.weeklyValues, // Require it
+    this.consistency = 0,
+  });
 
   @override
   State<WeeklySummaryWidget> createState() => _WeeklySummaryWidgetState();
@@ -88,101 +95,120 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Icon(
-                          Icons.trending_up,
-                          color: FlutterFlowTheme.of(context).secondary,
-                          size: 20.0,
-                        ),
-                        Text(
-                          '+12%',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                                color: FlutterFlowTheme.of(context).secondary,
-                                fontSize: 14.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
+                        Builder(builder: (context) {
+                          // Calculate trend
+                          double firstHalfAvg = 0;
+                          double secondHalfAvg = 0;
+                          if (widget.weeklyValues.length >= 2) {
+                            int mid = widget.weeklyValues.length ~/ 2;
+                            var firstHalf = widget.weeklyValues.sublist(0, mid);
+                            var secondHalf = widget.weeklyValues.sublist(mid);
+
+                            if (firstHalf.isNotEmpty)
+                              firstHalfAvg = firstHalf.reduce((a, b) => a + b) /
+                                  firstHalf.length;
+                            if (secondHalf.isNotEmpty)
+                              secondHalfAvg =
+                                  secondHalf.reduce((a, b) => a + b) /
+                                      secondHalf.length;
+                          }
+
+                          double trend = 0;
+                          if (firstHalfAvg > 0) {
+                            trend = ((secondHalfAvg - firstHalfAvg) /
+                                    firstHalfAvg) *
+                                100;
+                          } else if (secondHalfAvg > 0) {
+                            trend =
+                                100; // From 0 to something is 100% increase effectively for UI
+                          }
+
+                          bool isPositive = trend >= 0;
+
+                          return Row(
+                            children: [
+                              Icon(
+                                isPositive
+                                    ? Icons.trending_up
+                                    : Icons.trending_down,
+                                color: isPositive
+                                    ? FlutterFlowTheme.of(context).secondary
+                                    : FlutterFlowTheme.of(context).error,
+                                size: 20.0,
                               ),
-                        ),
+                              Text(
+                                '${isPositive ? '+' : ''}${trend.toStringAsFixed(1)}%',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: isPositive
+                                          ? FlutterFlowTheme.of(context)
+                                              .secondary
+                                          : FlutterFlowTheme.of(context).error,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                              ),
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ],
                 ),
               ],
             ),
-            FutureBuilder<List<UserActivitiesRecord>>(
-              future: queryUserActivitiesRecordOnce(
-                queryBuilder: (userActivitiesRecord) =>
-                    userActivitiesRecord.where(
-                  'lastSeriesDate',
-                  isGreaterThan: getCurrentTimestamp,
-                  isNull: (getCurrentTimestamp) == null,
-                ),
-                limit: 7,
-              ),
-              builder: (context, snapshot) {
-                // Customize what your widget looks like when it's loading.
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: SizedBox(
-                      width: 50.0,
-                      height: 50.0,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).primary,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                List<UserActivitiesRecord> chartUserActivitiesRecordList =
-                    snapshot.data!;
-
-                return Container(
-                  width: 370.0,
-                  height: 180.0,
-                  child: FlutterFlowLineChart(
-                    data: [
-                      FFLineChartData(
-                        xData: List.generate(random_data.randomInteger(7, 7),
-                            (index) => random_data.randomDate()),
-                        yData: List.generate(random_data.randomInteger(7, 7),
-                            (index) => random_data.randomInteger(0, 10)),
-                        settings: LineChartBarData(
-                          color: Color(0xFF1D4ACE),
-                          barWidth: 2.0,
-                          isCurved: true,
-                        ),
-                      )
+            Container(
+              width: 370.0,
+              height: 180.0,
+              child: FlutterFlowLineChart(
+                data: [
+                  FFLineChartData(
+                    xData: [
+                      DateTime.now().subtract(Duration(days: 6)),
+                      DateTime.now().subtract(Duration(days: 5)),
+                      DateTime.now().subtract(Duration(days: 4)),
+                      DateTime.now().subtract(Duration(days: 3)),
+                      DateTime.now().subtract(Duration(days: 2)),
+                      DateTime.now().subtract(Duration(days: 1)),
+                      DateTime.now(),
                     ],
-                    chartStylingInfo: ChartStylingInfo(
-                      backgroundColor:
-                          FlutterFlowTheme.of(context).primaryBackground,
-                      showBorder: false,
+                    yData: widget.weeklyValues.isNotEmpty
+                        ? widget.weeklyValues
+                        : [0, 0, 0, 0, 0, 0, 0],
+                    settings: LineChartBarData(
+                      color: Color(0xFF1D4ACE),
+                      barWidth: 2.0,
+                      isCurved: true,
                     ),
-                    axisBounds: AxisBounds(),
-                    xAxisLabelInfo: AxisLabelInfo(
-                      reservedSize: 32.0,
-                    ),
-                    yAxisLabelInfo: AxisLabelInfo(
-                      reservedSize: 40.0,
-                    ),
-                  ),
-                );
-              },
+                  )
+                ],
+                chartStylingInfo: ChartStylingInfo(
+                  backgroundColor: Colors.transparent,
+                  showBorder: false,
+                ),
+                axisBounds: AxisBounds(),
+                xAxisLabelInfo: AxisLabelInfo(
+                  reservedSize: 32.0,
+                ),
+                yAxisLabelInfo: AxisLabelInfo(
+                  reservedSize: 40.0,
+                ),
+              ),
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -323,7 +349,7 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      '87%',
+                      '${widget.consistency}%',
                       style: FlutterFlowTheme.of(context).titleLarge.override(
                             font: GoogleFonts.interTight(
                               fontWeight: FontWeight.bold,

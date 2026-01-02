@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/stats_charts/achievement_badges/achievement_badges_widget.dart';
 import '/components/stats_charts/streak_history/streak_history_widget.dart';
 import '/components/stats_charts/weekly_summary/weekly_summary_widget.dart';
@@ -60,7 +61,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
           child:
               // istatistikerlin gosterildigi alan
               Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 100.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -126,17 +127,15 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                         EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FutureBuilder<List<UserActivitiesRecord>>(
                       future: queryUserActivitiesRecordOnce(
+                        parent: currentUserReference,
                         queryBuilder: (userActivitiesRecord) =>
-                            userActivitiesRecord.where(
-                          'lastSeriesDate',
-                          isGreaterThan: getCurrentTimestamp,
-                          isNull: (getCurrentTimestamp) == null,
-                        ),
-                        limit: 7,
+                            userActivitiesRecord,
+                        singleRecord: true,
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(
                             child: SizedBox(
                               width: 50.0,
@@ -149,14 +148,26 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                             ),
                           );
                         }
-                        List<UserActivitiesRecord>
-                            weeklySummaryUserActivitiesRecordList =
-                            snapshot.data!;
+
+                        // Default to empty list if no data or error
+                        List<double> weeklyValues = [];
+                        int consistency = 0;
+
+                        if (snapshot.hasData &&
+                            snapshot.data != null &&
+                            snapshot.data!.isNotEmpty) {
+                          final userActivity = snapshot.data!.first;
+                          weeklyValues = userActivity.dailyValues;
+                          consistency = userActivity.consistency;
+                        }
 
                         return wrapWithModel(
                           model: _model.weeklySummaryModel,
                           updateCallback: () => safeSetState(() {}),
-                          child: WeeklySummaryWidget(),
+                          child: WeeklySummaryWidget(
+                            weeklyValues: weeklyValues,
+                            consistency: consistency,
+                          ),
                         );
                       },
                     ),

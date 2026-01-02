@@ -173,63 +173,33 @@ class _StreakHistoryWidgetState extends State<StreakHistoryWidget> {
                           color: FlutterFlowTheme.of(context).secondary,
                           size: 24.0,
                         ),
-                        AuthUserStreamWidget(
-                          builder: (context) =>
-                              FutureBuilder<List<UsersRecord>>(
-                            future: queryUsersRecordOnce(
-                              queryBuilder: (usersRecord) => usersRecord.where(
-                                'currentStreak',
-                                isGreaterThan: valueOrDefault(
-                                    currentUserDocument?.highestStreak, 0),
+                          AuthUserStreamWidget(
+                            builder: (context) => Text(
+                              valueOrDefault<String>(
+                                valueOrDefault(
+                                        currentUserDocument?.highestStreak, 0)
+                                    .toString(),
+                                '0',
                               ),
-                              limit: 30,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<UsersRecord> textUsersRecordList =
-                                  snapshot.data!;
-
-                              return Text(
-                                valueOrDefault<String>(
-                                  valueOrDefault(
-                                          currentUserDocument?.highestStreak, 0)
-                                      .toString(),
-                                  '0',
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w800,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleLarge
-                                            .fontStyle,
-                                      ),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      letterSpacing: 0.0,
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
+                                    font: GoogleFonts.interTight(
                                       fontWeight: FontWeight.w800,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .fontStyle,
                                     ),
-                              );
-                            },
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondary,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w800,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleLarge
+                                        .fontStyle,
+                                  ),
+                            ),
                           ),
-                        ),
                         Text(
                           'En Uzun Seri',
                           style:
@@ -257,38 +227,75 @@ class _StreakHistoryWidgetState extends State<StreakHistoryWidget> {
                 ),
               ],
             ),
-            Container(
-              width: double.infinity,
-              height: 50.0,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).customGrey,
-                borderRadius: BorderRadius.circular(10.0),
+            if (valueOrDefault(currentUserDocument?.currentStreak, 0) == 0 && currentUserDocument?.lastCompletedDate != null)
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).customGrey,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(6.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      AuthUserStreamWidget(
+                        builder: (context) => Text(
+                          'Son seri: ${dateTimeFormat('d MMMM', currentUserDocument?.lastCompletedDate)} tarihinde sona erdi',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).labelMedium.override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .fontStyle,
+                                ),
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontStyle,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              child: Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      'Son seri: 3 Kasım\'da 21 günlük seriniz sona erdi',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            font: GoogleFonts.inter(
+            if (valueOrDefault(currentUserDocument?.currentStreak, 0) > 0)
+               Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).customGrey,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(6.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        'Harika gidiyorsun! Serini bozma 🔥',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).labelMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .fontStyle,
+                              color: FlutterFlowTheme.of(context).success,
                             ),
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontStyle,
-                          ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ].divide(SizedBox(height: 18.0)),
         ),
       ),

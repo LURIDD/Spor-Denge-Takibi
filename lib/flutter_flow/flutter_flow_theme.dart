@@ -358,7 +358,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xA91E0CC2);
+  late Color primary = const Color(0xFF3975EA);
   late Color secondary = const Color(0xFF008B45);
   late Color tertiary = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFF262D34);
@@ -377,7 +377,7 @@ class DarkModeTheme extends FlutterFlowTheme {
 
   late Color backButtonColor = const Color(0xFF542333);
   late Color textFieldColor = const Color(0x4EACCAC3);
-  late Color lightTextAndIconColor = const Color(0xFF834BFD);
+  late Color lightTextAndIconColor = const Color(0xFFFFFFFF);
   late Color addNewGoalPageSelectedFillColor = const Color(0x7C114166);
   late Color addNewGoalPageSelectedBorderColor = const Color(0xFF254D68);
   late Color customGrey = const Color(0xFF232B30);
@@ -386,7 +386,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color iconColor = const Color(0xFFD5D9DB);
   late Color trashcanbackground = const Color(0xFF232B30);
   late Color dustbin = const Color(0xACE05570);
-  late Color customColor1 = const Color(0xADFF0000);
+  late Color customColor1 = const Color(0xFFFF0000);
   late Color customColor2 = const Color(0xFF232B30);
   late Color customColor3 = const Color(0xFF1D2428);
 }

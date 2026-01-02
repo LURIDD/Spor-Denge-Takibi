@@ -63,6 +63,11 @@ class UserGoalsRecord extends FirestoreRecord {
 
   DocumentReference get parentReference => reference.parent.parent!;
 
+  // "iconPath" field.
+  String? _iconPath;
+  String get iconPath => _iconPath ?? '';
+  bool hasIconPath() => _iconPath != null;
+
   void _initializeFields() {
     _goalName = snapshotData['goalName'] as String?;
     _goalAmount = castToType<double>(snapshotData['goalAmount']);
@@ -73,6 +78,7 @@ class UserGoalsRecord extends FirestoreRecord {
     _currentStreak = castToType<int>(snapshotData['current_streak']);
     _longestStreak = castToType<int>(snapshotData['longest_streak']);
     _lastCompletedDate = snapshotData['last_completed_date'] as DateTime?;
+    _iconPath = snapshotData['iconPath'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -124,6 +130,7 @@ Map<String, dynamic> createUserGoalsRecordData({
   int? currentStreak,
   int? longestStreak,
   DateTime? lastCompletedDate,
+  String? iconPath,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -136,6 +143,7 @@ Map<String, dynamic> createUserGoalsRecordData({
       'current_streak': currentStreak,
       'longest_streak': longestStreak,
       'last_completed_date': lastCompletedDate,
+      'iconPath': iconPath,
     }.withoutNulls,
   );
 
@@ -155,7 +163,8 @@ class UserGoalsRecordDocumentEquality implements Equality<UserGoalsRecord> {
         e1?.goalUnitMeasurement == e2?.goalUnitMeasurement &&
         e1?.currentStreak == e2?.currentStreak &&
         e1?.longestStreak == e2?.longestStreak &&
-        e1?.lastCompletedDate == e2?.lastCompletedDate;
+        e1?.lastCompletedDate == e2?.lastCompletedDate &&
+        e1?.iconPath == e2?.iconPath;
   }
 
   @override
@@ -168,7 +177,8 @@ class UserGoalsRecordDocumentEquality implements Equality<UserGoalsRecord> {
         e?.goalUnitMeasurement,
         e?.currentStreak,
         e?.longestStreak,
-        e?.lastCompletedDate
+        e?.lastCompletedDate,
+        e?.iconPath
       ]);
 
   @override

@@ -1,35 +1,58 @@
-// Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
+import '/custom_code/actions/index.dart'; // Imports other custom actions
 import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future resetDailyGoals(DocumentReference userRef) async {
-  final firestore = FirebaseFirestore.instance;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '/auth/firebase_auth/auth_util.dart';
 
-  // 1. Kullanıcının hedeflerini bul ve sıfırla
-  final goalsQuery = await firestore
-      .collection('UserGoals') // Koleksiyon adının 'goals' olduğundan emin ol
-      .where('user_ref', isEqualTo: userRef)
-      .get();
+Future resetDailyGoals() async {
+  // Add your function code here!
+  final currentUser = currentUserReference;
+  if (currentUser == null) return;
 
-  final batch = firestore.batch();
-  for (var doc in goalsQuery.docs) {
-    batch.update(doc.reference, {'is_completed': false});
+  final userDoc = await currentUser.get();
+  final lastActiveTime = userDoc.data() is Map
+      ? (userDoc.data() as Map)['last_active_time'] as Timestamp?
+      : null;
+
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+
+  if (lastActiveTime != null) {
+    final lastDate = lastActiveTime.toDate();
+    final lastDay = DateTime(lastDate.year, lastDate.month, lastDate.day);
+
+    if (lastDay.isAtSameMomentAs(today)) {
+      // Already opened today, no reset needed
+      // But we still update last_active_time to be current, just in case
+      await currentUser.update({
+        'last_active_time': FieldValue.serverTimestamp(),
+      });
+      return;
+    }
   }
 
-  // 2. Kullanıcının adım verisini sıfırla ve tarihi güncelle
-  batch.update(userRef, {
-    'liveSteps': 0,
-    'last_reset_date': FieldValue.serverTimestamp(),
+  // It's a new day (or first login), reset goals
+  final goalsQuery = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser.id)
+      .collection('user_goals')
+      .get();
+
+  final batch = FirebaseFirestore.instance.batch();
+
+  for (final doc in goalsQuery.docs) {
+    batch.update(doc.reference, {'isCompleted': false});
+  }
+
+  // Also update last_active_time
+  batch.update(currentUser, {
+    'last_active_time': FieldValue.serverTimestamp(),
   });
 
   await batch.commit();
 }
-
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the green button on the right!

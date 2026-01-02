@@ -1,3 +1,10 @@
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
+export 'user_activities_record.dart';
+export 'goal_logs_record.dart';
+export 'badges_record.dart';
+export 'notifications_record.dart';
+export 'user_goals_record.dart';
+export 'users_record.dart';
+export 'user_badges_record.dart';
 export 'package:flutter/material.dart' show Color, Colors;
 export '/flutter_flow/lat_lng.dart';

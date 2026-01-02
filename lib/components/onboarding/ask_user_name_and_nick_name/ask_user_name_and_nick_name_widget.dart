@@ -227,6 +227,7 @@ class _AskUserNameAndNickNameWidgetState
                             null,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         enableInteractiveSelection: false,
+                        onChanged: (_) => safeSetState(() {}),
                         validator: _model.adTxtTextControllerValidator
                             .asValidator(context),
                         inputFormatters: [
@@ -363,6 +364,7 @@ class _AskUserNameAndNickNameWidgetState
                             null,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         enableInteractiveSelection: false,
+                        onChanged: (_) => safeSetState(() {}),
                         validator: _model
                             .kullaniciAdiTextTextControllerValidator
                             .asValidator(context),
@@ -395,24 +397,20 @@ class _AskUserNameAndNickNameWidgetState
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onTap: () async {
-                      if ((_model.adTxtTextController.text != '') &&
-                          (_model.kullaniciAdiTextTextController.text !=
-                                  '')) {
-                        _model.showErrors = false;
-                        safeSetState(() {});
-                        FFAppState().tempRealname =
-                            _model.adTxtTextController.text;
-                        FFAppState().TempUsername =
-                            _model.kullaniciAdiTextTextController.text;
-                        safeSetState(() {});
+                    onTap: ((_model.adTxtTextController.text != '') &&
+                            (_model.kullaniciAdiTextTextController.text != ''))
+                        ? () async {
+                            _model.showErrors = false;
+                            safeSetState(() {});
+                            FFAppState().tempRealname =
+                                _model.adTxtTextController.text;
+                            FFAppState().TempUsername =
+                                _model.kullaniciAdiTextTextController.text;
+                            safeSetState(() {});
 
-                        context.pushNamed(BirthDatePageWidget.routeName);
-                      } else {
-                        _model.showErrors = true;
-                        safeSetState(() {});
-                      }
-                    },
+                            context.pushNamed(BirthDatePageWidget.routeName);
+                          }
+                        : null,
                     child: Container(
                       width: double.infinity,
                       height: 50.0,

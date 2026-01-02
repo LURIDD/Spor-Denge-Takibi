@@ -231,6 +231,7 @@ class _HeightAndWeightWidgetState extends State<HeightAndWeightWidget> {
                           keyboardType: TextInputType.number,
                           cursorColor: FlutterFlowTheme.of(context).primaryText,
                           enableInteractiveSelection: false,
+                          onChanged: (_) => safeSetState(() {}),
                           validator: _model.boyTextTextControllerValidator
                               .asValidator(context),
                           inputFormatters: [_model.boyTextMask],
@@ -360,6 +361,7 @@ class _HeightAndWeightWidgetState extends State<HeightAndWeightWidget> {
                         keyboardType: TextInputType.number,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         enableInteractiveSelection: false,
+                        onChanged: (_) => safeSetState(() {}),
                         validator: _model.kiloTextTextControllerValidator
                             .asValidator(context),
                         inputFormatters: [
@@ -392,23 +394,50 @@ class _HeightAndWeightWidgetState extends State<HeightAndWeightWidget> {
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onTap: () async {
-                      if ((_model.boyTextTextController.text != '') &&
-                          (_model.kiloTextTextController.text != '')) {
-                        _model.showErrors = false;
-                        safeSetState(() {});
-                        FFAppState().TempUserHeight =
-                            double.parse(_model.boyTextTextController.text);
-                        FFAppState().TempUserWeight =
-                            double.parse(_model.kiloTextTextController.text);
-                        safeSetState(() {});
+                    onTap: ((_model.boyTextTextController.text != '') &&
+                            (_model.kiloTextTextController.text != ''))
+                        ? () async {
+                            
+                            double? height = double.tryParse(_model.boyTextTextController.text);
+                            double? weight = double.tryParse(_model.kiloTextTextController.text);
 
-                        context.pushNamed(GenderPageWidget.routeName);
-                      } else {
-                        _model.showErrors = true;
-                        safeSetState(() {});
-                      }
-                    },
+                            if (height == null || height < 50 || height > 300) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Lütfen geçerli bir boy giriniz (50-300 cm)',
+                                    style: TextStyle(
+                                        color: FlutterFlowTheme.of(context).primaryText),
+                                  ),
+                                  backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                ),
+                              );
+                              return;
+                            }
+
+                            if (weight == null || weight < 20 || weight > 300) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Lütfen geçerli bir kilo giriniz (20-300 kg)',
+                                    style: TextStyle(
+                                        color: FlutterFlowTheme.of(context).primaryText),
+                                  ),
+                                  backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                ),
+                              );
+                              return;
+                            }
+
+                            _model.showErrors = false;
+                            safeSetState(() {});
+                            FFAppState().TempUserHeight = height;
+                            FFAppState().TempUserWeight = weight;
+                            safeSetState(() {});
+
+                            context.pushNamed(GenderPageWidget.routeName);
+                          }
+                        : null,
                     child: Container(
                       width: double.infinity,
                       height: 50.0,

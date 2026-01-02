@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'edit_profile_model.dart';
 export 'edit_profile_model.dart';
+import '/components/avatar_secme_widget.dart';
 
 /// Rumuz Ayarlari
 class EditProfileWidget extends StatefulWidget {
@@ -32,6 +33,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditProfileModel());
+    if (currentUserPhoto != null && currentUserPhoto.isNotEmpty) {
+      FFAppState().secilenAvatar = currentUserPhoto;
+    } else {
+      if (currentUserDocument?.gender == 'Erkek') {
+        FFAppState().secilenAvatar = 'assets/images/erkek1.png';
+      } else {
+        FFAppState().secilenAvatar = 'assets/images/kz1.png';
+      }
+    }
 
     _model.userNameTxtTextController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userName, ''));
@@ -140,22 +150,31 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 FFAppState().secilenAvatar = currentUserPhoto;
                                 safeSetState(() {});
                               },
-                              child: Container(
-                                width: 110.0,
-                                height: 110.0,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  valueOrDefault<String>(
-                                    currentUserPhoto,
-                                    'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                                child: Container(
+                                  width: 110.0,
+                                  height: 110.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
                                   ),
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment(0.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) {
+                                      if (FFAppState()
+                                          .secilenAvatar
+                                          .startsWith('http')) {
+                                        return Image.network(
+                                          FFAppState().secilenAvatar,
+                                          fit: BoxFit.cover,
+                                        );
+                                      } else {
+                                        return Image.asset(
+                                          FFAppState().secilenAvatar,
+                                          fit: BoxFit.cover,
+                                        );
+                                      }
+                                    },
+                                  ),
                                 ),
-                              ),
                             ),
                           ),
                           InkWell(
@@ -164,8 +183,18 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                  SelectProfilePictureWidget.routeName);
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: AvatarSecmeWidget(),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
                             },
                             child: Container(
                               width: 50.0,
@@ -1420,13 +1449,49 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      double? height = double.tryParse(
+                          _model.userHeightTxtTextController.text);
+                      double? weight = double.tryParse(
+                          _model.userWeightTxtTextController.text);
+
+                      if (height == null || height < 50 || height > 300) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Lütfen geçerli bir boy giriniz (50-300 cm)',
+                              style: TextStyle(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryText),
+                            ),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
+                        );
+                        return;
+                      }
+
+                      if (weight == null || weight < 20 || weight > 300) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Lütfen geçerli bir kilo giriniz (20-300 kg)',
+                              style: TextStyle(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryText),
+                            ),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
+                        );
+                        return;
+                      }
+
                       await currentUserReference!.update(createUsersRecordData(
                         displayName: _model.displayNameTxtTextController.text,
                         userName: _model.userNameTxtTextController.text,
-                        userHeight: double.tryParse(
-                            _model.userHeightTxtTextController.text),
-                        userWeight: double.tryParse(
-                            _model.userWeightTxtTextController.text),
+                        userHeight: height,
+                        userWeight: weight,
+                        photoUrl: FFAppState().secilenAvatar,
                       ));
                       context.safePop();
                     },

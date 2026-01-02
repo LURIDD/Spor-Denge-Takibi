@@ -88,7 +88,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız1.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz1.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -118,7 +118,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız2.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz2.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -148,7 +148,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız3.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz3.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -178,7 +178,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız4.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz4.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -208,7 +208,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız5.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz5.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -238,7 +238,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        FFAppState().secilenAvatar = 'assets/images/kız6.png';
+                        FFAppState().secilenAvatar = 'assets/images/kz6.png';
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
@@ -333,6 +333,115 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
                       ),
                       child: Image.asset(
                         'assets/images/erkek3.png',
+                        fit: BoxFit.cover,
+                        alignment: Alignment(0.0, 0.0),
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      FFAppState().secilenAvatar = 'assets/images/erkek4.png';
+                      safeSetState(() {});
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 200.0,
+                      height: 200.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/erkek4.png',
+                        fit: BoxFit.cover,
+                        alignment: Alignment(0.0, 0.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      FFAppState().secilenAvatar = 'assets/images/erkek5.png';
+                      safeSetState(() {});
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 200.0,
+                      height: 200.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/erkek5.png',
+                        fit: BoxFit.cover,
+                        alignment: Alignment(0.0, 0.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      FFAppState().secilenAvatar = 'assets/images/erkek6.png';
+                      safeSetState(() {});
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 200.0,
+                      height: 200.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/erkek6.png',
+                        fit: BoxFit.cover,
+                        alignment: Alignment(0.0, 0.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      FFAppState().secilenAvatar = 'assets/images/erkek7.png';
+                      safeSetState(() {});
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 200.0,
+                      height: 200.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/erkek7.png',
                         fit: BoxFit.cover,
                         alignment: Alignment(0.0, 0.0),
                       ),

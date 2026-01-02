@@ -14,9 +14,11 @@ class HomePageTodayGoalsWidget extends StatefulWidget {
   const HomePageTodayGoalsWidget({
     super.key,
     required this.goalsList,
+    this.onGoalCompleted,
   });
 
   final List<UserGoalsRecord>? goalsList;
+  final VoidCallback? onGoalCompleted;
 
   @override
   State<HomePageTodayGoalsWidget> createState() =>
@@ -118,6 +120,7 @@ class _HomePageTodayGoalsWidgetState extends State<HomePageTodayGoalsWidget> {
                             'Key84z_${goalItemItem.reference.id}',
                           ),
                           goalRecord: goalItemItem,
+                          onGoalCompleted: widget.onGoalCompleted,
                         ),
                       );
                     },

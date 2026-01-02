@@ -542,132 +542,373 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Hedef Miktarı',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
+                  if (_model.selectedGoalType == 'Özel Hedef') ...[
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Özel Hedef Adı',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: 200.0,
-                                child: TextFormField(
-                                  controller:
-                                      _model.hedefMiktariTextTextController,
-                                  focusNode: _model.hedefMiktariTextFocusNode,
-                                  autofocus: false,
-                                  enabled: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                    hintText: 'Örn: 8',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .textFieldColor,
+                                  fontSize: 16.0,
+                                ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.customGoalNameTextController,
+                              focusNode: _model.customGoalNameFocusNode,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                hintText: 'Örn: Gitar Çalışması',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).textFieldColor,
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model
+                                  .customGoalNameTextControllerValidator
+                                  .asValidator(context),
+                            ),
+                          ),
+                          Text(
+                            'Ölçü Birimi',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  fontSize: 16.0,
+                                ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 12.0, 0.0),
+                              child: DropdownButtonFormField<String>(
+                                value: _model.selectedGoalUnitMsr,
+                                items: [
+                                  'Adet',
+                                  'Dakika',
+                                  'Saat',
+                                  'Litre',
+                                  'Sayfa',
+                                  'Km',
+                                  'Defa'
+                                ].map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (val) => safeSetState(
+                                    () => _model.selectedGoalUnitMsr = val),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 12.0),
+                                ),
+                                dropdownColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                hint: Text(
+                                  'Birim Seçiniz...',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         font: GoogleFonts.inter(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                        ),
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Hedef İkonu',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  fontSize: 16.0,
+                                ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Wrap(
+                                spacing: 12.0,
+                                runSpacing: 12.0,
+                                alignment: WrapAlignment.start,
+                                children: [
+                                  'assets/images/star.png',
+                                  'assets/images/water-drop.png',
+                                  'assets/images/fire.png',
+                                  'assets/images/training.png',
+                                  'assets/images/meditation.png',
+                                  'assets/images/stack-of-books.png',
+                                  'assets/images/sleeping.png',
+                                  'assets/images/running.png',
+                                  'assets/images/target.png',
+                                ].map((iconPath) {
+                                  final isSelected =
+                                      _model.selectedIconPath == iconPath;
+                                  return InkWell(
+                                    onTap: () {
+                                      safeSetState(() {
+                                        _model.selectedIconPath = iconPath;
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 44.0,
+                                      height: 44.0,
+                                      decoration: BoxDecoration(
+                                        color: isSelected
+                                            ? FlutterFlowTheme.of(context)
+                                                .primary
+                                                .withOpacity(0.2)
+                                            : Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: isSelected
+                                              ? FlutterFlowTheme.of(context)
+                                                  .primary
+                                              : Colors.transparent,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.all(6.0),
+                                      child: Image.asset(
+                                        iconPath,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ].divide(SizedBox(height: 10.0)),
+                      ),
+                    ),
+                  ],
+                  if (_model.selectedGoalType !=
+                      'Özel Hedef') // Only show amount label context if NOT custom or handle appropriately (usually amount is always needed)
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hedef Miktarı',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller:
+                                        _model.hedefMiktariTextTextController,
+                                    focusNode: _model.hedefMiktariTextFocusNode,
+                                    autofocus: false,
+                                    enabled: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      hintText: 'Örn: 8',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldColor,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -677,7 +918,53 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        letterSpacing: 0.0,
+                                    keyboardType: TextInputType.number,
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    enableInteractiveSelection: true,
+                                    validator: _model
+                                        .hedefMiktariTextTextControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9]'))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                valueOrDefault<String>(
+                                  () {
+                                    if (_model.selectedGoalType == 'Su İçme') {
+                                      return 'Litre';
+                                    } else if ((_model.selectedGoalType ==
+                                            'Egzersiz') ||
+                                        (_model.selectedGoalType ==
+                                            'Meditasyon')) {
+                                      return 'Dakika';
+                                    } else if (_model.selectedGoalType ==
+                                        'Kitap Okuma') {
+                                      return 'Sayfa';
+                                    } else if (_model.selectedGoalType ==
+                                        'Uyku') {
+                                      return 'Saat';
+                                    } else if (_model.selectedGoalType ==
+                                        'Vitamin/İlaç') {
+                                      return 'Adet';
+                                    } else if (_model.selectedGoalType ==
+                                        'Özel Hedef') {
+                                      return _model.selectedGoalUnitMsr ??
+                                          'Birim'; // Dynamic unit for custom goal
+                                    } else {
+                                      return 'Litre';
+                                    }
+                                  }(),
+                                  'Litre',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontWeight,
@@ -685,49 +972,7 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.number,
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  enableInteractiveSelection: true,
-                                  validator: _model
-                                      .hedefMiktariTextTextControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Text(
-                              valueOrDefault<String>(
-                                () {
-                                  if (_model.selectedGoalType == 'Su İçme') {
-                                    return 'Litre';
-                                  } else if ((_model.selectedGoalType ==
-                                          'Egzersiz') ||
-                                      (_model.selectedGoalType ==
-                                          'Meditasyon')) {
-                                    return 'Dakika';
-                                  } else if (_model.selectedGoalType ==
-                                      'Kitap Okuma') {
-                                    return 'Sayfa';
-                                  } else if (_model.selectedGoalType ==
-                                      'Uyku') {
-                                    return 'Saat';
-                                  } else if (_model.selectedGoalType ==
-                                      'Vitamin/İlaç') {
-                                    return 'Adet';
-                                  } else {
-                                    return 'Litre';
-                                  }
-                                }(),
-                                'Litre',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
+                                      letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontWeight,
@@ -735,20 +980,236 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
+                              ),
+                            ].divide(SizedBox(width: 20.0)),
+                          ),
+                        ].divide(SizedBox(height: 10.0)),
+                      ),
+                    )
+                  else
+                    // When Custom Goal is selected, we still need the Amount field, just maybe labeled differently or positioned.
+                    // Actually, let's keep the amount field ALWAYS visible, but the unit label logic (above) handles the text.
+                    // The conditional `if (_model.selectedGoalType != 'Özel Hedef')` above was a mistake in my thought process while typing.
+                    // I should keep the Amount field visible for ALL types.
+                    // Let me correct the ReplacementContent to just INSERT the Custom Fields BEFORE the Amount field, and keep Amount field for everyone.
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hedef Miktarı',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                            ),
-                          ].divide(SizedBox(width: 20.0)),
-                        ),
-                      ].divide(SizedBox(height: 10.0)),
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller:
+                                        _model.hedefMiktariTextTextController,
+                                    focusNode: _model.hedefMiktariTextFocusNode,
+                                    autofocus: false,
+                                    enabled: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      hintText: 'Örn: 8',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldColor,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                    keyboardType: TextInputType.number,
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    enableInteractiveSelection: true,
+                                    validator: _model
+                                        .hedefMiktariTextTextControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9]'))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                valueOrDefault<String>(
+                                  () {
+                                    if (_model.selectedGoalType == 'Su İçme') {
+                                      return 'Litre';
+                                    } else if ((_model.selectedGoalType ==
+                                            'Egzersiz') ||
+                                        (_model.selectedGoalType ==
+                                            'Meditasyon')) {
+                                      return 'Dakika';
+                                    } else if (_model.selectedGoalType ==
+                                        'Kitap Okuma') {
+                                      return 'Sayfa';
+                                    } else if (_model.selectedGoalType ==
+                                        'Uyku') {
+                                      return 'Saat';
+                                    } else if (_model.selectedGoalType ==
+                                        'Vitamin/İlaç') {
+                                      return 'Adet';
+                                    } else if (_model.selectedGoalType ==
+                                        'Özel Hedef') {
+                                      return _model.selectedGoalUnitMsr ??
+                                          'Birim';
+                                    } else {
+                                      return 'Litre';
+                                    }
+                                  }(),
+                                  'Litre',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 20.0)),
+                          ),
+                        ].divide(SizedBox(height: 10.0)),
+                      ),
                     ),
-                  ),
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
@@ -758,19 +1219,52 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
+                        // Custom Goal Validation
+                        bool isCustomGoal =
+                            _model.selectedGoalType == 'Özel Hedef';
+                        bool isCustomGoalValid = !isCustomGoal ||
+                            (_model.customGoalNameTextController.text
+                                    .isNotEmpty &&
+                                _model.selectedGoalUnitMsr != null &&
+                                _model.selectedIconPath != null);
+
                         if ((_model.selectedGoalType != null &&
                                 _model.selectedGoalType != '') &&
                             (_model.hedefMiktariTextTextController.text !=
-                                    '')) {
+                                '') &&
+                            isCustomGoalValid) {
+                          String finalGoalName = isCustomGoal
+                              ? _model.customGoalNameTextController.text
+                              : _model.selectedGoalType!;
+                          String? finalIconPath;
+
+                          if (isCustomGoal) {
+                            finalIconPath = _model.selectedIconPath;
+                          } else {
+                            // Map default icons for standard goals
+                            if (_model.selectedGoalType == 'Su İçme')
+                              finalIconPath = 'assets/images/water.png';
+                            else if (_model.selectedGoalType == 'Egzersiz')
+                              finalIconPath = 'assets/images/training.png';
+                            else if (_model.selectedGoalType == 'Meditasyon')
+                              finalIconPath = 'assets/images/meditation.png';
+                            else if (_model.selectedGoalType == 'Kitap Okuma')
+                              finalIconPath =
+                                  'assets/images/stack-of-books.png';
+                            else if (_model.selectedGoalType == 'Uyku')
+                              finalIconPath = 'assets/images/sleeping.png';
+                          }
+
                           await UserGoalsRecord.createDoc(currentUserReference!)
                               .set({
                             ...createUserGoalsRecordData(
-                              goalName: _model.selectedGoalType,
+                              goalName: finalGoalName,
                               goalAmount: double.tryParse(
                                   _model.hedefMiktariTextTextController.text),
                               ownerRef: currentUserReference,
                               isCompleted: false,
                               goalUnitMeasurement: _model.selectedGoalUnitMsr,
+                              iconPath: finalIconPath,
                             ),
                             ...mapToFirestore(
                               {
@@ -783,7 +1277,9 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Lütfen kategori seçin ve geçerli bir miktar girin!',
+                                isCustomGoal && _model.selectedIconPath == null
+                                    ? 'Lütfen bir ikon seçin!'
+                                    : 'Lütfen tüm alanları doldurun!',
                                 style: TextStyle(
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,

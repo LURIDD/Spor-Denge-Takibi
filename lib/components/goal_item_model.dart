@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class GoalItemModel extends FlutterFlowModel<GoalItemWidget> {
   ///  Local state fields for this component.
 
-  double offsetX = 0.0;
 
   @override
   void initState(BuildContext context) {}

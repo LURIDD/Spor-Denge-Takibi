@@ -73,12 +73,28 @@ class _SettingsProfileWidgetState extends State<SettingsProfileWidget> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: Image.network(
-                  valueOrDefault<String>(
-                    currentUserPhoto,
-                    'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                  ),
-                  fit: BoxFit.cover,
+                child: Builder(
+                  builder: (context) {
+                    if (currentUserPhoto.startsWith('http')) {
+                      return Image.network(
+                        valueOrDefault<String>(
+                          currentUserPhoto,
+                          'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                        ),
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return Image.asset(
+                        valueOrDefault<String>(
+                          currentUserPhoto,
+                          (currentUserDocument?.gender == 'Erkek')
+                              ? 'assets/images/erkek1.png'
+                              : 'assets/images/kz1.png',
+                        ),
+                        fit: BoxFit.cover,
+                      );
+                    }
+                  },
                 ),
               ),
             ),

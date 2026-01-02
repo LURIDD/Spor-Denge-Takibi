@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,6 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 409.98,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -85,17 +85,17 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                         FlutterFlowTheme.of(context).titleMedium.fontStyle,
                   ),
             ),
-            Expanded(
-              child: GridView(
-                padding: EdgeInsets.zero,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  childAspectRatio: 1.0,
-                ),
-                scrollDirection: Axis.vertical,
-                children: [
+            GridView(
+              padding: EdgeInsets.zero,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 1.0,
+              ),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
                   Container(
                     width: 100.0,
                     height: 100.0,
@@ -244,30 +244,41 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GradientText(
-                          '12.5k',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontStyle,
-                              ),
-                          colors: [Color(0xFFBB4AF2), Color(0xFFEA3DAD)],
-                          gradientDirection: GradientDirection.ltr,
-                          gradientType: GradientType.linear,
+                        FutureBuilder<int>(
+                          future: queryUsersRecordCount(
+                            queryBuilder: (usersRecord) {
+                              final now = DateTime.now();
+                              final startOfToday = DateTime(now.year, now.month, now.day);
+                              return usersRecord.where('last_active_time', isGreaterThanOrEqualTo: startOfToday);
+                            },
+                          ),
+                          builder: (context, snapshot) {
+                            return GradientText(
+                              snapshot.hasData ? snapshot.data.toString() : '...',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontStyle,
+                                  ),
+                              colors: [Color(0xFFBB4AF2), Color(0xFFEA3DAD)],
+                              gradientDirection: GradientDirection.ltr,
+                              gradientType: GradientType.linear,
+                            );
+                          }
                         ),
                         Text(
                           'Günlük Aktif',
@@ -310,30 +321,41 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GradientText(
-                          '156',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontStyle,
-                              ),
-                          colors: [Color(0xFF00C562), Color(0xFF00C172)],
-                          gradientDirection: GradientDirection.ltr,
-                          gradientType: GradientType.linear,
+                        FutureBuilder<int>(
+                          future: queryUsersRecordCount(
+                            queryBuilder: (usersRecord) {
+                              final now = DateTime.now();
+                              final startOfToday = DateTime(now.year, now.month, now.day);
+                              return usersRecord.where('created_time', isGreaterThanOrEqualTo: startOfToday);
+                            },
+                          ),
+                          builder: (context, snapshot) {
+                            return GradientText(
+                              snapshot.hasData ? snapshot.data.toString() : '...',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontStyle,
+                                  ),
+                              colors: [Color(0xFF00C562), Color(0xFF00C172)],
+                              gradientDirection: GradientDirection.ltr,
+                              gradientType: GradientType.linear,
+                            );
+                          }
                         ),
                         Text(
                           'Yeni Kayıt\n(Bugün)',
@@ -365,7 +387,6 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                   ),
                 ],
               ),
-            ),
           ].divide(SizedBox(height: 20.0)),
         ),
       ),

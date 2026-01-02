@@ -40,8 +40,8 @@ class _OnlineUserWidgetState extends State<OnlineUserWidget> {
   Widget build(BuildContext context) {
     return
         // toplam kullanicinin gosterildigi alan
-        FutureBuilder<List<UsersRecord>>(
-      future: queryUsersRecordOnce(),
+        FutureBuilder<int>(
+      future: queryUsersRecordCount(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -57,7 +57,7 @@ class _OnlineUserWidgetState extends State<OnlineUserWidget> {
             ),
           );
         }
-        List<UsersRecord> containerUsersRecordList = snapshot.data!;
+        int userCount = snapshot.data!;
 
         return Container(
           width: double.infinity,
@@ -126,7 +126,7 @@ class _OnlineUserWidgetState extends State<OnlineUserWidget> {
                                   ),
                         ),
                         Text(
-                          containerUsersRecordList.length.toString(),
+                          userCount.toString(),
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium
                               .override(

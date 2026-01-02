@@ -1,4 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '../../../../custom_code/actions/notification_service.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -74,86 +76,107 @@ class _SettingsAllUserOptionsWidgetState
             // Kullanicinin uygulama ici bildirimleri onayladıgi ya da onaylamadigi alan
             Padding(
               padding: EdgeInsets.all(4.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              child: StreamBuilder<UsersRecord>(
+                stream: UsersRecord.getDocument(currentUserReference!),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  final userRecord = snapshot.data!;
+                  return Row(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).customGrey,
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: FaIcon(
-                          FontAwesomeIcons.solidBell,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
-                      ),
-                      Column(
+                      Row(
                         mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Bildirimler',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                          Container(
+                            width: 50.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).customGrey,
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: FaIcon(
+                              FontAwesomeIcons.solidBell,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
                           ),
-                          Text(
-                            'Hatırlatma ve başarı bildirimleri',
-                            style: FlutterFlowTheme.of(context)
-                                .labelSmall
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelSmall
-                                      .fontStyle,
-                                ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Bildirimler',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                              ),
+                              Text(
+                                'Hatırlatma ve başarı bildirimleri',
+                                style: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontStyle,
+                                    ),
+                              ),
+                            ].divide(SizedBox(height: 5.0)),
                           ),
-                        ].divide(SizedBox(height: 5.0)),
+                        ].divide(SizedBox(width: 16.0)),
                       ),
-                    ].divide(SizedBox(width: 16.0)),
-                  ),
-                  Switch.adaptive(
-                    value: _model.switchValue1!,
-                    onChanged: (newValue) async {
-                      safeSetState(() => _model.switchValue1 = newValue);
-                    },
-                    activeColor: Colors.white,
-                    activeTrackColor: FlutterFlowTheme.of(context).primary,
-                    inactiveTrackColor: FlutterFlowTheme.of(context).trackColor,
-                    inactiveThumbColor: Colors.white,
-                  ),
-                ],
+                      Switch.adaptive(
+                        value: userRecord.isNotificationsEnabled,
+                        onChanged: (newValue) async {
+                          await userRecord.reference.update(
+                              createUsersRecordData(
+                                  isNotificationsEnabled: newValue));
+
+                          final notificationService = NotificationService();
+                          if (newValue) {
+                            await notificationService.scheduleAll();
+                            await notificationService.showInstantNotification(
+                                'Bildirimler Açık', 'Sizi güncel tutacağız!');
+                          } else {
+                            await notificationService.cancelAllNotifications();
+                          }
+                        },
+                        activeColor: Colors.white,
+                        activeTrackColor: FlutterFlowTheme.of(context).primary,
+                        inactiveTrackColor:
+                            FlutterFlowTheme.of(context).trackColor,
+                        inactiveThumbColor: Colors.white,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             Divider(

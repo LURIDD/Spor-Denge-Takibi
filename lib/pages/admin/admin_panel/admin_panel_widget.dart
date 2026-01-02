@@ -1,6 +1,4 @@
-import '/components/gamification/badges/fitness_hero/fitness_hero_widget.dart';
-import '/components/gamification/badges/meditation_guru/meditation_guru_widget.dart';
-import '/components/gamification/badges/water_sensei/water_sensei_widget.dart';
+import '/backend/backend.dart';
 import '/components/gamification/earned_badges/earned_badges_widget.dart';
 import '/components/gamification/total_streak/total_streak_widget.dart';
 import '/components/settings_items/admin_settings_items/add_new_badge/add_new_badge_widget.dart';
@@ -271,25 +269,139 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                           ].divide(SizedBox(height: 3.0)),
                         ),
 
-                        // Su tuketimini takip eden ve kullaniciya rehberlik eden 'Sensei' bilesenini yukluyoruz
-                        wrapWithModel(
-                          model: _model.waterSenseiModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: WaterSenseiWidget(),
-                        ),
-
-                        // Kullaiıcinin spor aktivitelerini ve fitness hedeflerini yoneten 'Fitness Hero' bileseni
-                        wrapWithModel(
-                          model: _model.fitnessHeroModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: FitnessHeroWidget(),
-                        ),
-
-                        // Kullanicinin meditasyon seanslarini ve zihinsel saglık verilerini yoneten 'Meditation Guru' bileseni
-                        wrapWithModel(
-                          model: _model.meditationGuruModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: MeditationGuruWidget(),
+                        StreamBuilder<List<BadgesRecord>>(
+                          stream: queryBadgesRecord(
+                            queryBuilder: (badgesRecord) => badgesRecord.orderBy('created_time', descending: true),
+                          ),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            List<BadgesRecord> badgeList = snapshot.data!;
+                            if (badgeList.isEmpty) {
+                              return Center(child: Text('Henüz rozet eklenmemiş.'));
+                            }
+                            return ListView.separated(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: badgeList.length,
+                              separatorBuilder: (_, __) => SizedBox(height: 16.0),
+                              itemBuilder: (context, index) {
+                                final badge = badgeList[index];
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4.0,
+                                        color: Color(0x33000000),
+                                        offset: Offset(0.0, 2.0),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(
+                                                color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
+                                                borderRadius: BorderRadius.circular(18.0),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: badge.image.isNotEmpty 
+                                                    ? Image.network(badge.image, fit: BoxFit.cover, errorBuilder: (_,__,___) => Icon(Icons.shield)) 
+                                                    : Icon(Icons.shield, color: FlutterFlowTheme.of(context).primary),
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      badge.name,
+                                                      style: FlutterFlowTheme.of(context).titleMedium,
+                                                    ),
+                                                    SizedBox(width: 8),
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme.of(context).customGrey,
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      child: Text(
+                                                        badge.criteria,
+                                                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                          font: GoogleFonts.inter(),
+                                                          color: FlutterFlowTheme.of(context).primary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  badge.description.isNotEmpty ? badge.description : 'Açıklama yok',
+                                                  style: FlutterFlowTheme.of(context).labelMedium,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.edit_outlined, color: FlutterFlowTheme.of(context).primary),
+                                              onPressed: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor: Colors.transparent,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                      child: AddBadgeForm(badgeToEdit: badge),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.delete_outline, color: FlutterFlowTheme.of(context).error),
+                                              onPressed: () async {
+                                                await badge.reference.delete();
+                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Rozet silindi')));
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ].divide(SizedBox(height: 16.0)),
                     ),

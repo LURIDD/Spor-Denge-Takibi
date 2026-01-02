@@ -202,10 +202,10 @@ class _HomePageDailyProgressBarWidgetState
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
 
             // Günlük adım hedefini düzenlemek için sağ üst köşeye yerleştirilmiş buton.

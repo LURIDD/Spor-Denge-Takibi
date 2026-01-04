@@ -1,8 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'weekly_summary_model.dart';
@@ -123,14 +124,15 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                 ),
               ],
             ),
-            FutureBuilder<List<UserActivitiesRecord>>(
-              future: queryUserActivitiesRecordOnce(
-                queryBuilder: (userActivitiesRecord) =>
-                    userActivitiesRecord.where(
-                  'lastSeriesDate',
-                  isGreaterThan: getCurrentTimestamp,
-                  isNull: (getCurrentTimestamp) == null,
-                ),
+            StreamBuilder<List<DailyStatsRecord>>(
+              stream: queryDailyStatsRecord(
+                parent: currentUserReference,
+                queryBuilder: (dailyStatsRecord) => dailyStatsRecord
+                    .where(
+                      'date',
+                      isGreaterThanOrEqualTo: functions.getSevenDaysAgo(),
+                    )
+                    .orderBy('date'),
                 limit: 7,
               ),
               builder: (context, snapshot) {
@@ -148,7 +150,7 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                     ),
                   );
                 }
-                List<UserActivitiesRecord> chartUserActivitiesRecordList =
+                List<DailyStatsRecord> chartDailyStatsRecordList =
                     snapshot.data!;
 
                 return Container(
@@ -157,10 +159,12 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                   child: FlutterFlowLineChart(
                     data: [
                       FFLineChartData(
-                        xData: List.generate(random_data.randomInteger(7, 7),
-                            (index) => random_data.randomDate()),
-                        yData: List.generate(random_data.randomInteger(7, 7),
-                            (index) => random_data.randomInteger(0, 10)),
+                        xData: chartDailyStatsRecordList
+                            .map((d) => d.date)
+                            .toList(),
+                        yData: chartDailyStatsRecordList
+                            .map((d) => d.score)
+                            .toList(),
                         settings: LineChartBarData(
                           color: Color(0xFF1D4ACE),
                           barWidth: 2.0,
@@ -169,15 +173,32 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                       )
                     ],
                     chartStylingInfo: ChartStylingInfo(
-                      backgroundColor:
-                          FlutterFlowTheme.of(context).primaryBackground,
+                      backgroundColor: FlutterFlowTheme.of(context).customGrey,
                       showBorder: false,
                     ),
                     axisBounds: AxisBounds(),
                     xAxisLabelInfo: AxisLabelInfo(
+                      title: valueOrDefault<String>(
+                        dateTimeFormat(
+                          "E",
+                          chartDailyStatsRecordList.firstOrNull?.date,
+                          locale: FFLocalizations.of(context).languageCode,
+                        ),
+                        '0',
+                      ),
+                      titleTextStyle: TextStyle(
+                        fontSize: 14.0,
+                      ),
                       reservedSize: 32.0,
                     ),
                     yAxisLabelInfo: AxisLabelInfo(
+                      title: valueOrDefault<String>(
+                        chartDailyStatsRecordList.firstOrNull?.score.toString(),
+                        '0',
+                      ),
+                      titleTextStyle: TextStyle(
+                        fontSize: 14.0,
+                      ),
                       reservedSize: 40.0,
                     ),
                   ),

@@ -3,10 +3,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'goal_item_model.dart';
 export 'goal_item_model.dart';
 
@@ -63,45 +63,26 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () async {
         if (widget.goalRecord!.isCompleted) {
           await widget.goalRecord!.reference.update(createUserGoalsRecordData(
-            isCompleted: false,
-          ));
-        } else {
-          await widget.goalRecord!.reference.update(createUserGoalsRecordData(
             isCompleted: true,
           ));
-          if ((FFAppState().KalanAdet == 0) &&
-              (dateTimeFormat(
-                    "d/M/y",
-                    currentUserDocument?.lastStreakUpdate,
-                    locale: FFLocalizations.of(context).languageCode,
-                  ) !=
-                  dateTimeFormat(
-                    "d/M/y",
-                    getCurrentTimestamp,
-                    locale: FFLocalizations.of(context).languageCode,
-                  ))) {
-            await currentUserReference!.update({
-              ...createUsersRecordData(
-                lastStreakUpdate: getCurrentTimestamp,
-              ),
-              ...mapToFirestore(
-                {
-                  'currentStreak': FieldValue.increment(1),
-                },
-              ),
-            });
-          } else {
-            await currentUserReference!.update(createUsersRecordData(
-              currentStreak: 0,
-              lastStreakUpdate: getCurrentTimestamp,
-            ));
-          }
+          await actions.updateDailyStats(
+            currentUserReference!,
+            20,
+            false,
+          );
+        } else {
+          await widget.goalRecord!.reference.update(createUserGoalsRecordData(
+            isCompleted: false,
+          ));
+          await actions.updateDailyStats(
+            currentUserReference!,
+            -20,
+            false,
+          );
         }
       },
       onHorizontalDragEnd: (details) async {

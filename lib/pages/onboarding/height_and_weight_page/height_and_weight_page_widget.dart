@@ -120,7 +120,7 @@ class _HeightAndWeightPageWidgetState extends State<HeightAndWeightPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Adım 3/4',
+                              'Adım 3/5',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

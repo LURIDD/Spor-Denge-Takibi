@@ -115,7 +115,7 @@ class _BirthDatePageWidgetState extends State<BirthDatePageWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Adım 2/4',
+                          'Adım 2/5',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.inter(

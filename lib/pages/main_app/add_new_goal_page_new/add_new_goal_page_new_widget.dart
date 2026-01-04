@@ -633,7 +633,7 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 12.0, 0.0),
                               child: DropdownButtonFormField<String>(
-                                value: _model.selectedGoalUnitMsr,
+                                initialValue: _model.selectedGoalUnitMsr,
                                 items: [
                                   'Adet',
                                   'Dakika',

@@ -164,8 +164,7 @@ class _AchievementBadgesWidgetState extends State<AchievementBadgesWidget> {
                                               padding: EdgeInsets.all(8.0),
                                               child: Builder(
                                                 builder: (context) {
-                                                  if (badge.image != null &&
-                                                      badge.image.isNotEmpty &&
+                                                  if (badge.image.isNotEmpty &&
                                                       badge.image
                                                           .startsWith('http')) {
                                                     return Image.network(

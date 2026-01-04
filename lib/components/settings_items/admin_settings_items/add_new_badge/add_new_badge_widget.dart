@@ -7,7 +7,6 @@ import 'add_new_badge_model.dart';
 export 'add_new_badge_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:typed_data';
 
 /// Yeni Rozet Ekle
 class AddNewBadgeWidget extends StatefulWidget {

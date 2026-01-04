@@ -113,7 +113,7 @@ class _GenderPageWidgetState extends State<GenderPageWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Adım 4/4',
+                          'Adım 4/5',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.inter(

@@ -33,7 +33,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditProfileModel());
-    if (currentUserPhoto != null && currentUserPhoto.isNotEmpty) {
+    if (currentUserPhoto.isNotEmpty) {
       FFAppState().secilenAvatar = currentUserPhoto;
     } else {
       if (currentUserDocument?.gender == 'Erkek') {

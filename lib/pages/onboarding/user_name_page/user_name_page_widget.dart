@@ -124,7 +124,7 @@ class _UserNamePageWidgetState extends State<UserNamePageWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Adım 1/4',
+                              'Adım 1/5',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

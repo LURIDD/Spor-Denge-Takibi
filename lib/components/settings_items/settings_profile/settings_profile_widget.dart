@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -127,11 +128,21 @@ class _SettingsProfileWidgetState extends State<SettingsProfileWidget> {
                           ),
                     ),
                   ),
-                  AuthUserStreamWidget(
-                    builder: (context) => Text(
-                      '${valueOrDefault(currentUserDocument?.userAge, 0).toString()} yaş  • ${valueOrDefault(currentUserDocument?.userWeight, 0.0).toString()} kilo  • ${valueOrDefault(currentUserDocument?.userHeight, 0.0).toString()} boy',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
+                  if (!(FirebaseAuth.instance.currentUser?.isAnonymous ??
+                      false))
+                    AuthUserStreamWidget(
+                      builder: (context) => Text(
+                        '${valueOrDefault(currentUserDocument?.userAge, 0).toString()} yaş  • ${valueOrDefault(currentUserDocument?.userWeight, 0.0).toString()} kilo  • ${valueOrDefault(currentUserDocument?.userHeight, 0.0).toString()} boy',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .fontWeight,
@@ -139,16 +150,8 @@ class _SettingsProfileWidgetState extends State<SettingsProfileWidget> {
                                   .bodyMedium
                                   .fontStyle,
                             ),
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                      ),
                     ),
-                  ),
                   AuthUserStreamWidget(
                     builder: (context) => Text(
                       '${valueOrDefault(currentUserDocument?.currentStreak, 0).toString()} Günlük Aktif Seri 🔥',

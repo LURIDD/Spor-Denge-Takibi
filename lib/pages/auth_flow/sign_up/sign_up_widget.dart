@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/backend/backend.dart';
 import '/index.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -789,8 +790,14 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                             return;
                                           }
 
+                                          await currentUserReference!
+                                              .update(createUsersRecordData(
+                                            userName: 'Misafir',
+                                            displayName: 'Misafir',
+                                          ));
+
                                           context.pushNamedAuth(
-                                              UserNamePageWidget.routeName,
+                                              StepGoalPageWidget.routeName,
                                               context.mounted);
                                         },
                                         text: 'Misafir olarak devam et',

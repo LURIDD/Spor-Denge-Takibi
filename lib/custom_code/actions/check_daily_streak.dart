@@ -36,8 +36,8 @@ Future checkDailyStreak() async {
 
   // 2. Verileri al
   // lastStreakUpdate: Serinin en son arttığı veya resetlendiği zaman
-  Timestamp? lastStreakUpdateTs =
-      data['lastStreakUpdate'] as Timestamp?; // Using correct field name from UsersRecord
+  Timestamp? lastStreakUpdateTs = data['lastStreakUpdate']
+      as Timestamp?; // Using correct field name from UsersRecord
   int currentStreak = data['currentStreak'] is int ? data['currentStreak'] : 0;
   int highestStreak = data['highestStreak'] is int ? data['highestStreak'] : 0;
 
@@ -56,14 +56,14 @@ Future checkDailyStreak() async {
     int diffDays = today.difference(lastUpdateDate).inDays;
     if (diffDays > 1) {
       currentStreak = 0;
-      // Resetlendiği için tarihi güncellememiz gerekir mi? 
+      // Resetlendiği için tarihi güncellememiz gerekir mi?
       // Evet, bugünkü durumu yansıtması için güncelleyebiliriz veya 0 olarak kalır.
       // Kullanıcı bugün hedefleriamlarsa tekrar 1 olacak.
       // Şimdilik DB'yi güncelleyelim.
-       await userRef.update({
+      await userRef.update({
         'currentStreak': 0,
         // lastStreakUpdate'i güncellemiyoruz, çünkü bugün henüz "başarılı" bir işlem olmadı.
-        // Ama "seri bozuldu" bilgisini işlemek için belki gerekebilir. 
+        // Ama "seri bozuldu" bilgisini işlemek için belki gerekebilir.
         // Ancak artış mantığı "fark == 0 ise artırma" dediği için, eğer 0'a çekip tarihi güncellemezsek,
         // ve bugün tamamlarsa, fark > 0 olacağı için artırır (1 olur). Bu doğru.
       });
@@ -76,7 +76,7 @@ Future checkDailyStreak() async {
       .collection('UserGoals') // Subcollection name from UserGoalsRecord
       .where('isCompleted', isEqualTo: false)
       .get();
-  
+
   // Hiç hedef yoksa (kullanıcı hedef eklememişse) ne olacak?
   // Kullanıcı hedef eklemiş mi kontrolü:
   final allGoalsQuery = await userRef.collection('UserGoals').limit(1).get();
@@ -85,7 +85,7 @@ Future checkDailyStreak() async {
   // Sadece hedefleri varsa ve tamamlanmamış hedefi yoksa artır
   if (hasGoals && uncompletedGoalsQuery.docs.isEmpty) {
     // Tüm hedefler tamamlanmış!
-    
+
     // Bugün zaten artırıldı mı?
     bool alreadyUpdatedToday = false;
     if (lastUpdateDate != null) {
@@ -97,7 +97,7 @@ Future checkDailyStreak() async {
     if (!alreadyUpdatedToday) {
       // Seriyi artır
       currentStreak += 1;
-      
+
       // Rekor kontrolü
       if (currentStreak > highestStreak) {
         highestStreak = currentStreak;
@@ -115,4 +115,10 @@ Future checkDailyStreak() async {
   await userRef.update({
     'last_active_time': now,
   });
+
+  // 6. Rozetleri Kontrol Et
+  await checkAndAwardBadges();
+
+  // 7. Günlük Aktivite İlerlemesini Güncelle (Haftalık Özet için)
+  await updateDailyActivityProgress();
 }

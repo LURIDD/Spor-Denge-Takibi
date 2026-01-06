@@ -30,3 +30,5 @@ export '/pages/main_app/select_profile_picture/select_profile_picture_widget.dar
     show SelectProfilePictureWidget;
 export '/pages/main_app/help_support/help_support_widget.dart'
     show HelpSupportWidget;
+export '/pages/onboarding/step_goal_page/step_goal_page_widget.dart'
+    show StepGoalPageWidget;

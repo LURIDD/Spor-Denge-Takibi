@@ -268,10 +268,10 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                             ),
                           ].divide(SizedBox(height: 3.0)),
                         ),
-
                         StreamBuilder<List<BadgesRecord>>(
                           stream: queryBadgesRecord(
-                            queryBuilder: (badgesRecord) => badgesRecord.orderBy('created_time', descending: true),
+                            queryBuilder: (badgesRecord) => badgesRecord
+                                .orderBy('created_time', descending: true),
                           ),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
@@ -289,20 +289,23 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                             }
                             List<BadgesRecord> badgeList = snapshot.data!;
                             if (badgeList.isEmpty) {
-                              return Center(child: Text('Henüz rozet eklenmemiş.'));
+                              return Center(
+                                  child: Text('Henüz rozet eklenmemiş.'));
                             }
                             return ListView.separated(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: badgeList.length,
-                              separatorBuilder: (_, __) => SizedBox(height: 16.0),
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(height: 16.0),
                               itemBuilder: (context, index) {
                                 final badge = badgeList[index];
                                 return Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 4.0,
@@ -315,82 +318,242 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                                   child: Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              decoration: BoxDecoration(
-                                                color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
-                                                borderRadius: BorderRadius.circular(18.0),
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Builder(
+                                                    builder: (context) {
+                                                      if (badge
+                                                          .image.isNotEmpty) {
+                                                        if (badge.image
+                                                            .startsWith(
+                                                                'http')) {
+                                                          return Image.network(
+                                                            badge.image,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (_,
+                                                                    __, ___) =>
+                                                                Icon(Icons
+                                                                    .shield),
+                                                          );
+                                                        } else if (badge.image
+                                                            .startsWith(
+                                                                'assets/')) {
+                                                          return Image.asset(
+                                                            badge.image,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (_,
+                                                                    __, ___) =>
+                                                                Icon(Icons
+                                                                    .shield),
+                                                          );
+                                                        }
+                                                      }
+
+                                                      // Smart Fallback logic
+                                                      String assetPath =
+                                                          'assets/images/star.png';
+                                                      if (badge.name
+                                                          .contains('Su')) {
+                                                        assetPath =
+                                                            'assets/images/water.png';
+                                                      } else if (badge.name
+                                                              .contains(
+                                                                  'Egzersiz') ||
+                                                          badge.name.contains(
+                                                              'Spor')) {
+                                                        assetPath =
+                                                            'assets/images/training.png';
+                                                      } else if (badge.name
+                                                          .contains(
+                                                              'Meditasyon')) {
+                                                        assetPath =
+                                                            'assets/images/meditation.png';
+                                                      } else if (badge.name
+                                                          .contains('Kitap')) {
+                                                        assetPath =
+                                                            'assets/images/stack-of-books.png';
+                                                      } else if (badge.name
+                                                          .contains('Uyku')) {
+                                                        assetPath =
+                                                            'assets/images/sleeping.png';
+                                                      }
+
+                                                      return Image.asset(
+                                                        assetPath,
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (_, __,
+                                                                ___) =>
+                                                            Icon(Icons.shield,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: badge.image.isNotEmpty 
-                                                    ? Image.network(badge.image, fit: BoxFit.cover, errorBuilder: (_,__,___) => Icon(Icons.shield)) 
-                                                    : Icon(Icons.shield, color: FlutterFlowTheme.of(context).primary),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
+                                              SizedBox(width: 10),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      badge.name,
-                                                      style: FlutterFlowTheme.of(context).titleMedium,
-                                                    ),
-                                                    SizedBox(width: 8),
-                                                    Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme.of(context).customGrey,
-                                                        borderRadius: BorderRadius.circular(12),
-                                                      ),
-                                                      child: Text(
-                                                        badge.criteria,
-                                                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                          font: GoogleFonts.inter(),
-                                                          color: FlutterFlowTheme.of(context).primary,
+                                                    Wrap(
+                                                      crossAxisAlignment:
+                                                          WrapCrossAlignment
+                                                              .center,
+                                                      spacing: 8.0,
+                                                      runSpacing: 4.0,
+                                                      children: [
+                                                        Text(
+                                                          badge.name,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleMedium,
                                                         ),
-                                                      ),
+                                                        Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal: 8,
+                                                                  vertical: 2),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .customGrey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                          ),
+                                                          child: Text(
+                                                            badge.criteria,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  font: GoogleFonts
+                                                                      .inter(),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      badge.description
+                                                              .isNotEmpty
+                                                          ? badge.description
+                                                          : 'Açıklama yok',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium,
                                                     ),
                                                   ],
                                                 ),
-                                                Text(
-                                                  badge.description.isNotEmpty ? badge.description : 'Açıklama yok',
-                                                  style: FlutterFlowTheme.of(context).labelMedium,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
+                                        SizedBox(width: 8),
                                         Row(
                                           children: [
                                             IconButton(
-                                              icon: Icon(Icons.edit_outlined, color: FlutterFlowTheme.of(context).primary),
+                                              icon: Icon(Icons.edit_outlined,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary),
                                               onPressed: () async {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
-                                                  backgroundColor: Colors.transparent,
+                                                  backgroundColor:
+                                                      Colors.transparent,
                                                   context: context,
                                                   builder: (context) {
                                                     return Padding(
-                                                      padding: MediaQuery.viewInsetsOf(context),
-                                                      child: AddBadgeForm(badgeToEdit: badge),
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child: AddBadgeForm(
+                                                          badgeToEdit: badge),
                                                     );
                                                   },
                                                 );
                                               },
                                             ),
                                             IconButton(
-                                              icon: Icon(Icons.delete_outline, color: FlutterFlowTheme.of(context).error),
+                                              icon: Icon(Icons.delete_outline,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error),
                                               onPressed: () async {
-                                                await badge.reference.delete();
-                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Rozet silindi')));
+                                                final confirm =
+                                                    await showDialog<bool>(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Rozeti Sil'),
+                                                      content: const Text(
+                                                          'Bu rozeti silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: const Text(
+                                                              'İptal'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child: Text(
+                                                            'Sil',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+
+                                                if (confirm == true) {
+                                                  await badge.reference
+                                                      .delete();
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'Rozet silindi')));
+                                                }
                                               },
                                             ),
                                           ],

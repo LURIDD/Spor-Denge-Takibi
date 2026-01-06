@@ -1,4 +1,8 @@
+import 'dart:ui';
+import '/index.dart';
 import '/backend/backend.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/stats_charts/achievement_badges/achievement_badges_widget.dart';
 import '/components/stats_charts/streak_history/streak_history_widget.dart';
@@ -60,46 +64,49 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
           top: true,
           child:
               // istatistikerlin gosterildigi alan
+              Stack(
+            children: [
               Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'İstatistikler',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontStyle,
-                              ),
-                        ),
-                        Text(
-                          'İlerlemenizi takip edin 📊',
-                          style:
-                              FlutterFlowTheme.of(context).labelLarge.override(
+                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'İstatistikler',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                            Text(
+                              'İlerlemenizi takip edin 📊',
+                              style: FlutterFlowTheme.of(context)
+                                  .labelLarge
+                                  .override(
                                     font: GoogleFonts.inter(
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .labelLarge
@@ -116,87 +123,153 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                                         .labelLarge
                                         .fontStyle,
                                   ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-
-                  // Haftalik ozet kartini sagdan ve soldan bosluk birakacak sekilde paketliyoruz
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-                    child: FutureBuilder<List<UserActivitiesRecord>>(
-                      future: queryUserActivitiesRecordOnce(
-                        parent: currentUserReference,
-                        queryBuilder: (userActivitiesRecord) =>
-                            userActivitiesRecord,
-                        singleRecord: true,
                       ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
+
+                      // Haftalik ozet kartini sagdan ve soldan bosluk birakacak sekilde paketliyoruz
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: FutureBuilder<List<UserActivitiesRecord>>(
+                          future: queryUserActivitiesRecordOnce(
+                            parent: currentUserReference,
+                            queryBuilder: (userActivitiesRecord) =>
+                                userActivitiesRecord,
+                            singleRecord: true,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+
+                            // Default to empty list if no data or error
+                            List<double> weeklyValues = [];
+                            int consistency = 0;
+
+                            if (snapshot.hasData &&
+                                snapshot.data != null &&
+                                snapshot.data!.isNotEmpty) {
+                              final userActivity = snapshot.data!.first;
+                              weeklyValues = userActivity.dailyValues;
+                              consistency = userActivity.consistency;
+                            }
+
+                            return wrapWithModel(
+                              model: _model.weeklySummaryModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: WeeklySummaryWidget(
+                                weeklyValues: weeklyValues,
+                                consistency: consistency,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // Seri (Streak) gecmisini gosteren tabloyu sayfa duzenine yerlestiriyoruz
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: wrapWithModel(
+                          model: _model.streakHistoryModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: StreakHistoryWidget(),
+                        ),
+                      ),
+
+                      // Kullanicinin kazandigi basari rozetlerini gosteren bolumu sayfaya ekliyoruz
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: wrapWithModel(
+                          model: _model.achievementBadgesModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: AchievementBadgesWidget(),
+                        ),
+                      ),
+                    ].divide(SizedBox(height: 16.0)),
+                  ),
+                ),
+              ),
+              if (FirebaseAuth.instance.currentUser?.isAnonymous ?? false)
+                Positioned.fill(
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 6.0,
+                        sigmaY: 6.0,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Görüntülemek için Giriş Yapınız',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineSmall
+                                  .override(
+                                    font: GoogleFonts.interTight(),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  context.pushNamed(SignInWidget.routeName);
+                                },
+                                text: 'Giriş Yap',
+                                options: FFButtonOptions(
+                                  width: 150.0,
+                                  height: 44.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        font: GoogleFonts.interTight(),
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 2.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                             ),
-                          );
-                        }
-
-                        // Default to empty list if no data or error
-                        List<double> weeklyValues = [];
-                        int consistency = 0;
-
-                        if (snapshot.hasData &&
-                            snapshot.data != null &&
-                            snapshot.data!.isNotEmpty) {
-                          final userActivity = snapshot.data!.first;
-                          weeklyValues = userActivity.dailyValues;
-                          consistency = userActivity.consistency;
-                        }
-
-                        return wrapWithModel(
-                          model: _model.weeklySummaryModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: WeeklySummaryWidget(
-                            weeklyValues: weeklyValues,
-                            consistency: consistency,
-                          ),
-                        );
-                      },
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-
-                  // Seri (Streak) gecmisini gosteren tabloyu sayfa duzenine yerlestiriyoruz
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-                    child: wrapWithModel(
-                      model: _model.streakHistoryModel,
-                      updateCallback: () => safeSetState(() {}),
-                      child: StreakHistoryWidget(),
-                    ),
-                  ),
-
-                  // Kullanicinin kazandigi basari rozetlerini gosteren bolumu sayfaya ekliyoruz
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-                    child: wrapWithModel(
-                      model: _model.achievementBadgesModel,
-                      updateCallback: () => safeSetState(() {}),
-                      child: AchievementBadgesWidget(),
-                    ),
-                  ),
-                ].divide(SizedBox(height: 16.0)),
-              ),
-            ),
+                ),
+            ],
           ),
         ),
       ),

@@ -42,7 +42,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.checkDailyStreak();
-      await actions.resetDailyGoals();
     });
   }
 

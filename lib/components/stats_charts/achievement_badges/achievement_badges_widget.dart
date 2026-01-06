@@ -164,87 +164,66 @@ class _AchievementBadgesWidgetState extends State<AchievementBadgesWidget> {
                                               padding: EdgeInsets.all(8.0),
                                               child: Builder(
                                                 builder: (context) {
-                                                  if (badge.image.isNotEmpty &&
-                                                      badge.image
-                                                          .startsWith('http')) {
-                                                    return Image.network(
-                                                      badge.image,
-                                                      width: 36.0,
-                                                      height: 36.0,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        // Fallback logic inside errorBuilder if network fails
-                                                        String assetPath =
-                                                            'assets/images/star.png';
-                                                        if (badge.name
-                                                            .contains('Su'))
-                                                          assetPath =
-                                                              'assets/images/water.png';
-                                                        else if (badge.name
-                                                                .contains(
-                                                                    'Egzersiz') ||
-                                                            badge.name.contains(
-                                                                'Spor'))
-                                                          assetPath =
-                                                              'assets/images/training.png';
-                                                        else if (badge.name
-                                                            .contains(
-                                                                'Meditasyon'))
-                                                          assetPath =
-                                                              'assets/images/meditation.png';
-                                                        else if (badge.name
-                                                            .contains('Kitap'))
-                                                          assetPath =
-                                                              'assets/images/stack-of-books.png';
-                                                        else if (badge.name
-                                                            .contains('Uyku'))
-                                                          assetPath =
-                                                              'assets/images/sleeping.png';
-
-                                                        return Image.asset(
-                                                          assetPath,
-                                                          width: 36.0,
-                                                          height: 36.0,
-                                                          fit: BoxFit.cover,
-                                                        );
-                                                      },
-                                                    );
-                                                  } else {
-                                                    // Logic for when there is no URL or it's a local path
-                                                    String assetPath =
-                                                        'assets/images/star.png';
-                                                    if (badge.name
-                                                        .contains('Su'))
-                                                      assetPath =
-                                                          'assets/images/water.png';
-                                                    else if (badge.name
-                                                            .contains(
-                                                                'Egzersiz') ||
-                                                        badge.name
-                                                            .contains('Spor'))
-                                                      assetPath =
-                                                          'assets/images/training.png';
-                                                    else if (badge.name
-                                                        .contains('Meditasyon'))
-                                                      assetPath =
-                                                          'assets/images/meditation.png';
-                                                    else if (badge.name
-                                                        .contains('Kitap'))
-                                                      assetPath =
-                                                          'assets/images/stack-of-books.png';
-                                                    else if (badge.name
-                                                        .contains('Uyku'))
-                                                      assetPath =
-                                                          'assets/images/sleeping.png';
-
-                                                    return Image.asset(
-                                                      assetPath,
-                                                      width: 36.0,
-                                                      height: 36.0,
-                                                      fit: BoxFit.cover,
-                                                    );
+                                                  if (badge.image.isNotEmpty) {
+                                                    if (badge.image
+                                                        .startsWith('http')) {
+                                                      return Image.network(
+                                                        badge.image,
+                                                        width: 36.0,
+                                                        height: 36.0,
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context,
+                                                                error,
+                                                                stackTrace) =>
+                                                            Icon(Icons.shield),
+                                                      );
+                                                    } else if (badge.image
+                                                        .startsWith(
+                                                            'assets/')) {
+                                                      return Image.asset(
+                                                        badge.image,
+                                                        width: 36.0,
+                                                        height: 36.0,
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context,
+                                                                error,
+                                                                stackTrace) =>
+                                                            Icon(Icons.shield),
+                                                      );
+                                                    }
                                                   }
+
+                                                  // Fallback logic
+                                                  String assetPath =
+                                                      'assets/images/star.png';
+                                                  if (badge.name.contains('Su'))
+                                                    assetPath =
+                                                        'assets/images/water.png';
+                                                  else if (badge.name.contains(
+                                                          'Egzersiz') ||
+                                                      badge.name
+                                                          .contains('Spor'))
+                                                    assetPath =
+                                                        'assets/images/training.png';
+                                                  else if (badge.name
+                                                      .contains('Meditasyon'))
+                                                    assetPath =
+                                                        'assets/images/meditation.png';
+                                                  else if (badge.name
+                                                      .contains('Kitap'))
+                                                    assetPath =
+                                                        'assets/images/stack-of-books.png';
+                                                  else if (badge.name
+                                                      .contains('Uyku'))
+                                                    assetPath =
+                                                        'assets/images/sleeping.png';
+
+                                                  return Image.asset(
+                                                    assetPath,
+                                                    width: 36.0,
+                                                    height: 36.0,
+                                                    fit: BoxFit.cover,
+                                                  );
                                                 },
                                               ),
                                             ),

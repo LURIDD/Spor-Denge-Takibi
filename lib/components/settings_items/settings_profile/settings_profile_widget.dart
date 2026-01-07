@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -77,8 +78,8 @@ class _SettingsProfileWidgetState extends State<SettingsProfileWidget> {
                 child: Builder(
                   builder: (context) {
                     if (currentUserPhoto.startsWith('http')) {
-                      return Image.network(
-                        valueOrDefault<String>(
+                      return CachedNetworkImage(
+                        imageUrl: valueOrDefault<String>(
                           currentUserPhoto,
                           'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
                         ),

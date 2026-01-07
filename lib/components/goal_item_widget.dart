@@ -114,11 +114,52 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
             ));
           } else {
             await HapticFeedback.mediumImpact();
+
+            // --- GOAL STREAK LOGIC ---
+            final now = DateTime.now();
+            final today = DateTime(now.year, now.month, now.day);
+
+            int currentStreak = widget.goalRecord!.currentStreak; // default 0
+            int longestStreak = widget.goalRecord!.longestStreak; // default 0
+            DateTime? lastDate = widget.goalRecord!.lastCompletedDate;
+            DateTime? lastDateMidnight;
+            if (lastDate != null) {
+              lastDateMidnight =
+                  DateTime(lastDate.year, lastDate.month, lastDate.day);
+            }
+
+            // Check difference in days
+            if (lastDateMidnight != null) {
+              final diff = today.difference(lastDateMidnight).inDays;
+              if (diff == 1) {
+                // Consecutive day
+                currentStreak += 1;
+              } else if (diff > 1) {
+                // Broken streak
+                currentStreak = 1;
+              } else {
+                // Same day (diff == 0), don't increment, just keep
+                // Logic: usually shouldn't happen if isCompleted was false, unless unchecked today and rechecked
+                if (currentStreak == 0) currentStreak = 1;
+              }
+            } else {
+              // First time
+              currentStreak = 1;
+            }
+
+            // Update Longest
+            if (currentStreak > longestStreak) {
+              longestStreak = currentStreak;
+            }
+
             if (widget.onGoalCompleted != null) {
               widget.onGoalCompleted!();
             }
             await widget.goalRecord!.reference.update(createUserGoalsRecordData(
               isCompleted: true,
+              currentStreak: currentStreak,
+              longestStreak: longestStreak,
+              lastCompletedDate: now,
             ));
           }
           await actions.checkDailyStreak();

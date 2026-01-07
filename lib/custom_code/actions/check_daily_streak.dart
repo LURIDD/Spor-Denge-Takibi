@@ -29,58 +29,52 @@ Future checkDailyStreak() async {
   final userRef = currentUserReference;
   if (userRef == null) return;
 
-  final userDoc = await userRef.get();
-  if (!userDoc.exists) return;
-
-  final data = userDoc.data() as Map<String, dynamic>;
+  // OPTİMİZASYON: Veritabanından tekrar çekmek yerine yerel önbellekteki veriyi kullan
+  if (currentUserDocument == null) return;
 
   // 2. Verileri al
-  // lastStreakUpdate: Serinin en son arttığı veya resetlendiği zaman
-  Timestamp? lastStreakUpdateTs = data['lastStreakUpdate']
-      as Timestamp?; // Using correct field name from UsersRecord
-  int currentStreak = data['currentStreak'] is int ? data['currentStreak'] : 0;
-  int highestStreak = data['highestStreak'] is int ? data['highestStreak'] : 0;
+  int currentStreak = currentUserDocument?.currentStreak ?? 0;
+  int highestStreak = currentUserDocument?.highestStreak ?? 0;
 
   DateTime now = DateTime.now();
   DateTime today = DateTime(now.year, now.month, now.day);
-  DateTime? lastUpdateDate;
-  if (lastStreakUpdateTs != null) {
-    DateTime d = lastStreakUpdateTs.toDate();
-    lastUpdateDate = DateTime(d.year, d.month, d.day);
-  }
 
-  // 3. SIFIRLAMA KONTROLÜ (Reset Logic)
-  // Eğer son güncelleme bugünden önceki günden daha eskiyse (dün değil, evvelsi gün veya daha önce),
-  // seri bozulmuş demektir.
+  // lastStreakUpdate zaten DateTime? olarak geliyor (UsersRecord getter'ı sayesinde)
+  DateTime? lastUpdateDate = currentUserDocument?.lastStreakUpdate;
+
+  // 3. SIFIRLAMA KONTROLÜ (Reset Mantığı)
   if (lastUpdateDate != null) {
+    // Sadece yıl/ay/gün karşılaştırması için temizle
+    DateTime d = lastUpdateDate;
+    lastUpdateDate = DateTime(d.year, d.month, d.day);
+
     int diffDays = today.difference(lastUpdateDate).inDays;
     if (diffDays > 1) {
       currentStreak = 0;
-      // Resetlendiği için tarihi güncellememiz gerekir mi?
-      // Evet, bugünkü durumu yansıtması için güncelleyebiliriz veya 0 olarak kalır.
-      // Kullanıcı bugün hedefleriamlarsa tekrar 1 olacak.
-      // Şimdilik DB'yi güncelleyelim.
       await userRef.update({
         'currentStreak': 0,
-        // lastStreakUpdate'i güncellemiyoruz, çünkü bugün henüz "başarılı" bir işlem olmadı.
-        // Ama "seri bozuldu" bilgisini işlemek için belki gerekebilir.
-        // Ancak artış mantığı "fark == 0 ise artırma" dediği için, eğer 0'a çekip tarihi güncellemezsek,
-        // ve bugün tamamlarsa, fark > 0 olacağı için artırır (1 olur). Bu doğru.
+        'streak': 0,
+        'current_streak': 0,
       });
     }
   }
 
-  // 4. ARTIRMA KONTROLÜ (Increment Logic)
+  // 4. ARTIRMA KONTROLÜ (Increment Mantığı)
   // Kullanıcının tamamlanmamış hedeflerini sorgula
   final uncompletedGoalsQuery = await userRef
-      .collection('UserGoals') // Subcollection name from UserGoalsRecord
+      .collection('UserGoals')
       .where('isCompleted', isEqualTo: false)
       .get();
 
-  // Hiç hedef yoksa (kullanıcı hedef eklememişse) ne olacak?
-  // Kullanıcı hedef eklemiş mi kontrolü:
-  final allGoalsQuery = await userRef.collection('UserGoals').limit(1).get();
-  bool hasGoals = allGoalsQuery.docs.isNotEmpty;
+  // OPTİMİZASYON: Kullanıcının hedefi olup olmadığını SADECE tamamlanmamış hedef bulamazsak kontrol et.
+  bool hasGoals = true;
+  if (uncompletedGoalsQuery.docs.isNotEmpty) {
+    // Tamamlanmamış hedefler var, bu yüzden seriyi artıramayız. hasGoals kontrolü burada önemsiz.
+  } else {
+    // Eğer tamamlanmamış hedef yoksa, HİÇ hedefi var mı diye kontrol et.
+    final allGoalsQuery = await userRef.collection('UserGoals').limit(1).get();
+    hasGoals = allGoalsQuery.docs.isNotEmpty;
+  }
 
   // Sadece hedefleri varsa ve tamamlanmamış hedefi yoksa artır
   if (hasGoals && uncompletedGoalsQuery.docs.isEmpty) {
@@ -105,6 +99,8 @@ Future checkDailyStreak() async {
 
       await userRef.update({
         'currentStreak': currentStreak,
+        'streak': currentStreak,
+        'current_streak': currentStreak,
         'highestStreak': highestStreak,
         'lastStreakUpdate': now, // Serinin arttığı zaman
       });

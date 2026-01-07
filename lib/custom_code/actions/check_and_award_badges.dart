@@ -13,11 +13,11 @@ import '/auth/firebase_auth/auth_util.dart';
 import 'package:collection/collection.dart';
 
 Future checkAndAwardBadges() async {
-  // 1. Get current user reference
+  // 1. Mevcut kullanıcı referansını al
   final userRef = currentUserReference;
   if (userRef == null) return;
 
-  // 2. Fetch all defined badges
+  // 2. Tanımlı tüm rozetleri getir
   final badgesQuery =
       await FirebaseFirestore.instance.collection('badges').get();
   final badges =
@@ -25,88 +25,112 @@ Future checkAndAwardBadges() async {
 
   if (badges.isEmpty) return;
 
-  // 3. Fetch user's existing badges to prevent duplicate awarding
+  // 3. Kullanıcının zaten kazandığı rozetleri getir (Çift kazanımı önlemek için)
   final userBadgesQuery = await userRef.collection('UserBadges').get();
   final existingBadgeRefs = userBadgesQuery.docs
       .map((d) => UserBadgesRecord.fromSnapshot(d).badgeRef)
       .toSet();
 
-  // 4. Fetch user's goals to check criteria
-  // We need to check all goals to find relevant ones (Su, Egzersiz, etc.)
+  // 4. Kriterleri kontrol etmek için kullanıcının hedeflerini getir
+  // İlgili hedefleri bulmak için tüm hedefleri kontrol etmeliyiz (Su, Egzersiz vb.)
+  // OPTİMİZASYON: Tüm hedefleri çekmek yerine spesifik sorgular da yapılabilir ancak şu anlık genel çekim daha güvenli.
   final userGoalsQuery = await userRef.collection('UserGoals').get();
   final userGoals =
       userGoalsQuery.docs.map((d) => UserGoalsRecord.fromSnapshot(d)).toList();
 
-  // 5. Fetch current user document to get Global Streak
-  final userDocData = await userRef.get();
-  final userDoc = UsersRecord.fromSnapshot(userDocData);
+  // 5. Önbellekteki kullanıcı verisini kullan (Optimizasyon)
+  // currentUserDocument küresel olarak verimli bir şekilde zaten elimizde mevcut
+  UsersRecord? userDoc = currentUserDocument;
+
+  if (userDoc == null) {
+    // Sadece önbellek boşsa (nadir durum) veritabanından çek
+    final userDocData = await userRef.get();
+    userDoc = UsersRecord.fromSnapshot(userDocData);
+  }
 
   for (final badge in badges) {
     if (existingBadgeRefs.contains(badge.reference)) {
-      continue; // Already earned
+      continue; // Zaten kazanılmış
     }
 
     bool requirementsMet = false;
-    // targetDays determination
-    int targetDays = 15; // Default fallback
+    // Hedef gün sayısı belirleme
+    int targetDays = 15; // Varsayılan geri dönüş değeri
     String name = badge.name.toLowerCase();
     String criteria = badge.criteria.toLowerCase();
 
-    // Try to extract number from criteria
+    // Kriter metninden sayıyı çıkarmayı dene
     final RegExp numRegExp = RegExp(r'(\d+)');
     final match = numRegExp.firstMatch(criteria);
     if (match != null) {
       targetDays = int.tryParse(match.group(1)!) ?? 15;
     }
-    // Prefer explicitly set target if available and positive
+    // Eğer açıkça belirtilmiş bir hedef varsa ve pozitifse onu tercih et
     if (badge.target > 0) {
       targetDays = badge.target;
     }
 
-    // --- LOGIC 1: GLOBAL STREAK CHECK ---
-    // If badge is about "Seri" or "Streak"
+    // --- MANTIK 1: KÜRESEL SERİ (STREAK) KONTROLÜ ---
+    // Eğer rozet "Seri" veya "Streak" ile ilgiliyse
     if (name.contains('seri') ||
         name.contains('streak') ||
         criteria.contains('seri') ||
         criteria.contains('streak')) {
-      // Check Global User Streak
-      // Use currentStreak, fallback to streak just in case
-      final currentStreak =
-          userDoc.currentStreak > 0 ? userDoc.currentStreak : userDoc.streak;
+      // Küresel Kullanıcı Serisini Kontrol Et - KALICILIK DÜZELTMESİ
+      // Varsa highestStreak (en yüksek seri) kullan, yoksa currentStreak veya streak alanlarının maksimumunu al
+      int bestStreak = userDoc.highestStreak;
+      // Geri Dönüş/Güvenlik: highestStreak daha önce doğru güncellenmemişse mevcut alanları da kontrol et
+      if (userDoc.currentStreak > bestStreak)
+        bestStreak = userDoc.currentStreak;
+      if (userDoc.streak > bestStreak) bestStreak = userDoc.streak;
 
-      if (currentStreak >= targetDays) {
+      if (bestStreak >= targetDays) {
         requirementsMet = true;
       }
     }
-    // --- LOGIC 2: DYNAMIC GOAL MATCHING ---
-    // Match Badge Name with User Goal Name
+    // --- MANTIK 2: DİNAMİK HEDEF EŞLEŞTİRME ---
+    // Rozet İsmini Kullanıcı Hedef İsmi ile Eşleştir
     else {
-      // Find matching goal
+      // Eşleşen hedefi bul
       final matchingGoal = userGoals.firstWhereOrNull((goal) {
         final goalName = goal.goalName.toLowerCase();
-        // Check unidirectional containment (simplified matching)
+
+        // Sağlamlık için Katı Anahtar Kelime Eşleştirmesi
+        // ("Su" kelimesi kısa olduğu için yanlış eşleşmeleri önlemek adına özel kontrol)
+        if (name.contains('su') && goalName.contains('su')) return true;
+        if ((name.contains('egzersiz') || name.contains('spor')) &&
+            (goalName.contains('egzersiz') || goalName.contains('spor')))
+          return true;
+        if (name.contains('kitap') && goalName.contains('kitap')) return true;
+        if (name.contains('meditasyon') && goalName.contains('meditasyon'))
+          return true;
+        if (name.contains('uyku') && goalName.contains('uyku')) return true;
+
+        // Genel içerik kontrolüne geri dönüş
         return goalName.contains(name) || name.contains(goalName);
       });
 
       if (matchingGoal != null) {
-        // If we matched a goal, check its streak
-        // (Assuming most badges are about consistency/streak)
-        if (matchingGoal.longestStreak >= targetDays) {
+        // KALICILIK DÜZELTMESİ: longestStreak (en iyi kayıt) kontrol et
+        int bestGoalStreak = matchingGoal.longestStreak;
+        // Güvenlik kontrolü: mevcut seri daha yüksekse onu kullan
+        if (matchingGoal.currentStreak > bestGoalStreak) {
+          bestGoalStreak = matchingGoal.currentStreak;
+        }
+
+        if (bestGoalStreak >= targetDays) {
           requirementsMet = true;
         }
       }
-      // Keep legacy fallback for very specific naming if strictly needed,
-      // but dynamic matching should cover "Su" and "Egzersiz" cases too.
-      // (e.g. badge 'Su Ustası' matches goal 'Su İçme')
     }
 
-    // Award Badge if met
+    // Eğer şartlar sağlandıysa Rozeti Ver
     if (requirementsMet) {
       final newBadgeData = createUserBadgesRecordData(
         badgeRef: badge.reference,
-        status: 'unlocked',
+        status: 'unlocked', // Kilit açıldı
         earnedTime: getCurrentTimestamp,
-        currentProgress: targetDays, // Completed
+        currentProgress: targetDays, // Tamamlandı
       );
 
       await userRef.collection('UserBadges').add(newBadgeData);

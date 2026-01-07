@@ -70,7 +70,7 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
                   ),
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: Icon(
-                    FFIcons.kawardEmpty,
+                    Icons.flag_rounded,
                     color: Color(0xFF9810FA),
                     size: 24.0,
                   ),
@@ -81,7 +81,7 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kazanılan Rozet',
+                      'Toplam Hedef',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             font: GoogleFonts.inter(
                               fontWeight: FlutterFlowTheme.of(context)
@@ -102,8 +102,7 @@ class _EarnedBadgesWidgetState extends State<EarnedBadgesWidget> {
                     ),
                     FutureBuilder<AggregateQuerySnapshot>(
                       future: FirebaseFirestore.instance
-                          .collectionGroup('user_badges')
-                          .where('status', isEqualTo: 'unlocked')
+                          .collectionGroup('UserGoals')
                           .count()
                           .get(),
                       builder: (context, snapshot) {

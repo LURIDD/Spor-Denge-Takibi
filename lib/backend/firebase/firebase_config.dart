@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 Future initFirebase() async {
@@ -14,5 +15,7 @@ Future initFirebase() async {
             measurementId: "G-X7Y7HQFVCB"));
   } else {
     await Firebase.initializeApp();
+    FirebaseFirestore.instance.settings =
+        const Settings(persistenceEnabled: true);
   }
 }

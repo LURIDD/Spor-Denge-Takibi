@@ -687,6 +687,94 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                           ),
                         ),
                       ),
+
+                      // Adımsayar Sıfırlama Butonu
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0.0),
+                        child: InkWell(
+                          onTap: () async {
+                            var confirm = await showDialog<bool>(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('Adımsayarı Sıfırla'),
+                                  content: const Text(
+                                      'Günlük adım sayacını sıfırlamak istiyor musunuz? Bu işlem geri alınamaz.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, false),
+                                      child: const Text('İptal'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, true),
+                                      child: const Text('Sıfırla'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            if (confirm == true) {
+                              int currentLive = FFAppState().liveSteps;
+                              int currentOffset = FFAppState().stepOffset;
+                              int rawEst = currentLive + currentOffset;
+
+                              FFAppState().stepOffset = rawEst;
+                              FFAppState().liveSteps = 0;
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Adımsayar sıfırlandı.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                              safeSetState(() {});
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).customGrey,
+                              borderRadius: BorderRadius.circular(12.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1.0,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.restore,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Adımsayarı Sıfırla',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ]
                         .divide(SizedBox(height: 24.0))
                         .addToStart(SizedBox(height: 16.0))

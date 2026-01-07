@@ -42,10 +42,29 @@ class _LiveStepCounterState extends State<LiveStepCounter> {
   }
 
   void onStepCount(StepCount event) {
+    int rawSteps = event.steps;
+    int offset = FFAppState().stepOffset;
+    int last = FFAppState().lastSensorSteps;
+
+    // Cihaz yeniden başlatıldıysa veya sayaç sıfırlandıysa
+    if (rawSteps < last) {
+      offset = rawSteps;
+      FFAppState().stepOffset = offset;
+    }
+
+    FFAppState().lastSensorSteps = rawSteps;
+
+    int displayedSteps = rawSteps - offset;
+    if (displayedSteps < 0) {
+      offset = rawSteps;
+      FFAppState().stepOffset = offset;
+      displayedSteps = 0;
+    }
+
     setState(() {
-      _steps = event.steps.toString();
+      _steps = displayedSteps.toString();
     });
-    FFAppState().liveSteps = event.steps;
+    FFAppState().liveSteps = displayedSteps;
   }
 
   void onStepCountError(error) {

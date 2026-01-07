@@ -22,6 +22,12 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _secilenAvatar = prefs.getString('ff_secilenAvatar') ?? _secilenAvatar;
     });
+    _safeInit(() {
+      _stepOffset = prefs.getInt('ff_stepOffset') ?? _stepOffset;
+    });
+    _safeInit(() {
+      _lastSensorSteps = prefs.getInt('ff_lastSensorSteps') ?? _lastSensorSteps;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -136,6 +142,20 @@ class FFAppState extends ChangeNotifier {
   int get KalanAdet => _KalanAdet;
   set KalanAdet(int value) {
     _KalanAdet = value;
+  }
+
+  int _stepOffset = 0;
+  int get stepOffset => _stepOffset;
+  set stepOffset(int value) {
+    _stepOffset = value;
+    prefs.setInt('ff_stepOffset', value);
+  }
+
+  int _lastSensorSteps = 0;
+  int get lastSensorSteps => _lastSensorSteps;
+  set lastSensorSteps(int value) {
+    _lastSensorSteps = value;
+    prefs.setInt('ff_lastSensorSteps', value);
   }
 }
 

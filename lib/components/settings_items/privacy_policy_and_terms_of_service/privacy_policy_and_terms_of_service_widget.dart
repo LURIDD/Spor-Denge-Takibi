@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'privacy_policy_and_terms_of_service_model.dart';
 export 'privacy_policy_and_terms_of_service_model.dart';
 
-/// Gizlilik Politikasi Ve Hizmet Sartlari
+/// Gizlilik Politikası Ve Hizmet Şartları
 class PrivacyPolicyAndTermsOfServiceWidget extends StatefulWidget {
   const PrivacyPolicyAndTermsOfServiceWidget({super.key});
 
@@ -45,7 +45,7 @@ class _PrivacyPolicyAndTermsOfServiceWidgetState
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        // Gizlilik politikasi bilgisi alani
+        // Gizlilik politikası bilgisi alanı
         Padding(
           padding: EdgeInsets.all(4.0),
           child: InkWell(
@@ -124,7 +124,7 @@ class _PrivacyPolicyAndTermsOfServiceWidgetState
           color: FlutterFlowTheme.of(context).alternate,
         ),
 
-        // Kullanim sartlari bilgisi alani
+        // Kullanım şartları bilgisi alanı
         Padding(
           padding: EdgeInsets.all(4.0),
           child: InkWell(

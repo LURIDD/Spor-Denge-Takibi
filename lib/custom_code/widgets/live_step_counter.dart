@@ -1,13 +1,13 @@
-// Automatic FlutterFlow imports
+// Otomatik FlutterFlow içe aktarmaları
 import '/backend/backend.dart';
 import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
+import 'index.dart'; // Diğer özel bileşenleri içe aktarır
+import '/custom_code/actions/index.dart'; // Özel eylemleri içe aktarır
 import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+// Özel bileşen kodunu başlat
+// YUKARIDAKİ KODU KALDIRMAYIN VEYA DEĞİŞTİRMEYİN!
 
 import 'dart:async';
 import 'package:pedometer/pedometer.dart';

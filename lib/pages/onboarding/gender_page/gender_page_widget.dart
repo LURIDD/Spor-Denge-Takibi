@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'gender_page_model.dart';
 export 'gender_page_model.dart';
 
-/// Cinsiyet Sayfasi
+/// Cinsiyet Sayfası
 class GenderPageWidget extends StatefulWidget {
   const GenderPageWidget({super.key});
 
@@ -171,7 +171,7 @@ class _GenderPageWidgetState extends State<GenderPageWidget> {
                 ),
               ),
 
-              // Kullanicinin cinsiyet bilgisini secmesini saglayan profil bileseni
+              // Kullanıcının cinsiyet bilgisini seçmesini sağlayan profil bileşeni
               wrapWithModel(
                 model: _model.genderModel,
                 updateCallback: () => safeSetState(() {}),

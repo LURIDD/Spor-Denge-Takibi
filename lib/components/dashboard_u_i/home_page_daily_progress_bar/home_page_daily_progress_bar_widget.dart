@@ -10,7 +10,7 @@ import '/backend/backend.dart';
 import 'home_page_daily_progress_bar_model.dart';
 export 'home_page_daily_progress_bar_model.dart';
 
-/// Ana Sayfadaki Gunluk Ilerleme Cubugu
+/// Ana Sayfadaki Günlük İlerleme Çubuğu
 class HomePageDailyProgressBarWidget extends StatefulWidget {
   const HomePageDailyProgressBarWidget({super.key});
 
@@ -65,7 +65,7 @@ class _HomePageDailyProgressBarWidgetState
           borderRadius: BorderRadius.circular(18.0),
         ),
         child:
-            // anasayfadaki gunluk ilerlemenin gosterildigi alan
+            // Ana sayfadaki günlük ilerlemenin gösterildiği alan
             // Ana içerik ve düzenleme butonunu üst üste bindirmek için Stack kullanıyoruz.
             Stack(
           children: [

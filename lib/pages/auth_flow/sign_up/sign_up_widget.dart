@@ -14,7 +14,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'sign_up_model.dart';
 export 'sign_up_model.dart';
 
-/// Uyelik Olusturma
+/// Üyelik Oluşturma
 class SignUpWidget extends StatefulWidget {
   const SignUpWidget({
     super.key,
@@ -144,7 +144,7 @@ class _SignUpWidgetState extends State<SignUpWidget>
                             ),
                             alignment: AlignmentDirectional(0.0, 0.0),
                             child:
-                                // Uygulama Logosunun oldugu alan
+                                // Uygulama logosunun olduğu alan
                                 Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -220,7 +220,7 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
 
-                        // Kullanicinin hesap olusturdugu alan
+                        // Kullanıcının hesap oluşturduğu alan
                         Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Container(
@@ -776,7 +776,7 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                           .alternate,
                                     ),
 
-                                    // Misafir olarak giris yapilan alan
+                                    // Misafir olarak giriş yapılan alan
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 16.0, 0.0, 16.0),

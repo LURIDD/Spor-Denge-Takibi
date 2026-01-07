@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'home_page_today_goals_model.dart';
 export 'home_page_today_goals_model.dart';
 
-/// Bugunku Hedefler
+/// Bugünkü Hedefler
 class HomePageTodayGoalsWidget extends StatefulWidget {
   const HomePageTodayGoalsWidget({
     super.key,
@@ -50,7 +50,7 @@ class _HomePageTodayGoalsWidgetState extends State<HomePageTodayGoalsWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // anasayfadaki gunluk hedeflerin gosterildigi alan
+        // anasayfadaki günlük hedeflerin gösterildiği alan
         Padding(
       padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
       child: Container(

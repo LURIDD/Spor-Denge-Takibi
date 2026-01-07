@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'ask_user_name_and_nick_name_model.dart';
 export 'ask_user_name_and_nick_name_model.dart';
 
-/// Kullanicinin Adini ve Gorunen Adini Isteme
+/// Kullanıcının Adını ve Görünen Adını İsteme
 class AskUserNameAndNickNameWidget extends StatefulWidget {
   const AskUserNameAndNickNameWidget({super.key});
 
@@ -72,7 +72,7 @@ class _AskUserNameAndNickNameWidgetState
           ),
         ),
         child:
-            // Kullanicinin adini ve kullanici adini girdigi bolum
+            // Kullanıcının adını ve kullanıcı adını girdiği bölüm
             Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(

@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'privacy_policy_model.dart';
 export 'privacy_policy_model.dart';
 
-/// Gizlilik Politikasi
+/// Gizlilik Politikası
 class PrivacyPolicyWidget extends StatefulWidget {
   const PrivacyPolicyWidget({super.key});
 
@@ -49,7 +49,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
         body: SafeArea(
           top: true,
           child:
-              // Gizlilik politikasi alani
+              // Gizlilik politikası alanı
               Column(
             mainAxisSize: MainAxisSize.max,
             children: [

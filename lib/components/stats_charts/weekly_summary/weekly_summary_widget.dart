@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'weekly_summary_model.dart';
 export 'weekly_summary_model.dart';
 
-/// Haftalik Genel Ozet
+/// Haftalık Genel Özet
 class WeeklySummaryWidget extends StatefulWidget {
   final List<double> weeklyValues; // Add parameter
   final int consistency;
@@ -63,7 +63,7 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
         borderRadius: BorderRadius.circular(18.0),
       ),
       child:
-          // Kullanicinin haftalik istatistik degerlerinin gosterildigi alan
+          // Kullanıcının haftalık istatistik değerlerinin gösterildiği alan
           Padding(
         padding: EdgeInsets.all(15.0),
         child: Column(
@@ -94,7 +94,7 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Builder(builder: (context) {
-                          // Calculate trend
+                          // Trend hesaplama
                           double firstHalfAvg = 0;
                           double secondHalfAvg = 0;
                           if (widget.weeklyValues.length >= 2) {
@@ -215,7 +215,7 @@ class _WeeklySummaryWidgetState extends State<WeeklySummaryWidget> {
                 // today is the last index (6)
                 // index 0 -> today - 6 days
                 final date = DateTime.now().subtract(Duration(days: 6 - index));
-                // Map weekday to Turkish short name
+                // Günü Türkçe kısa isme eşleştir
                 const days = {
                   1: 'Pzt',
                   2: 'Sal',

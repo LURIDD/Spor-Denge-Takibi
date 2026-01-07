@@ -27,7 +27,7 @@ void main() async {
   await notificationService.init();
   await notificationService.requestPermissions();
 
-  final appState = FFAppState(); // Initialize FFAppState
+  final appState = FFAppState(); // FFAppState'i başlat
   await appState.initializePersistedState();
 
   runApp(ChangeNotifierProvider(
@@ -37,7 +37,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+  // Bu bileşen uygulamanızın köküdür.
   @override
   State<MyApp> createState() => _MyAppState();
 
@@ -133,6 +133,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+/// Alt Gezinti Çubuğu Sayfası
 class NavBarPage extends StatefulWidget {
   NavBarPage({
     Key? key,
@@ -149,7 +150,7 @@ class NavBarPage extends StatefulWidget {
   _NavBarPageState createState() => _NavBarPageState();
 }
 
-/// This is the private State class that goes with NavBarPage.
+/// Bu, NavBarPage ile giden özel State sınıfıdır.
 class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'HomePage';
   late Widget? _currentPage;
@@ -218,7 +219,7 @@ class _NavBarPageState extends State<NavBarPage> {
                       size: 24.0,
                     ),
                     Text(
-                      'Home',
+                      'Ana Sayfa',
                       style: TextStyle(
                         color: currentIndex == 0
                             ? FlutterFlowTheme.of(context).primary

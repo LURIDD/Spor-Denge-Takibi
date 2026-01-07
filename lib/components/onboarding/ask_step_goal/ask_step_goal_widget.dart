@@ -151,12 +151,12 @@ class _AskStepGoalWidgetState extends State<AskStepGoalWidget> {
                     int goal =
                         int.tryParse(_model.textController.text) ?? 10000;
 
-                    // Update user document directly as this might be the last step
-                    // OR update AppState if there are more steps.
-                    // Assuming this is inserted into the flow, we'll likely route to the next page.
-                    // For now, let's update Firestore and route to HomePage if it's the end,
-                    // or just update AppState.
-                    // Let's assume we update the user doc immediately for safety.
+                    // Kullanıcı belgesini doğrudan güncelle, çünkü bu son adım olabilir
+                    // VEYA daha fazla adım varsa AppState'i güncelle.
+                    // Bu akışa eklendiği varsayılarak, muhtemelen bir sonraki sayfaya yönlendireceğiz.
+                    // Şimdilik, eğer sonsa Firestore'u güncelleyip HomePage'e yönlendirelim,
+                    // veya sadece AppState'i güncelleyelim.
+                    // Güvenlik için kullanıcı belgesini hemen güncellediğimizi varsayalım.
 
                     await currentUserReference!.update(createUsersRecordData(
                       dailyStepGoal: goal,

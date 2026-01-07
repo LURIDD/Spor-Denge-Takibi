@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'home_page_greeter_model.dart';
 export 'home_page_greeter_model.dart';
 
-/// Ana Sayfadaki Seri Sayaci
+/// Ana Sayfadaki Seri Sayacı
 class HomePageGreeterWidget extends StatefulWidget {
   const HomePageGreeterWidget({super.key});
 
@@ -54,7 +54,7 @@ class _HomePageGreeterWidgetState extends State<HomePageGreeterWidget> {
           shape: BoxShape.rectangle,
         ),
         child:
-            // HomePageGreeter(anasayfa karsilama) bilesenini (widget) sayfaya dahil ediyoruz ve modelini bagliyoruz
+            // Ana sayfa karşılama bileşenini sayfaya dahil ediyoruz ve modelini bağlıyoruz
             Align(
           alignment: AlignmentDirectional(0.0, 0.0),
           child: Column(

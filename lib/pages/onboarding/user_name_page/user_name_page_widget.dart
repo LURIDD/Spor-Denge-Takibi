@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'user_name_page_model.dart';
 export 'user_name_page_model.dart';
 
-/// Kullanici Adi Sayfasi
+/// Kullanıcı Adı Sayfası
 class UserNamePageWidget extends StatefulWidget {
   const UserNamePageWidget({
     super.key,
@@ -185,7 +185,7 @@ class _UserNamePageWidgetState extends State<UserNamePageWidget> {
                     ),
                   ),
 
-                  // Kullanicidan isim ve takma ad (nickname) bilgilerini alan giris bileseni
+                  // Kullanıcıdan isim ve takma ad bilgilerini alan giriş bileşeni
                   wrapWithModel(
                     model: _model.askUserNameAndNickNameModel,
                     updateCallback: () => safeSetState(() {}),

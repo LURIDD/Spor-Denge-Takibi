@@ -116,7 +116,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     ].divide(SizedBox(height: 10.0)),
                   ),
 
-                  // Kullanicinin profil bilgilerini veya ayar ozetini iceren bileseni duzenliyoruz.
+                  // Kullanıcının profil bilgilerini veya ayar özetini içeren bileşeni düzenliyoruz.
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
@@ -127,7 +127,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     ),
                   ),
 
-                  // Tum kullanici seceneklerini ve ayar listesini iceren bileseni ekrana yerlestiriyoruz
+                  // Tüm kullanıcı seçeneklerini ve ayar listesini içeren bileşeni ekrana yerleştiriyoruz
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),

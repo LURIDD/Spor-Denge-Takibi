@@ -12,7 +12,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'sign_in_model.dart';
 export 'sign_in_model.dart';
 
-/// Giris Yap
+/// Giriş Yap
 class SignInWidget extends StatefulWidget {
   const SignInWidget({super.key});
 
@@ -231,7 +231,7 @@ class _SignInWidgetState extends State<SignInWidget>
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             child:
-                                // Kayitli kullanicinin giris yaptigi alan
+                                // Kayıtlı kullanıcının giriş yaptığı alan
                                 Align(
                               alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(
@@ -635,7 +635,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                       ),
                                     ),
 
-                                    // You will have to add an action on this rich text to go to your login page.
+                                    // Bu zengin metne (rich text) giriş sayfanıza gitmek için bir eylem eklemeniz gerekecek.
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 12.0, 0.0, 12.0),

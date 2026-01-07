@@ -39,7 +39,7 @@ class _TotalStreakWidgetState extends State<TotalStreakWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // Kullanicini Aktif toplam serisinin gosterildigi alan
+        // Kullanıcının Aktif toplam serisinin gösterildiği alan
         StreamBuilder<List<UsersRecord>>(
       stream: queryUsersRecord(
         queryBuilder: (usersRecord) => usersRecord.where(
@@ -49,7 +49,7 @@ class _TotalStreakWidgetState extends State<TotalStreakWidget> {
         limit: 1000,
       ),
       builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
+        // Widget yüklenirken görünümünü özelleştirin.
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(

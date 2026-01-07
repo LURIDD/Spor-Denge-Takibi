@@ -72,7 +72,7 @@ class _HeightAndWeightWidgetState extends State<HeightAndWeightWidget> {
           ),
         ),
         child:
-            // Kullanicinin boy ve kilo bilgilerini girdigi alan
+            // Kullanıcının boy ve kilo bilgilerini girdiği alan
             Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(

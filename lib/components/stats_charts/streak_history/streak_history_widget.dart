@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'streak_history_model.dart';
 export 'streak_history_model.dart';
 
-/// Seri Gecmisi (Mevcut Seri & En Uzun Seri)
+/// Seri Geçmişi (Mevcut Seri & En Uzun Seri)
 class StreakHistoryWidget extends StatefulWidget {
   const StreakHistoryWidget({super.key});
 
@@ -57,7 +57,7 @@ class _StreakHistoryWidgetState extends State<StreakHistoryWidget> {
         borderRadius: BorderRadius.circular(18.0),
       ),
       child:
-          // Kullanicinin seri gecmisinin gosterildigi alan
+          // Kullanıcının seri geçmişinin gösterildiği alan
           Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(

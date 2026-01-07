@@ -15,32 +15,32 @@ class BadgesRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "name" field.
+  // "name" alanı.
   String? _name;
   String get name => _name ?? '';
   bool hasName() => _name != null;
 
-  // "description" field.
+  // "description" alanı.
   String? _description;
   String get description => _description ?? '';
   bool hasDescription() => _description != null;
 
-  // "image" field.
+  // "image" alanı.
   String? _image;
   String get image => _image ?? '';
   bool hasImage() => _image != null;
 
-  // "criteria" field.
+  // "criteria" alanı.
   String? _criteria;
   String get criteria => _criteria ?? '';
   bool hasCriteria() => _criteria != null;
 
-  // "created_time" field.
+  // "created_time" alanı.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "target" field.
+  // "target" alanı.
   int? _target;
   int get target => _target ?? 0;
   bool hasTarget() => _target != null;

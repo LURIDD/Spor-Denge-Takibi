@@ -68,7 +68,7 @@ class _GenderWidgetState extends State<GenderWidget> {
           ),
         ),
         child:
-            // Kullanicinin cinsiyetini sectigi bolum
+            // Kullanıcının cinsiyetini seçtiği bölüm
             Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(

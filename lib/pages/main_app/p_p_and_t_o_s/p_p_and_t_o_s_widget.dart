@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'p_p_and_t_o_s_model.dart';
 export 'p_p_and_t_o_s_model.dart';
 
-/// Gizlilik Politikasi ve Kullanim Sartlari
+/// Gizlilik Politikası ve Kullanım Şartları
 class PPAndTOSWidget extends StatefulWidget {
   const PPAndTOSWidget({super.key});
 
@@ -93,8 +93,8 @@ class _PPAndTOSWidgetState extends State<PPAndTOSWidget> {
                   ),
                 ),
 
-                // Gizlilik Politikasi ve Kullanim Sartlarini Iceren yasal bilgilendirme bolumu
-                // Expanded:Metnin uzunluguna gore ekranin kalan tum bos alanini kaplamasini saglar
+                // Gizlilik Politikası ve Kullanım Şartlarını içeren yasal bilgilendirme bölümü
+                // Expanded: Metnin uzunluğuna göre ekranın kalan tüm boş alanını kaplamasını sağlar
                 Expanded(
                   child: wrapWithModel(
                     model: _model.privacyPolicyAndTermsOfServiceModel,

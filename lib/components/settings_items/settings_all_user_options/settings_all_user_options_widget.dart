@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'settings_all_user_options_model.dart';
 export 'settings_all_user_options_model.dart';
 
-/// Tum Kullanici Ayarlari
+/// Tüm Kullanıcı Ayarları
 class SettingsAllUserOptionsWidget extends StatefulWidget {
   const SettingsAllUserOptionsWidget({super.key});
 
@@ -73,7 +73,7 @@ class _SettingsAllUserOptionsWidgetState
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            // Kullanicinin uygulama ici bildirimleri onayladıgi ya da onaylamadigi alan
+            // Kullanıcının uygulama içi bildirimleri onayladığı ya da onaylamadığı alan
             Padding(
               padding: EdgeInsets.all(4.0),
               child: StreamBuilder<UsersRecord>(
@@ -184,7 +184,7 @@ class _SettingsAllUserOptionsWidgetState
               color: FlutterFlowTheme.of(context).alternate,
             ),
 
-            // Uygulama temasinin ayarlandigi alan
+            // Uygulama temasının ayarlandığı alan
             Padding(
               padding: EdgeInsets.all(4.0),
               child: Row(
@@ -293,7 +293,7 @@ class _SettingsAllUserOptionsWidgetState
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Yoneticinin uygulama yonetimini yaptigi alan alan
+                      // Yöneticinin uygulama yönetimini yaptığı alan
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -394,7 +394,7 @@ class _SettingsAllUserOptionsWidgetState
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Veri koruma ve guvenlik alani
+                  // Veri koruma ve güvenlik alanı
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -489,7 +489,7 @@ class _SettingsAllUserOptionsWidgetState
               color: FlutterFlowTheme.of(context).alternate,
             ),
 
-            // Yardım ve Destek alani
+            // Yardım ve Destek alanı
             Padding(
               padding: EdgeInsets.all(4.0),
               child: Row(
@@ -582,7 +582,7 @@ class _SettingsAllUserOptionsWidgetState
               color: FlutterFlowTheme.of(context).alternate,
             ),
 
-            // Uygulamadan cikis alani
+            // Uygulamadan çıkış alanı
             Padding(
               padding: EdgeInsets.all(4.0),
               child: Row(

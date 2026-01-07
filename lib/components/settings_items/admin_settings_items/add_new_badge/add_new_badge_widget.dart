@@ -75,7 +75,7 @@ class _AddNewBadgeWidgetState extends State<AddNewBadgeWidget> {
           borderRadius: BorderRadius.circular(18.0),
         ),
         child:
-            // Yeni rozet ekleme alani
+            // Yeni rozet ekleme alanı
             Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

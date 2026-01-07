@@ -115,12 +115,12 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
           } else {
             await HapticFeedback.mediumImpact();
 
-            // --- GOAL STREAK LOGIC ---
+            // --- HEDEF SERİSİ MANTIĞI ---
             final now = DateTime.now();
             final today = DateTime(now.year, now.month, now.day);
 
-            int currentStreak = widget.goalRecord!.currentStreak; // default 0
-            int longestStreak = widget.goalRecord!.longestStreak; // default 0
+            int currentStreak = widget.goalRecord!.currentStreak; // varsayılan 0
+            int longestStreak = widget.goalRecord!.longestStreak; // varsayılan 0
             DateTime? lastDate = widget.goalRecord!.lastCompletedDate;
             DateTime? lastDateMidnight;
             if (lastDate != null) {
@@ -128,26 +128,26 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
                   DateTime(lastDate.year, lastDate.month, lastDate.day);
             }
 
-            // Check difference in days
+            // Gün farkını kontrol et
             if (lastDateMidnight != null) {
               final diff = today.difference(lastDateMidnight).inDays;
               if (diff == 1) {
-                // Consecutive day
+                // Ardışık gün
                 currentStreak += 1;
               } else if (diff > 1) {
-                // Broken streak
+                // Seri bozuldu
                 currentStreak = 1;
               } else {
-                // Same day (diff == 0), don't increment, just keep
-                // Logic: usually shouldn't happen if isCompleted was false, unless unchecked today and rechecked
+                // Aynı gün (fark == 0), artırma, sadece koru
+                // Mantık: isCompleted false ise genellikle olmamalı, ancak bugün işareti kaldırılıp tekrar işaretlendiyse olabilir
                 if (currentStreak == 0) currentStreak = 1;
               }
             } else {
-              // First time
+              // İlk kez
               currentStreak = 1;
             }
 
-            // Update Longest
+            // En uzunu güncelle
             if (currentStreak > longestStreak) {
               longestStreak = currentStreak;
             }
@@ -272,7 +272,7 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
                       } else {
                         return Icon(
                           Icons
-                              .star, // Changed default fallback to Star if no icon
+                              .star, // Simge yoksa varsayılan olarak Yıldız simgesi
                           color: FlutterFlowTheme.of(context).primaryText,
                           size: 24.0,
                         );
@@ -309,7 +309,7 @@ class _GoalItemWidgetState extends State<GoalItemWidget>
                         style: FlutterFlowTheme.of(context).labelSmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FontWeight
-                                    .w500, // Replaced explicit theme weight access with constant as it was causing issues or to simplify
+                                    .w500, // Sorunlara neden olduğu veya basitleştirme amacıyla açık tema ağırlığı erişimi sabit ile değiştirildi
                                 fontStyle: FlutterFlowTheme.of(context)
                                     .labelSmall
                                     .fontStyle,

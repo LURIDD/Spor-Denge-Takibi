@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'water_sensei_model.dart';
 export 'water_sensei_model.dart';
 
-/// Su Ustasi Rozeti
+/// Su Ustası Rozeti
 class WaterSenseiWidget extends StatefulWidget {
   const WaterSenseiWidget({super.key});
 
@@ -40,7 +40,7 @@ class _WaterSenseiWidgetState extends State<WaterSenseiWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // Su ustasi rozeti
+        // Su ustası rozeti
         Container(
       width: double.infinity,
       decoration: BoxDecoration(

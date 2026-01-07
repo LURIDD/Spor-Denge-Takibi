@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'settings_profile_model.dart';
 export 'settings_profile_model.dart';
 
-/// Profil Ayarlari Kisisel ve Fiziksel Ozellikler
+/// Profil Ayarları Kişisel ve Fiziksel Özellikler
 class SettingsProfileWidget extends StatefulWidget {
   const SettingsProfileWidget({super.key});
 
@@ -43,7 +43,7 @@ class _SettingsProfileWidgetState extends State<SettingsProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // Profil ayarlari, kisisel ve fiziksel ozelliklerinin girildigi alan
+        // Profil ayarları, kişisel ve fiziksel özelliklerinin girildiği alan
         Container(
       width: double.infinity,
       height: 100.0,

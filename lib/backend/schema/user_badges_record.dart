@@ -14,22 +14,22 @@ class UserBadgesRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "badge_ref" field.
+  // "badge_ref" alanı.
   DocumentReference? _badgeRef;
   DocumentReference? get badgeRef => _badgeRef;
   bool hasBadgeRef() => _badgeRef != null;
 
-  // "earned_time" field.
+  // "earned_time" alanı.
   DateTime? _earnedTime;
   DateTime? get earnedTime => _earnedTime;
   bool hasEarnedTime() => _earnedTime != null;
 
-  // "status" field.
+  // "status" alanı.
   String? _status;
   String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
-  // "current_progress" field.
+  // "current_progress" alanı.
   int? _currentProgress;
   int get currentProgress => _currentProgress ?? 0;
   bool hasCurrentProgress() => _currentProgress != null;

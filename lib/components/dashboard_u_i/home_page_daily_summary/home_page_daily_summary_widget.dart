@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'home_page_daily_summary_model.dart';
 export 'home_page_daily_summary_model.dart';
 
-/// Gunluk Ozet (Tamamlanan Hedef Sayisi)
+/// Günlük Özet (Tamamlanan Hedef Sayısı)
 class HomePageDailySummaryWidget extends StatefulWidget {
   const HomePageDailySummaryWidget({
     super.key,
@@ -39,7 +39,7 @@ class _HomePageDailySummaryWidgetState
     super.initState();
     _model = createModel(context, () => HomePageDailySummaryModel());
 
-    // On component load action.
+    // Bileşen yüklendiğinde çalışacak eylem.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       FFAppState().KalanAdet = widget.kalanAdet;
       safeSetState(() {});
@@ -76,7 +76,7 @@ class _HomePageDailySummaryWidgetState
           borderRadius: BorderRadius.circular(18.0),
         ),
         child:
-            // Gunluk ozet (tamamlanan ve kalan hedeflerin gosterildigi alan)
+            // Günlük özet (tamamlanan ve kalan hedeflerin gösterildiği alan)
             Padding(
           padding: EdgeInsets.all(12.0),
           child: Column(

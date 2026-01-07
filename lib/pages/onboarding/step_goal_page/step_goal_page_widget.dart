@@ -7,6 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'step_goal_page_model.dart';
 export 'step_goal_page_model.dart';
 
+/// Adım Hedefi Sayfası
 class StepGoalPageWidget extends StatefulWidget {
   const StepGoalPageWidget({super.key});
 
@@ -22,18 +23,21 @@ class _StepGoalPageWidgetState extends State<StepGoalPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  /// Başlangıç durumu
   void initState() {
     super.initState();
     _model = createModel(context, () => StepGoalPageModel());
   }
 
   @override
+  /// Kaynakları serbest bırak
   void dispose() {
     _model.dispose();
     super.dispose();
   }
 
   @override
+  /// Arayüzü oluştur
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -108,7 +112,7 @@ class _StepGoalPageWidgetState extends State<StepGoalPageWidget> {
                   ].divide(SizedBox(height: 10.0)),
                 ),
               ),
-              // Step Goal Selection Component
+              // Adım Hedefi Seçim Bileşeni
               wrapWithModel(
                 model: _model.askStepGoalModel,
                 updateCallback: () => safeSetState(() {}),

@@ -16,54 +16,54 @@ class UserGoalsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "goalName" field.
+  // "goalName" alanı.
   String? _goalName;
   String get goalName => _goalName ?? '';
   bool hasGoalName() => _goalName != null;
 
-  // "goalAmount" field.
+  // "goalAmount" alanı.
   double? _goalAmount;
   double get goalAmount => _goalAmount ?? 0.0;
   bool hasGoalAmount() => _goalAmount != null;
 
-  // "ownerRef" field.
+  // "ownerRef" alanı.
   DocumentReference? _ownerRef;
   DocumentReference? get ownerRef => _ownerRef;
   bool hasOwnerRef() => _ownerRef != null;
 
-  // "isCompleted" field.
+  // "isCompleted" alanı.
   bool? _isCompleted;
   bool get isCompleted => _isCompleted ?? false;
   bool hasIsCompleted() => _isCompleted != null;
 
-  // "createdAt" field.
+  // "createdAt" alanı.
   DateTime? _createdAt;
   DateTime? get createdAt => _createdAt;
   bool hasCreatedAt() => _createdAt != null;
 
-  // "goalUnitMeasurement" field.
+  // "goalUnitMeasurement" alanı.
   String? _goalUnitMeasurement;
   String get goalUnitMeasurement => _goalUnitMeasurement ?? '';
   bool hasGoalUnitMeasurement() => _goalUnitMeasurement != null;
 
-  // "current_streak" field.
+  // "current_streak" alanı.
   int? _currentStreak;
   int get currentStreak => _currentStreak ?? 0;
   bool hasCurrentStreak() => _currentStreak != null;
 
-  // "longest_streak" field.
+  // "longest_streak" alanı.
   int? _longestStreak;
   int get longestStreak => _longestStreak ?? 0;
   bool hasLongestStreak() => _longestStreak != null;
 
-  // "last_completed_date" field.
+  // "last_completed_date" alanı.
   DateTime? _lastCompletedDate;
   DateTime? get lastCompletedDate => _lastCompletedDate;
   bool hasLastCompletedDate() => _lastCompletedDate != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  // "iconPath" field.
+  // "iconPath" alanı.
   String? _iconPath;
   String get iconPath => _iconPath ?? '';
   bool hasIconPath() => _iconPath != null;

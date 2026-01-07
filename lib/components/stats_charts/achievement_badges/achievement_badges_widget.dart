@@ -11,7 +11,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'achievement_badges_model.dart';
 export 'achievement_badges_model.dart';
 
-/// Basari Rozetleri
+/// Başarı Rozetleri
 class AchievementBadgesWidget extends StatefulWidget {
   const AchievementBadgesWidget({super.key});
 
@@ -317,7 +317,7 @@ class _AchievementBadgesWidgetState extends State<AchievementBadgesWidget> {
                                                         }
                                                       }
 
-                                                      // Fallback logic
+                                                      // Yedekleme mantığı
                                                       String assetPath =
                                                           'assets/images/star.png';
                                                       if (badge.name

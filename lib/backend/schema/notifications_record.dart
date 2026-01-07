@@ -14,27 +14,27 @@ class NotificationsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "title" field.
+  // "title" alanı.
   String? _title;
   String get title => _title ?? '';
   bool hasTitle() => _title != null;
 
-  // "message" field.
+  // "message" alanı.
   String? _message;
   String get message => _message ?? '';
   bool hasMessage() => _message != null;
 
-  // "created_time" field.
+  // "created_time" alanı.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "user_ref" field.
+  // "user_ref" alanı.
   DocumentReference? _userRef;
   DocumentReference? get userRef => _userRef;
   bool hasUserRef() => _userRef != null;
 
-  // "is_read" field.
+  // "is_read" alanı.
   bool? _isRead;
   bool get isRead => _isRead ?? false;
   bool hasIsRead() => _isRead != null;

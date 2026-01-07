@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'terms_of_service_model.dart';
 export 'terms_of_service_model.dart';
 
-/// Kullanim Sartlari
+/// Kullanım Şartları
 class TermsOfServiceWidget extends StatefulWidget {
   const TermsOfServiceWidget({super.key});
 
@@ -49,7 +49,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
         body: SafeArea(
           top: true,
           child:
-              // Kullanim sartlari bilgisi alani
+              // Kullanım şartları bilgisi alanı
               Column(
             mainAxisSize: MainAxisSize.max,
             children: [

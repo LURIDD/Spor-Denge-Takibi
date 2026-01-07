@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'fitness_hero_model.dart';
 export 'fitness_hero_model.dart';
 
-/// Fitness Kahramani Rozeti
+/// Fitness Kahramanı Rozeti
 class FitnessHeroWidget extends StatefulWidget {
   const FitnessHeroWidget({super.key});
 
@@ -40,7 +40,7 @@ class _FitnessHeroWidgetState extends State<FitnessHeroWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // Fitness Kahramani Rozeti
+        // Fitness Kahramanı Rozeti
         Container(
       width: double.infinity,
       decoration: BoxDecoration(

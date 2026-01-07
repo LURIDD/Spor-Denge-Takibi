@@ -28,7 +28,7 @@ export 'schema/badges_record.dart';
 export 'schema/notifications_record.dart';
 export 'schema/user_badges_record.dart';
 
-/// Functions to query UsersRecords (as a Stream and as a Future).
+/// UsersRecords sorgulama fonksiyonları (Akış ve Gelecek olarak).
 Future<int> queryUsersRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -65,7 +65,7 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query UserGoalsRecords (as a Stream and as a Future).
+/// UserGoalsRecords sorgulama fonksiyonları (Akış ve Gelecek olarak).
 Future<int> queryUserGoalsRecordCount({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -105,7 +105,7 @@ Future<List<UserGoalsRecord>> queryUserGoalsRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query UserActivitiesRecords (as a Stream and as a Future).
+/// UserActivitiesRecords sorgulama fonksiyonları (Akış ve Gelecek olarak).
 Future<int> queryUserActivitiesRecordCount({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -145,7 +145,7 @@ Future<List<UserActivitiesRecord>> queryUserActivitiesRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query GoalLogsRecords (as a Stream and as a Future).
+/// GoalLogsRecords sorgulama fonksiyonları (Akış ve Gelecek olarak).
 Future<int> queryGoalLogsRecordCount({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -185,7 +185,7 @@ Future<List<GoalLogsRecord>> queryGoalLogsRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query BadgesRecords (as a Stream and as a Future).
+/// BadgesRecords sorgulama fonksiyonları (Akış ve Gelecek olarak).
 Future<int> queryNotificationsRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -432,7 +432,7 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   return FFFirestorePage(data, dataStream, nextPageToken);
 }
 
-// Creates a Firestore document representing the logged in user if it doesn't yet exist
+// Henüz mevcut değilse oturum açmış kullanıcıyı temsil eden bir Firestore belgesi oluşturur
 Future maybeCreateUser(User user) async {
   final userRecord = UsersRecord.collection.doc(user.uid);
   final userExists = await userRecord.get().then((u) => u.exists);

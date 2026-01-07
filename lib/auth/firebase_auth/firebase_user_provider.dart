@@ -41,8 +41,8 @@ class DengeleFirebaseUser extends BaseAuthUser {
 
   @override
   bool get emailVerified {
-    // Reloads the user when checking in order to get the most up to date
-    // email verified status.
+    // En güncel e-posta doğrulama durumunu almak için
+    // kontrol sırasında kullanıcıyı yeniden yükler.
     if (loggedIn && !user!.emailVerified) {
       refreshUser();
     }

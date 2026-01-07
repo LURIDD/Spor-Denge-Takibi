@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'help_support_model.dart';
 export 'help_support_model.dart';
 
-/// Kullanicilar eger bir sorunla karsılasırsa bu sayfadan çozum bulabilirler.
+/// Kullanıcılar eğer bir sorunla karşılaşırsa bu sayfadan çözüm bulabilirler.
 class HelpSupportWidget extends StatefulWidget {
   const HelpSupportWidget({super.key});
 
@@ -117,7 +117,7 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                         ),
                       ),
 
-                      // S.S.S alani
+                      // S.S.S alanı
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
@@ -146,7 +146,7 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                                   ),
                             ),
 
-                            // "Dengele nedir?"  adlı sorunun cevabını bulabileceginiz soru kartı.
+                            // "Dengele nedir?" adlı sorunun cevabını bulabileceğiniz soru kartı.
                             Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -280,7 +280,7 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                               ),
                             ),
 
-                            // "Seri (Streak) nasıl çalışır?"  adlı sorunun cevabını bulabileceginiz soru kartı.
+                            // "Seri (Streak) nasıl çalışır?" adlı sorunun cevabını bulabileceğiniz soru kartı.
                             Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -414,7 +414,7 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                               ),
                             ),
 
-                            // "Günlük su hedefimi nasıl ayarlayabilirim?"  adlı sorunun cevabını bulabileceginiz soru kartı.
+                            // "Günlük su hedefimi nasıl ayarlayabilirim?" adlı sorunun cevabını bulabileceğiniz soru kartı.
                             Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -563,7 +563,7 @@ class _HelpSupportWidgetState extends State<HelpSupportWidget> {
                           ),
                         ),
                         child:
-                            // Kullanicinin uygulama içinde bir sorunla karsilastiginda iletisim kuracagi e-posta bilgisi alani
+                            // Kullanıcının uygulama içinde bir sorunla karşılaştığında iletişim kuracağı e-posta bilgisi alanı
                             Padding(
                           padding: EdgeInsets.all(20.0),
                           child: Column(

@@ -15,12 +15,12 @@ class GoalLogsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "completed_at" field.
+  // "completed_at" alanı.
   DateTime? _completedAt;
   DateTime? get completedAt => _completedAt;
   bool hasCompletedAt() => _completedAt != null;
 
-  // "status" field.
+  // "status" alanı.
   bool? _status;
   bool get status => _status ?? false;
   bool hasStatus() => _status != null;

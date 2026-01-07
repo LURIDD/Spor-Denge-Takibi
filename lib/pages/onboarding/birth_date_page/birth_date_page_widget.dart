@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'birth_date_page_model.dart';
 export 'birth_date_page_model.dart';
 
-/// Dogum Tarihi Sayfasi
+/// Doğum Tarihi Sayfası
 class BirthDatePageWidget extends StatefulWidget {
   const BirthDatePageWidget({super.key});
 
@@ -49,7 +49,7 @@ class _BirthDatePageWidgetState extends State<BirthDatePageWidget> {
         body: SafeArea(
           top: true,
           child:
-              // Kullanicinin dogum tarihi bilgisini girmesini saglayan tarih secici bileseni
+              // Kullanıcının doğum tarihi bilgisini girmesini sağlayan tarih seçici bileşeni
               Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,

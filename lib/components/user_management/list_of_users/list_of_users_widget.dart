@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'list_of_users_model.dart';
 export 'list_of_users_model.dart';
 
-/// Kullanici Listesi
+/// Kullanıcı Listesi
 class ListOfUsersWidget extends StatefulWidget {
   const ListOfUsersWidget({super.key});
 
@@ -117,7 +117,7 @@ class _ListOfUsersWidgetState extends State<ListOfUsersWidget> {
           ),
         ),
         child:
-            // Kullanici listesinin gosterildigi alan
+            // Kullanıcı listesinin gösterildiği alan
             Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

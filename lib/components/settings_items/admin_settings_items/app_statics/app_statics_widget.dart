@@ -7,7 +7,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'app_statics_model.dart';
 export 'app_statics_model.dart';
 
-/// Uygulama Istatistikleri
+/// Uygulama İstatistikleri
 class AppStaticsWidget extends StatefulWidget {
   const AppStaticsWidget({super.key});
 
@@ -64,7 +64,7 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
         borderRadius: BorderRadius.circular(18.0),
       ),
       child:
-          // Uygulama istatistiklerinin gosterildigi alan
+          // Uygulama istatistiklerinin gösterildiği alan
           Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
@@ -104,7 +104,7 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     child:
-                        // Kullanici memnuniyetinin  yuzdelik dilimle gosterildigi alan
+                        // Kullanıcı memnuniyetinin yüzdelik dilimle gösterildiği alan
                         Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -173,7 +173,7 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     child:
-                        // Ortalama puanin gosterildigi alan
+                        // Ortalama puanın gösterildiği alan
                         Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +239,7 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     child:
-                        // Gunluk aktif kullanicinin gosterildigi alan
+                        // Günlük aktif kullanıcının gösterildiği alan
                         Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -316,7 +316,7 @@ class _AppStaticsWidgetState extends State<AppStaticsWidget> {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     child:
-                        // Yeni kayıt yapanların gosterildigi alan
+                        // Yeni kayıt yapanların gösterildiği alan
                         Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,

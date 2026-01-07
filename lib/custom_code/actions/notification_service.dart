@@ -18,11 +18,11 @@ class NotificationService {
   Future<void> init() async {
     tz.initializeTimeZones();
 
-    // Android initialization
+    // Android başlatma
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // iOS initialization
+    // iOS başlatma
     const DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
       requestAlertPermission: false,
@@ -40,7 +40,7 @@ class NotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse:
           (NotificationResponse notificationResponse) async {
-        // Handle notification tap
+        // Bildirim dokunmasını işle
       },
     );
   }
@@ -74,7 +74,7 @@ class NotificationService {
         android: AndroidNotificationDetails(
           'daily_motivation_channel',
           'Daily Motivation',
-          channelDescription: 'Daily reminders for motivation',
+          channelDescription: 'Motivasyon için günlük hatırlatıcılar',
           importance: Importance.max,
           priority: Priority.high,
         ),
@@ -97,7 +97,7 @@ class NotificationService {
         android: AndroidNotificationDetails(
           'goal_reminder_channel',
           'Goal Reminders',
-          channelDescription: 'Reminders to complete your goals',
+          channelDescription: 'Hedeflerinizi tamamlamanız için hatırlatıcılar',
           importance: Importance.high,
           priority: Priority.high,
         ),

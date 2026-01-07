@@ -9,8 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'select_profile_picture_model.dart';
 export 'select_profile_picture_model.dart';
 
-/// Kullanicinin profil fotografini ister galerisinden isterse de uygulamanin
-/// kendi sundugu avatarlarla degistirmesini saglar.
+/// Kullanıcının profil fotoğrafını ister galerisinden isterse de uygulamanın
+/// kendi sunduğu avatarlarla değiştirmesini sağlar.
 class SelectProfilePictureWidget extends StatefulWidget {
   const SelectProfilePictureWidget({super.key});
 

@@ -17,22 +17,22 @@ class UserActivitiesRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "userId" field.
+  // "userId" alanı.
   String? _userId;
   String get userId => _userId ?? '';
   bool hasUserId() => _userId != null;
 
-  // "dailyValues" field.
+  // "dailyValues" alanı.
   List<double>? _dailyValues;
   List<double> get dailyValues => _dailyValues ?? const [];
   bool hasDailyValues() => _dailyValues != null;
 
-  // "consistency" field.
+  // "consistency" alanı.
   int? _consistency;
   int get consistency => _consistency ?? 0;
   bool hasConsistency() => _consistency != null;
 
-  // "lastSeriesDate" field.
+  // "lastSeriesDate" alanı.
   DateTime? _lastSeriesDate;
   DateTime? get lastSeriesDate => _lastSeriesDate;
   bool hasLastSeriesDate() => _lastSeriesDate != null;

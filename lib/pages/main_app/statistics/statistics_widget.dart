@@ -37,7 +37,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
     super.initState();
     _model = createModel(context, () => StatisticsModel());
 
-    // On page load action.
+    // Sayfa yüklendiğinde çalışacak işlem.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.checkDailyStreak();
     });
@@ -63,7 +63,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
         body: SafeArea(
           top: true,
           child:
-              // istatistikerlin gosterildigi alan
+              // İstatistiklerin gösterildiği alan
               Stack(
             children: [
               Padding(
@@ -128,7 +128,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                         ),
                       ),
 
-                      // Haftalik ozet kartini sagdan ve soldan bosluk birakacak sekilde paketliyoruz
+                      // Haftalık özet kartını sağdan ve soldan boşluk bırakacak şekilde paketliyoruz
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             10.0, 0.0, 10.0, 0.0),
@@ -140,7 +140,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                             singleRecord: true,
                           ),
                           builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
+                            // Yükleniyor durumunu özelleştirin.
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(
@@ -156,7 +156,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                               );
                             }
 
-                            // Default to empty list if no data or error
+                            // Veri yoksa veya hata varsa varsayılan olarak boş liste kullan
                             List<double> weeklyValues = [];
                             int consistency = 0;
 
@@ -180,7 +180,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                         ),
                       ),
 
-                      // Seri (Streak) gecmisini gosteren tabloyu sayfa duzenine yerlestiriyoruz
+                      // Seri (Streak) geçmişini gösteren tabloyu sayfa düzenine yerleştiriyoruz
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             10.0, 0.0, 10.0, 0.0),
@@ -191,7 +191,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                         ),
                       ),
 
-                      // Kullanicinin kazandigi basari rozetlerini gosteren bolumu sayfaya ekliyoruz
+                      // Kullanıcının kazandığı başarı rozetlerini gösteren bölümü sayfaya ekliyoruz
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             10.0, 0.0, 10.0, 0.0),

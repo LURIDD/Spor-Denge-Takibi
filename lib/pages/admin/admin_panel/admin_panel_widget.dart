@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'admin_panel_model.dart';
 export 'admin_panel_model.dart';
 
-/// Yönetici Sayfasi
+/// Yönetici Sayfası
 class AdminPanelWidget extends StatefulWidget {
   const AdminPanelWidget({super.key});
 
@@ -54,7 +54,7 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
         body: SafeArea(
           top: true,
           child:
-              // Admin Panel alani
+              // Admin Panel alanı
               Padding(
             padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 100.0),
             child: SingleChildScrollView(
@@ -161,21 +161,21 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        // Uygulamadaki aktif/cevrimici kullanicilari gosteren bileseni modele bagliyoruz
+                        // Uygulamadaki aktif/çevrimiçi kullanıcıları gösteren bileşeni modele bağlıyoruz
                         wrapWithModel(
                           model: _model.onlineUserModel,
                           updateCallback: () => safeSetState(() {}),
                           child: OnlineUserWidget(),
                         ),
 
-                        // Kullanicinin toplam devamlilik (streak) sayisini gosteren bileseni modele bagliyoruz
+                        // Kullanıcının toplam devamlılık (streak) sayısını gösteren bileşeni modele bağlıyoruz
                         wrapWithModel(
                           model: _model.totalStreakModel,
                           updateCallback: () => safeSetState(() {}),
                           child: TotalStreakWidget(),
                         ),
 
-                        // Kullanicinin basariyla kazandigi (kilidini actigi) rozetlerin listesini yukluyoruz
+                        // Kullanıcının başarıyla kazandığı (kilidini açtığı) rozetlerin listesini yüklüyoruz
                         wrapWithModel(
                           model: _model.earnedBadgesModel,
                           updateCallback: () => safeSetState(() {}),
@@ -189,9 +189,9 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        // Yeni rozet ekleme bilesenini, ekranin kalan bos alanini dolduracak sekilde yerlestiriyoruz.
-                        // Expanded: Bu widget'in icinde bulundugu satir (Row) veya sutun (Column) icindeki
-                        // kullanilabilir tum bos alani kaplamasini saglar.
+                        // Yeni rozet ekleme bileşenini, ekranın kalan boş alanını dolduracak şekilde yerleştiriyoruz.
+                        // Expanded: Bu widget'ın içinde bulunduğu satır (Row) veya sütun (Column) içindeki
+                        // kullanılabilir tüm boş alanı kaplamasını sağlar.
                         Expanded(
                           child: wrapWithModel(
                             model: _model.addNewBadgeModel,
@@ -200,8 +200,8 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                           ),
                         ),
 
-                        // Tum kullanicilarin listelendigi ana bolumu ekranin kalanina yayiyoruz
-                        // Expanded:Listenin ekranin alt kismina kadar uzanmasini ve esnek bir yapida olmasini saglar.
+                        // Tüm kullanıcıların listelendiği ana bölümü ekranın kalanına yayıyoruz
+                        // Expanded: Listenin ekranın alt kısmına kadar uzanmasını ve esnek bir yapıda olmasını sağlar.
                         Expanded(
                           child: wrapWithModel(
                             model: _model.listOfUsersModel,
@@ -570,7 +570,7 @@ class _AdminPanelWidgetState extends State<AdminPanelWidget> {
                     ),
                   ),
 
-                  // Uygulama genelindeki istatistikleri gosteren bileseni (Widget) sayfaya dahil ediyoruz
+                  // Uygulama genelindeki istatistikleri gösteren bileşeni (Widget) sayfaya dahil ediyoruz
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: wrapWithModel(

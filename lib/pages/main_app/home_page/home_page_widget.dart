@@ -39,7 +39,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.initState();
     _model = createModel(context, () => HomePageModel());
 
-    // On page load action.
+    // Sayfa yüklendiğinde çalışacak eylem.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.checkDailyStreak();
     });
@@ -61,7 +61,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         parent: currentUserReference,
       ),
       builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
+        // Widget yüklenirken görünümünü özelleştirin.
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -110,8 +110,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Kullaniciyi karsilayan ana baslik metni
-                                  // Kullaniciyi karsilayan ana baslik metni
+                                  // Kullanıcıyı karşılayan ana başlık metni
+                                  // Kullanıcıyı karşılayan ana başlık metni
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -294,7 +294,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ],
                                   ),
 
-                                  // Kullaniciyi motive eden alt bilgi veya aciklama metni
+                                  // Kullanıcıyı motive eden alt bilgi veya açıklama metni
                                   Text(
                                     'Bugün de hedeflerine odaklan 🎯',
                                     style: FlutterFlowTheme.of(context)
@@ -331,14 +331,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               child: HomePageGreeterWidget(),
                             ),
 
-                            // Gunluk ilerleme durumunu gosteren progress bar bilesenini modele baglayarak cagiriyoruz
+                            // Günlük ilerleme durumunu gösteren ilerleme çubuğu bileşenini modele bağlayarak çağırıyoruz
                             wrapWithModel(
                               model: _model.homePageDailyProgressBarModel,
                               updateCallback: () => safeSetState(() {}),
                               child: HomePageDailyProgressBarWidget(),
                             ),
 
-                            // Kullanicinin gunluk hedeflerini listeleyen bileseni (Widget) sayfaya dahil ediyoruz
+                            // Kullanıcının günlük hedeflerini listeleyen bileşeni (Widget) sayfaya dahil ediyoruz
                             wrapWithModel(
                               model: _model.homePageTodayGoalsModel,
                               updateCallback: () => safeSetState(() {}),
@@ -359,7 +359,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 .fade(duration: 600.ms)
                                 .slideY(begin: 0.2, end: 0),
 
-                            // Kullanicinin gun icindeki aktivitelerinin ozetini gösteren bileseni (Widget) yukluyoruz
+                            // Kullanıcının gün içindeki aktivitelerinin özetini gösteren bileşeni (Widget) yüklüyoruz
                             wrapWithModel(
                               model: _model.homePageDailySummaryModel,
                               updateCallback: () => safeSetState(() {}),

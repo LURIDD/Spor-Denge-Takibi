@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'earned_badges_model.dart';
 export 'earned_badges_model.dart';
 
-/// Kazanilan Rozetler
+/// Kazanılan Rozetler
 class EarnedBadgesWidget extends StatefulWidget {
   const EarnedBadgesWidget({super.key});
 

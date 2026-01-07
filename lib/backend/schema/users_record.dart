@@ -15,135 +15,135 @@ class UsersRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "uid" field.
+  // "uid" alanı.
   String? _uid;
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
-  // "user_name" field.
+  // "user_name" alanı.
   String? _userName;
   String get userName => _userName ?? '';
   bool hasUserName() => _userName != null;
 
-  // "user_age" field.
+  // "user_age" alanı.
   int? _userAge;
   int get userAge => _userAge ?? 0;
   bool hasUserAge() => _userAge != null;
 
-  // "phone_number" field.
+  // "phone_number" alanı.
   String? _phoneNumber;
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
-  // "email" field.
+  // "email" alanı.
   String? _email;
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
-  // "photo_url" field.
+  // "photo_url" alanı.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
-  // "user_token" field.
+  // "user_token" alanı.
   String? _userToken;
   String get userToken => _userToken ?? '';
   bool hasUserToken() => _userToken != null;
 
-  // "created_time" field.
+  // "created_time" alanı.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "user_password" field.
+  // "user_password" alanı.
   String? _userPassword;
   String get userPassword => _userPassword ?? '';
   bool hasUserPassword() => _userPassword != null;
 
-  // "display_name" field.
+  // "display_name" alanı.
   String? _displayName;
   String get displayName => _displayName ?? '';
   bool hasDisplayName() => _displayName != null;
 
-  // "is_Admin" field.
+  // "is_Admin" alanı.
   bool? _isAdmin;
   bool get isAdmin => _isAdmin ?? false;
   bool hasIsAdmin() => _isAdmin != null;
 
-  // "user_height" field.
+  // "user_height" alanı.
   double? _userHeight;
   double get userHeight => _userHeight ?? 0.0;
   bool hasUserHeight() => _userHeight != null;
 
-  // "user_weight" field.
+  // "user_weight" alanı.
   double? _userWeight;
   double get userWeight => _userWeight ?? 0.0;
   bool hasUserWeight() => _userWeight != null;
 
-  // "Gender" field.
+  // "Gender" alanı.
   String? _gender;
   String get gender => _gender ?? '';
   bool hasGender() => _gender != null;
 
-  // "currentStreak" field.
+  // "currentStreak" alanı.
   // Kullanıcının mevcut devam eden seri günü sayısı.
   int? _currentStreak;
   int get currentStreak => _currentStreak ?? 0;
   bool hasCurrentStreak() => _currentStreak != null;
 
-  // "lastCompletedDate" field.
+  // "lastCompletedDate" alanı.
   DateTime? _lastCompletedDate;
   DateTime? get lastCompletedDate => _lastCompletedDate;
   bool hasLastCompletedDate() => _lastCompletedDate != null;
 
-  // "highestStreak" field.
+  // "highestStreak" alanı.
   int? _highestStreak;
   int get highestStreak => _highestStreak ?? 0;
   bool hasHighestStreak() => _highestStreak != null;
 
-  // "streakCount" field.
+  // "streakCount" alanı.
   // Tamamlanan toplam seri sayısı.
   int? _streakCount;
   int get streakCount => _streakCount ?? 0;
   bool hasStreakCount() => _streakCount != null;
 
-  // "lastStreakUpdate" field.
+  // "lastStreakUpdate" alanı.
   DateTime? _lastStreakUpdate;
   DateTime? get lastStreakUpdate => _lastStreakUpdate;
   bool hasLastStreakUpdate() => _lastStreakUpdate != null;
 
-  // "dailyStepGoal" field.
+  // "dailyStepGoal" alanı.
   // Kullanıcının günlük hedeflediği adım sayısı.
   int? _dailyStepGoal;
   int get dailyStepGoal => _dailyStepGoal ?? 0;
   bool hasDailyStepGoal() => _dailyStepGoal != null;
 
-  // "userRole" field.
+  // "userRole" alanı.
   String? _userRole;
   String get userRole => _userRole ?? '';
   bool hasUserRole() => _userRole != null;
 
-  // "last_reset_date" field.
+  // "last_reset_date" alanı.
   DateTime? _lastResetDate;
   DateTime? get lastResetDate => _lastResetDate;
   bool hasLastResetDate() => _lastResetDate != null;
 
-  // "streak" field.
+  // "streak" alanı.
   int? _streak;
   int get streak => _streak ?? 0;
   bool hasStreak() => _streak != null;
 
-  // "last_login_date" field.
+  // "last_login_date" alanı.
   DateTime? _lastLoginDate;
   DateTime? get lastLoginDate => _lastLoginDate;
   bool hasLastLoginDate() => _lastLoginDate != null;
 
-  // "last_active_time" field.
+  // "last_active_time" alanı.
   DateTime? _lastActiveTime;
   DateTime? get lastActiveTime => _lastActiveTime;
   bool hasLastActiveTime() => _lastActiveTime != null;
 
-  // "is_notifications_enabled" field.
+  // "is_notifications_enabled" alanı.
   // Kullanıcının bildirim izin durumu.
   bool? _isNotificationsEnabled;
   bool get isNotificationsEnabled => _isNotificationsEnabled ?? true;

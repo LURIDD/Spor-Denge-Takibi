@@ -767,7 +767,7 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                     ),
                   ],
                   if (_model.selectedGoalType !=
-                      'Özel Hedef') // Only show amount label context if NOT custom or handle appropriately (usually amount is always needed)
+                      'Özel Hedef') // Sadece özel hedef değilse miktar etiketini göster (genellikle miktar her zaman gereklidir)
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),

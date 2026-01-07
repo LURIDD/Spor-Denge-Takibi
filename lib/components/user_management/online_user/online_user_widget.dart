@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'online_user_model.dart';
 export 'online_user_model.dart';
 
-/// Aktif Kullanici Sayisi
+/// Aktif Kullanıcı Sayısı
 class OnlineUserWidget extends StatefulWidget {
   const OnlineUserWidget({super.key});
 
@@ -39,7 +39,7 @@ class _OnlineUserWidgetState extends State<OnlineUserWidget> {
   @override
   Widget build(BuildContext context) {
     return
-        // toplam kullanicinin gosterildigi alan
+        // Toplam kullanıcının gösterildiği alan
         FutureBuilder<int>(
       future: queryUsersRecordCount(),
       builder: (context, snapshot) {

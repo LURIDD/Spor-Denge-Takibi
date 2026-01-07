@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'birth_date_model.dart';
 export 'birth_date_model.dart';
 
-/// Dogum Yili / Yas
+/// Doğum Yılı / Yaş
 class BirthDateWidget extends StatefulWidget {
   const BirthDateWidget({super.key});
 
@@ -63,7 +63,7 @@ class _BirthDateWidgetState extends State<BirthDateWidget> {
           ),
         ),
         child:
-            // Kullanicinin dogum tarihini girdigi bolum
+            // Kullanıcının doğum tarihini girdiği bölüm
             Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(

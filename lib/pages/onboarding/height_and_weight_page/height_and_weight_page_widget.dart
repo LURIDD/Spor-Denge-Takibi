@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'height_and_weight_page_model.dart';
 export 'height_and_weight_page_model.dart';
 
-/// Boy ve Kilo Sayfasi
+/// Boy ve Kilo Sayfası
 class HeightAndWeightPageWidget extends StatefulWidget {
   const HeightAndWeightPageWidget({super.key});
 
@@ -181,7 +181,7 @@ class _HeightAndWeightPageWidgetState extends State<HeightAndWeightPageWidget> {
                     ),
                   ),
 
-                  // Kullanicinin boy ve kilo bilgilerini girmesini saglayan fiziksel profil bileseni
+                  // Kullanıcının boy ve kilo bilgilerini girmesini sağlayan fiziksel profil bileşeni
                   wrapWithModel(
                     model: _model.heightAndWeightModel,
                     updateCallback: () => safeSetState(() {}),

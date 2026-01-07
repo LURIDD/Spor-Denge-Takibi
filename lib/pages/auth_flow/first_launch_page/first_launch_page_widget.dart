@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'first_launch_page_model.dart';
 export 'first_launch_page_model.dart';
 
-/// Ilk Baslangic Sayfasi
+/// İlk Başlangıç Sayfası
 class FirstLaunchPageWidget extends StatefulWidget {
   const FirstLaunchPageWidget({super.key});
 
@@ -169,7 +169,7 @@ class _FirstLaunchPageWidgetState extends State<FirstLaunchPageWidget>
                     ),
                   ),
                   child:
-                      // ilk baslangic sayfasi
+                      // İlk başlangıç sayfası
                       Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -287,7 +287,7 @@ class _FirstLaunchPageWidgetState extends State<FirstLaunchPageWidget>
                   animationsMap['containerOnPageLoadAnimation1']!),
             ),
 
-            // Kullanicinin uygulamaya giris türünü sectigi alan
+            // Kullanıcının uygulamaya giriş türünü seçtiği alan
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 44.0),
               child: Row(

@@ -44,7 +44,7 @@ class _AvatarSecmeWidgetState extends State<AvatarSecmeWidget> {
         borderRadius: BorderRadius.circular(20.0),
       ),
       child:
-          // Kullanicinin uygulama icinden profil fotografini sectigi bolum
+          // Kullanıcının uygulama içinden profil fotoğrafını seçtiği bölüm
           Column(
         mainAxisSize: MainAxisSize.max,
         children: [

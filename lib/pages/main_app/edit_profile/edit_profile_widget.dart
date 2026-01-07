@@ -13,7 +13,7 @@ import 'edit_profile_model.dart';
 export 'edit_profile_model.dart';
 import '/components/avatar_secme_widget.dart';
 
-/// Rumuz Ayarlari
+/// Profil Düzenleme Sayfası
 class EditProfileWidget extends StatefulWidget {
   const EditProfileWidget({super.key});
 
@@ -218,7 +218,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ],
                   ),
 
-                  // Kullanicinin kullanci adini girdigi alan
+                  // Kullanıcının kullanıcı adını girdiği alan
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Container(
@@ -432,7 +432,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
 
-                  // Kullanicinin adini girdigi alan
+                  // Kullanıcının adını girdiği alan
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Container(
@@ -650,7 +650,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
 
-                  // Kullanicinin yas bilgisini girdigi alan
+                  // Kullanıcının yaş bilgisini girdiği alan
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Container(

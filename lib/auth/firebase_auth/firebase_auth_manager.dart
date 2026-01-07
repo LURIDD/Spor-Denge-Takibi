@@ -19,11 +19,11 @@ export '../base_auth_user_provider.dart';
 class FirebasePhoneAuthManager extends ChangeNotifier {
   bool? _triggerOnCodeSent;
   FirebaseAuthException? phoneAuthError;
-  // Set when using phone verification (after phone number is provided).
+  // Telefon doğrulaması kullanılırken ayarlanır (telefon numarası girildikten sonra).
   String? phoneAuthVerificationCode;
-  // Set when using phone sign in in web mode (ignored otherwise).
+  // Web modunda telefonla oturum açma kullanılırken ayarlanır (aksi takdirde göz ardı edilir).
   ConfirmationResult? webPhoneAuthConfirmationResult;
-  // Used for handling verification codes for phone sign in.
+  // Telefonla oturum açmak için doğrulama kodlarını işlemek için kullanılır.
   void Function(BuildContext)? _onCodeSent;
 
   bool get triggerOnCodeSent => _triggerOnCodeSent ?? false;
@@ -73,7 +73,7 @@ class FirebaseAuthManager extends AuthManager
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  'Too long since most recent sign in. Sign in again before deleting your account.')),
+                  'En son oturum açmanızdan bu yana çok uzun zaman geçti. Hesabınızı silmeden önce tekrar oturum açın.')),
         );
       }
     }
@@ -97,7 +97,7 @@ class FirebaseAuthManager extends AuthManager
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  'Too long since most recent sign in. Sign in again before updating your email.')),
+                  'En son oturum açmanızdan bu yana çok uzun zaman geçti. E-postanızı güncellemeden önce tekrar oturum açın.')),
         );
       }
     }
@@ -118,7 +118,7 @@ class FirebaseAuthManager extends AuthManager
       if (e.code == 'requires-recent-login') {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.message!}')),
+          SnackBar(content: Text('Hata: ${e.message!}')),
         );
       }
     }
@@ -139,7 +139,7 @@ class FirebaseAuthManager extends AuthManager
       return null;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password reset email sent')),
+      SnackBar(content: Text('Şifre sıfırlama e-postası gönderildi')),
     );
   }
 
@@ -226,24 +226,18 @@ class FirebaseAuthManager extends AuthManager
       return;
     }
     final completer = Completer<bool>();
-    // If you'd like auto-verification, without the user having to enter the SMS
-    // code manually. Follow these instructions:
-    // * For Android: https://firebase.google.com/docs/auth/android/phone-auth?authuser=0#enable-app-verification (SafetyNet set up)
-    // * For iOS: https://firebase.google.com/docs/auth/ios/phone-auth?authuser=0#start-receiving-silent-notifications
-    // * Finally modify verificationCompleted below as instructed.
+    // Kullanıcının SMS kodunu manuel olarak girmesine gerek kalmadan otomatik doğrulama istiyorsanız.
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout:
-          Duration(seconds: 0), // Skips Android's default auto-verification
+          Duration(seconds: 0), // Android'in varsayılan otomatik doğrulamasını atlar
       verificationCompleted: (phoneAuthCredential) async {
         await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
         phoneAuthManager.update(() {
           phoneAuthManager.triggerOnCodeSent = false;
           phoneAuthManager.phoneAuthError = null;
         });
-        // If you've implemented auto-verification, navigate to home page or
-        // onboarding page here manually. Uncomment the lines below and replace
-        // DestinationPage() with the desired widget.
+        // Otomatik doğrulamayı uyguladıysanız, buraya manuel olarak ana sayfaya veya onboarding sayfasına yönlendirin.
         // await Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (_) => DestinationPage()),
@@ -294,8 +288,8 @@ class FirebaseAuthManager extends AuthManager
     }
   }
 
-  /// Tries to sign in or create an account using Firebase Auth.
-  /// Returns the User object if sign in was successful.
+  /// Firebase Auth kullanarak oturum açmaya veya hesap oluşturmaya çalışır.
+  /// Oturum açma başarılıysa User nesnesini döndürür.
   Future<BaseAuthUser?> _signInOrCreateAccount(
     BuildContext context,
     Future<UserCredential?> Function() signInFunc,
@@ -312,10 +306,10 @@ class FirebaseAuthManager extends AuthManager
     } on FirebaseAuthException catch (e) {
       final errorMsg = switch (e.code) {
         'email-already-in-use' =>
-          'Error: The email is already in use by a different account',
+          'Hata: E-posta zaten başka bir hesap tarafından kullanılıyor',
         'INVALID_LOGIN_CREDENTIALS' =>
-          'Error: The supplied auth credential is incorrect, malformed or has expired',
-        _ => 'Error: ${e.message!}',
+          'Hata: Sağlanan kimlik bilgisi hatalı, bozuk veya süresi dolmuş',
+        _ => 'Hata: ${e.message!}',
       };
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(

@@ -581,6 +581,47 @@ class _SignInWidgetState extends State<SignInWidget>
                                             return;
                                           }
 
+                                          if (!currentUserEmailVerified) {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      'E-posta Doğrulanmadı'),
+                                                  content: Text(
+                                                      'Lütfen giriş yapmadan önce e-posta adresinizi doğrulayın.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        await authManager
+                                                            .sendEmailVerification();
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                              content: Text(
+                                                                  'Doğrulama e-postası tekrar gönderildi.')),
+                                                        );
+                                                        Navigator.pop(
+                                                            alertDialogContext);
+                                                      },
+                                                      child:
+                                                          Text('Tekrar Gönder'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Tamam'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            await authManager.signOut();
+                                            return;
+                                          }
+
                                           context.goNamedAuth(
                                               HomePageWidget.routeName,
                                               context.mounted);

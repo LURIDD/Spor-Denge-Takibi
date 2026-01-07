@@ -144,6 +144,16 @@ class FirebaseAuthManager extends AuthManager
   }
 
   @override
+  Future sendEmailVerification() async {
+    try {
+      await currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      // Handle error if needed, or propagate
+      print('Error sending verification email: ${e.message}');
+    }
+  }
+
+  @override
   Future<BaseAuthUser?> signInWithEmail(
     BuildContext context,
     String email,
@@ -229,8 +239,8 @@ class FirebaseAuthManager extends AuthManager
     // Kullanıcının SMS kodunu manuel olarak girmesine gerek kalmadan otomatik doğrulama istiyorsanız.
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      timeout:
-          Duration(seconds: 0), // Android'in varsayılan otomatik doğrulamasını atlar
+      timeout: Duration(
+          seconds: 0), // Android'in varsayılan otomatik doğrulamasını atlar
       verificationCompleted: (phoneAuthCredential) async {
         await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
         phoneAuthManager.update(() {

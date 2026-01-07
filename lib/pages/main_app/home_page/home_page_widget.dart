@@ -11,6 +11,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -88,6 +89,25 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           },
           child: PopScope(
             canPop: false,
+            onPopInvokedWithResult: (bool didPop, dynamic result) async {
+              if (didPop) {
+                return;
+              }
+              final now = DateTime.now();
+              if (_model.lastBackPressedTime == null ||
+                  now.difference(_model.lastBackPressedTime!) >
+                      const Duration(seconds: 2)) {
+                _model.lastBackPressedTime = now;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Çıkmak için tekrar dokunun'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                SystemNavigator.pop();
+              }
+            },
             child: Scaffold(
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

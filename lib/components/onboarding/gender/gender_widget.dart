@@ -2,7 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/onboarding/step_goal_page/step_goal_page_widget.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -319,7 +319,9 @@ class _GenderWidgetState extends State<GenderWidget> {
                             gender: FFAppState().TempGender,
                             dailyStepGoal: 10000,
                             userRole: 'User',
-                            photoUrl: 'assets/images/erkek1.png',
+                            photoUrl: FFAppState().TempGender == 'Kadın'
+                                ? 'assets/images/kz1.png'
+                                : 'assets/images/erkek1.png',
                           ),
                           ...mapToFirestore(
                             {
@@ -328,8 +330,28 @@ class _GenderWidgetState extends State<GenderWidget> {
                           ),
                         });
 
-                        _navigate = () =>
-                            context.pushNamed(StepGoalPageWidget.routeName);
+                        await authManager.sendEmailVerification();
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Doğrulama E-postası Gönderildi'),
+                              content: Text(
+                                  'Lütfen e-postanızı kontrol edin ve hesabınızı doğrulamak için gönderilen bağlantıya tıklayın. Ardından giriş yapabilirsiniz.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Tamam'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        await authManager.signOut();
+
+                        _navigate =
+                            () => context.pushNamed(SignInWidget.routeName);
                       } else {
                         _model.showErrors = true;
                         safeSetState(() {});

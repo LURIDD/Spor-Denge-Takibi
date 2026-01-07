@@ -13,6 +13,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   int kalanSayisi = 0;
 
+  DateTime? lastBackPressedTime;
+
   ///  State fields for stateful widgets in this page.
 
   // Model for HomePageGreeter component.

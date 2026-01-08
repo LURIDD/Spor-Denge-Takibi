@@ -136,7 +136,7 @@ class _SignUpWidgetState extends State<SignUpWidget>
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 20.0),
+                              0.0, 70.0, 0.0, 20.0),
                           child: Container(
                             width: 200.0,
                             decoration: BoxDecoration(

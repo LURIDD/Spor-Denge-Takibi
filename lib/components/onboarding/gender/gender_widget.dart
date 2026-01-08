@@ -330,28 +330,8 @@ class _GenderWidgetState extends State<GenderWidget> {
                           ),
                         });
 
-                        await authManager.sendEmailVerification();
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Doğrulama E-postası Gönderildi'),
-                              content: Text(
-                                  'Lütfen e-postanızı kontrol edin ve hesabınızı doğrulamak için gönderilen bağlantıya tıklayın. Ardından giriş yapabilirsiniz.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Tamam'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        await authManager.signOut();
-
-                        _navigate =
-                            () => context.pushNamed(SignInWidget.routeName);
+                        _navigate = () =>
+                            context.pushNamed(StepGoalPageWidget.routeName);
                       } else {
                         _model.showErrors = true;
                         safeSetState(() {});

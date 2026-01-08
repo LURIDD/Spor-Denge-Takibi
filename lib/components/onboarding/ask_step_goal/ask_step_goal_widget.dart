@@ -162,8 +162,28 @@ class _AskStepGoalWidgetState extends State<AskStepGoalWidget> {
                       dailyStepGoal: goal,
                     ));
 
+                    await authManager.sendEmailVerification();
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('Doğrulama E-postası Gönderildi'),
+                          content: Text(
+                              'Lütfen e-postanızı kontrol edin ve hesabınızı doğrulamak için gönderilen bağlantıya tıklayın. Ardından giriş yapabilirsiniz.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Tamam'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    await authManager.signOut();
+
                     context.goNamedAuth(
-                        HomePageWidget.routeName, context.mounted);
+                        SignInWidget.routeName, context.mounted);
                   },
                   child: Container(
                     width: double.infinity,

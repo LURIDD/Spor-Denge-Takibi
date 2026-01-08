@@ -42,7 +42,25 @@
 
 ## 🚀 Kurulum ve Çalıştırma
 
-Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
+Bu projeyi en kolay şekilde kurmak ve çalıştırmak için hazırladığımız otomatik kurulum scriptlerini kullanabilirsiniz.
+
+### ⚡ Hızlı Kurulum (Otomatik)
+
+**Windows Kullanıcıları İçin:**
+1. Proje klasörünü açın.
+2. `setup_windows.bat` dosyasına çift tıklayın.
+3. Script gerekli temizlikleri yapacak, paketleri yükleyecek ve uygulamayı başlatmak isteyip istemediğinizi soracaktır.
+
+**Mac ve Linux Kullanıcıları İçin:**
+1. Terminali açın ve proje klasörüne gidin.
+2. Aşağıdaki komutu çalıştırın:
+   ```bash
+   ./setup.sh
+   ```
+
+### 🛠️ Manuel Kurulum
+
+Script kullanmadan manuel kurulum yapmak isterseniz:
 
 1.  **Depoyu Klonlayın:**
     ```bash
@@ -52,13 +70,11 @@ Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izley
 
 2.  **Bağımlılıkları Yükleyin:**
     ```bash
+    flutter clean
     flutter pub get
     ```
 
-3.  **Firebase Yapılandırması:**
-    - Projeniz için `flutterfire configure` komutunu kullanarak Firebase bağlantısını sağlayın.
-
-4.  **Uygulamayı Çalıştırın:**
+3.  **Uygulamayı Çalıştırın:**
     ```bash
     flutter run
     ```

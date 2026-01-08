@@ -14,6 +14,7 @@ import 'flutter_flow/internationalization.dart';
 import 'custom_code/actions/notification_service.dart';
 import 'index.dart';
 
+/// Uygulamanın ana giriş noktası (Entry Point).
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
@@ -27,6 +28,7 @@ void main() async {
   await notificationService.init();
   await notificationService.requestPermissions();
 
+  // Global State (Durum Yönetimi) nesnesini oluştur
   final appState = FFAppState(); // FFAppState'i başlat
   await appState.initializePersistedState();
 
@@ -36,6 +38,7 @@ void main() async {
   ));
 }
 
+/// Ana Uygulama Widget'ı
 class MyApp extends StatefulWidget {
   // Bu bileşen uygulamanızın köküdür.
   @override
@@ -133,7 +136,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-/// Alt Gezinti Çubuğu Sayfası
+/// Alt Gezinti Çubuğu (Bottom Navigation Bar) içeren sayfa yapısı
 class NavBarPage extends StatefulWidget {
   NavBarPage({
     Key? key,

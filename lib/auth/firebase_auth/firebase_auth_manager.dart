@@ -1,59 +1,18 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../auth_manager.dart';
 
 import '/backend/backend.dart';
 import 'anonymous_auth.dart';
-import 'apple_auth.dart';
 import 'email_auth.dart';
 import 'firebase_user_provider.dart';
-import 'google_auth.dart';
-import 'jwt_token_auth.dart';
-import 'github_auth.dart';
 
 export '../base_auth_user_provider.dart';
 
-class FirebasePhoneAuthManager extends ChangeNotifier {
-  bool? _triggerOnCodeSent;
-  FirebaseAuthException? phoneAuthError;
-  // Telefon doğrulaması kullanılırken ayarlanır (telefon numarası girildikten sonra).
-  String? phoneAuthVerificationCode;
-  // Web modunda telefonla oturum açma kullanılırken ayarlanır (aksi takdirde göz ardı edilir).
-  ConfirmationResult? webPhoneAuthConfirmationResult;
-  // Telefonla oturum açmak için doğrulama kodlarını işlemek için kullanılır.
-  void Function(BuildContext)? _onCodeSent;
-
-  bool get triggerOnCodeSent => _triggerOnCodeSent ?? false;
-  set triggerOnCodeSent(bool val) => _triggerOnCodeSent = val;
-
-  void Function(BuildContext) get onCodeSent =>
-      _onCodeSent == null ? (_) {} : _onCodeSent!;
-  set onCodeSent(void Function(BuildContext) func) => _onCodeSent = func;
-
-  void update(VoidCallback callback) {
-    callback();
-    notifyListeners();
-  }
-}
-
 class FirebaseAuthManager extends AuthManager
-    with
-        EmailSignInManager,
-        GoogleSignInManager,
-        AppleSignInManager,
-        AnonymousSignInManager,
-        JwtSignInManager,
-        GithubSignInManager,
-        PhoneSignInManager {
-  // Set when using phone verification (after phone number is provided).
-  String? _phoneAuthVerificationCode;
-  // Set when using phone sign in in web mode (ignored otherwise).
-  ConfirmationResult? _webPhoneAuthConfirmationResult;
-  FirebasePhoneAuthManager phoneAuthManager = FirebasePhoneAuthManager();
-
+    with EmailSignInManager, AnonymousSignInManager {
   @override
   Future signOut() {
     return FirebaseAuth.instance.signOut();
@@ -182,121 +141,6 @@ class FirebaseAuthManager extends AuthManager
     BuildContext context,
   ) =>
       _signInOrCreateAccount(context, anonymousSignInFunc, 'ANONYMOUS');
-
-  @override
-  Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
-      _signInOrCreateAccount(context, appleSignIn, 'APPLE');
-
-  @override
-  Future<BaseAuthUser?> signInWithGoogle(BuildContext context) =>
-      _signInOrCreateAccount(context, googleSignInFunc, 'GOOGLE');
-
-  @override
-  Future<BaseAuthUser?> signInWithGithub(BuildContext context) =>
-      _signInOrCreateAccount(context, githubSignInFunc, 'GITHUB');
-
-  @override
-  Future<BaseAuthUser?> signInWithJwtToken(
-    BuildContext context,
-    String jwtToken,
-  ) =>
-      _signInOrCreateAccount(context, () => jwtTokenSignIn(jwtToken), 'JWT');
-
-  void handlePhoneAuthStateChanges(BuildContext context) {
-    phoneAuthManager.addListener(() {
-      if (!context.mounted) {
-        return;
-      }
-
-      if (phoneAuthManager.triggerOnCodeSent) {
-        phoneAuthManager.onCodeSent(context);
-        phoneAuthManager
-            .update(() => phoneAuthManager.triggerOnCodeSent = false);
-      } else if (phoneAuthManager.phoneAuthError != null) {
-        final e = phoneAuthManager.phoneAuthError!;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: ${e.message!}'),
-        ));
-        phoneAuthManager.update(() => phoneAuthManager.phoneAuthError = null);
-      }
-    });
-  }
-
-  @override
-  Future beginPhoneAuth({
-    required BuildContext context,
-    required String phoneNumber,
-    required void Function(BuildContext) onCodeSent,
-  }) async {
-    phoneAuthManager.update(() => phoneAuthManager.onCodeSent = onCodeSent);
-    if (kIsWeb) {
-      phoneAuthManager.webPhoneAuthConfirmationResult =
-          await FirebaseAuth.instance.signInWithPhoneNumber(phoneNumber);
-      phoneAuthManager.update(() => phoneAuthManager.triggerOnCodeSent = true);
-      return;
-    }
-    final completer = Completer<bool>();
-    // Kullanıcının SMS kodunu manuel olarak girmesine gerek kalmadan otomatik doğrulama istiyorsanız.
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      timeout: Duration(
-          seconds: 0), // Android'in varsayılan otomatik doğrulamasını atlar
-      verificationCompleted: (phoneAuthCredential) async {
-        await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
-        phoneAuthManager.update(() {
-          phoneAuthManager.triggerOnCodeSent = false;
-          phoneAuthManager.phoneAuthError = null;
-        });
-        // Otomatik doğrulamayı uyguladıysanız, buraya manuel olarak ana sayfaya veya onboarding sayfasına yönlendirin.
-        // await Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => DestinationPage()),
-        // );
-      },
-      verificationFailed: (e) {
-        phoneAuthManager.update(() {
-          phoneAuthManager.triggerOnCodeSent = false;
-          phoneAuthManager.phoneAuthError = e;
-        });
-        completer.complete(false);
-      },
-      codeSent: (verificationId, _) {
-        phoneAuthManager.update(() {
-          phoneAuthManager.phoneAuthVerificationCode = verificationId;
-          phoneAuthManager.triggerOnCodeSent = true;
-          phoneAuthManager.phoneAuthError = null;
-        });
-        completer.complete(true);
-      },
-      codeAutoRetrievalTimeout: (_) {},
-    );
-
-    return completer.future;
-  }
-
-  @override
-  Future verifySmsCode({
-    required BuildContext context,
-    required String smsCode,
-  }) {
-    if (kIsWeb) {
-      return _signInOrCreateAccount(
-        context,
-        () => phoneAuthManager.webPhoneAuthConfirmationResult!.confirm(smsCode),
-        'PHONE',
-      );
-    } else {
-      final authCredential = PhoneAuthProvider.credential(
-        verificationId: phoneAuthManager.phoneAuthVerificationCode!,
-        smsCode: smsCode,
-      );
-      return _signInOrCreateAccount(
-        context,
-        () => FirebaseAuth.instance.signInWithCredential(authCredential),
-        'PHONE',
-      );
-    }
-  }
 
   /// Firebase Auth kullanarak oturum açmaya veya hesap oluşturmaya çalışır.
   /// Oturum açma başarılıysa User nesnesini döndürür.

@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+/// Kullanıcılar koleksiyonu için veri modeli.
+/// Firebase 'Users' koleksiyonunu temsil eder.
 class UsersRecord extends FirestoreRecord {
   UsersRecord._(
     DocumentReference reference,
@@ -71,16 +73,19 @@ class UsersRecord extends FirestoreRecord {
   bool hasIsAdmin() => _isAdmin != null;
 
   // "user_height" alanı.
+  // Kullanıcının boy bilgisi (cm)
   double? _userHeight;
   double get userHeight => _userHeight ?? 0.0;
   bool hasUserHeight() => _userHeight != null;
 
   // "user_weight" alanı.
+  // Kullanıcının kilo bilgisi (kg)
   double? _userWeight;
   double get userWeight => _userWeight ?? 0.0;
   bool hasUserWeight() => _userWeight != null;
 
   // "Gender" alanı.
+  // Kullanıcının cinsiyeti (Erkek/Kadın)
   String? _gender;
   String get gender => _gender ?? '';
   bool hasGender() => _gender != null;

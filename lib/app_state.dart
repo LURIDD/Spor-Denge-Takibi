@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Uygulamanın genel durumunu yöneten sınıf (Global State Management).
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
 
@@ -14,6 +15,7 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
+  /// Kalıcı durumu başlatır (SharedPreferences'tan verileri yükler).
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
@@ -37,6 +39,7 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
+  /// Geçici E-posta adresi
   String _tempEmail = '';
   String get tempEmail => _tempEmail;
   set tempEmail(String value) {
@@ -49,12 +52,14 @@ class FFAppState extends ChangeNotifier {
     _tempPassword = value;
   }
 
+  /// Geçici Gerçek İsim
   String _tempRealname = '';
   String get tempRealname => _tempRealname;
   set tempRealname(String value) {
     _tempRealname = value;
   }
 
+  /// Geçici Kullanıcı Adı
   String _TempUsername = '';
   String get TempUsername => _TempUsername;
   set TempUsername(String value) {
@@ -73,6 +78,7 @@ class FFAppState extends ChangeNotifier {
     _TempUserWeight = value;
   }
 
+  /// Geçici Cinsiyet Seçimi
   String _TempGender = '';
   String get TempGender => _TempGender;
   set TempGender(String value) {
@@ -124,13 +130,14 @@ class FFAppState extends ChangeNotifier {
     _selectedAvatarName = value;
   }
 
+  /// Canlı adım sayısı (Pedometer'dan gelen)
   int _liveSteps = 0;
   int get liveSteps => _liveSteps;
   set liveSteps(int value) {
     _liveSteps = value;
   }
 
-  /// Seçilen avatarı tutar
+  /// Seçilen avatarın dosya yolu
   String _secilenAvatar = '';
   String get secilenAvatar => _secilenAvatar;
   set secilenAvatar(String value) {
@@ -144,6 +151,7 @@ class FFAppState extends ChangeNotifier {
     _KalanAdet = value;
   }
 
+  /// Adım sayacı ofset değeri (sıfırlama için kullanılır)
   int _stepOffset = 0;
   int get stepOffset => _stepOffset;
   set stepOffset(int value) {
@@ -151,6 +159,7 @@ class FFAppState extends ChangeNotifier {
     prefs.setInt('ff_stepOffset', value);
   }
 
+  /// Sensörden okunan son adım değeri
   int _lastSensorSteps = 0;
   int get lastSensorSteps => _lastSensorSteps;
   set lastSensorSteps(int value) {

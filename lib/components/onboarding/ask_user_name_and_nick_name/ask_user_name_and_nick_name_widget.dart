@@ -232,7 +232,7 @@ class _AskUserNameAndNickNameWidgetState
                             .asValidator(context),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                              RegExp('[a-zA-Z\\s]')),
+                              RegExp('[a-zA-ZçÇğĞıIöÖşŞüÜ\\s]')),
                         ],
                       ),
                     ),

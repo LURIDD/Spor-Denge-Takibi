@@ -17,11 +17,13 @@ class UserGoalsRecord extends FirestoreRecord {
   }
 
   // "goalName" alanı.
+  // Hedefin adı (örn. Su İçme)
   String? _goalName;
   String get goalName => _goalName ?? '';
   bool hasGoalName() => _goalName != null;
 
   // "goalAmount" alanı.
+  // Hedeflenen miktar
   double? _goalAmount;
   double get goalAmount => _goalAmount ?? 0.0;
   bool hasGoalAmount() => _goalAmount != null;
@@ -42,6 +44,7 @@ class UserGoalsRecord extends FirestoreRecord {
   bool hasCreatedAt() => _createdAt != null;
 
   // "goalUnitMeasurement" alanı.
+  // Ölçü birimi (Litre, Adım, vb.)
   String? _goalUnitMeasurement;
   String get goalUnitMeasurement => _goalUnitMeasurement ?? '';
   bool hasGoalUnitMeasurement() => _goalUnitMeasurement != null;

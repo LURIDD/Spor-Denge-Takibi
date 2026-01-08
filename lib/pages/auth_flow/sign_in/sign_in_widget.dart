@@ -562,6 +562,55 @@ class _SignInWidgetState extends State<SignInWidget>
                                         ),
                                       ),
                                     ),
+                                    Align(
+                                      alignment: AlignmentDirectional(1.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            if (_model
+                                                .emailAddressTextController
+                                                .text
+                                                .isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Lütfen şifrenizi sıfırlamak için e-posta adresinizi giriniz.',
+                                                  ),
+                                                ),
+                                              );
+                                              return;
+                                            }
+                                            await authManager.resetPassword(
+                                              email: _model
+                                                  .emailAddressTextController
+                                                  .text,
+                                              context: context,
+                                            );
+                                          },
+                                          child: Text(
+                                            'Şifremi Unuttum?',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 16.0),

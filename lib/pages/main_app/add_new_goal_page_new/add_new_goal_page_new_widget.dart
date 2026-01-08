@@ -1255,6 +1255,31 @@ class _AddNewGoalPageNewWidgetState extends State<AddNewGoalPageNewWidget> {
                               finalIconPath = 'assets/images/sleeping.png';
                           }
 
+                          // Check for duplicate goals
+                          final existingGoals =
+                              await UserGoalsRecord.collection(
+                                      currentUserReference)
+                                  .where('goalName', isEqualTo: finalGoalName)
+                                  .get();
+
+                          if (existingGoals.docs.isNotEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Bu hedef zaten listenizde mevcut!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor: Color(0xFFD63636),
+                              ),
+                            );
+                            return;
+                          }
+
                           await UserGoalsRecord.createDoc(currentUserReference!)
                               .set({
                             ...createUserGoalsRecordData(
